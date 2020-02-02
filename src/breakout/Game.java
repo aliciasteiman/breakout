@@ -52,7 +52,7 @@ public class Game extends Application {
         Group root = new Group();
         myPaddle = new Paddle(WIDTH/2 - PADDLE_WIDTH/2, HEIGHT - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT);
         root.getChildren().add(myPaddle.getShape());
-        myBall = new Ball(WIDTH/2,HEIGHT - PADDLE_HEIGHT - BALL_RADIUS, BALL_RADIUS);
+        myBall = new Ball(WIDTH/2,HEIGHT - PADDLE_HEIGHT - BALL_RADIUS + 10, BALL_RADIUS);
         root.getChildren().add(myBall.getShape());
         myScene = new Scene(root, width, height, background);
         myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
@@ -69,6 +69,8 @@ public class Game extends Application {
     public void step(double elapsedTime) {
         Circle ball = myBall.getShape();
         Rectangle paddle = myPaddle.getShape();
+
+        // do something with this??
         if (Shape.intersect(ball, paddle).getBoundsInLocal().getWidth()!= -1) {
             myBallSpeed += BALL_SPEEDUP_FACTOR;
 
@@ -77,7 +79,7 @@ public class Game extends Application {
 
     private void handleKeyInput(KeyCode code) {
         Rectangle paddle = myPaddle.getShape();
-        Circle ball = myBall.getShape();
+        //Circle ball = myBall.getShape();
 
         if (code == KeyCode.RIGHT) {
             paddle.setX(paddle.getX() + PADDLE_SPEED);
@@ -85,6 +87,7 @@ public class Game extends Application {
             paddle.setX(paddle.getX() - PADDLE_SPEED);
         }
 
+        // laumch ball somehow... 
         if (code == KeyCode.SPACE) {
             if (myAnimation.getStatus() == Animation.Status.RUNNING) {
                 myAnimation.pause();
