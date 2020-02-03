@@ -4,8 +4,6 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -13,9 +11,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.shape.Shape;
+
 
 import java.awt.*;
 
@@ -27,7 +26,7 @@ public class Game extends Application {
 
     public static final int PADDLE_WIDTH = 120;
     public static final int PADDLE_HEIGHT = 15;
-    public static final int PADDLE_SPEED = 20;
+    public int PADDLE_SPEED = 20;
     public static final Paint PADDLE_COLOR = Color.GRAY;
 
     public static final int BALL_RADIUS = 15;
@@ -41,8 +40,8 @@ public class Game extends Application {
     private Paddle myPaddle;
     private Ball myBall;
     private Timeline myAnimation;
-    private int dx = 5;
-    private int dy = 5;
+    private double dx = 5;
+    private double dy = 5;
 
     @Override
     public void start (Stage stage) {
@@ -70,24 +69,27 @@ public class Game extends Application {
         myAnimation.getKeyFrames().add(frame);
     }
 
-
     public void step(double elapsedTime) {
         Circle ball = myBall.getShape();
+        Rectangle paddle = myPaddle.getShape();
+
         ball.setCenterX(ball.getCenterX() + dx * BALL_SPEED * elapsedTime);
         ball.setCenterY(ball.getCenterY() + dy * BALL_SPEED * elapsedTime);
 
-        if (ball.getCenterX() > myScene.getWidth() || ball.getCenterX() < 0) {
+        if (ball.getCenterX() > myScene.getWidth() - BALL_RADIUS || ball.getCenterX() < 0 + BALL_RADIUS) {
             dx *= -1;
         }
-        else if (ball.getCenterY() > myScene.getHeight() || ball.getCenterY() < 0) {
-            dy = -dy;
+        else if (Shape.intersect(ball, paddle).getBoundsInLocal().getWidth() != -1 || ball.getCenterY() < 0 + BALL_RADIUS) {
+            dy *= -1;
+        }
+        //currently stops game if ball stops... will later lose life and reset
+        else if (ball.getCenterY() > myScene.getHeight()) {
+            myAnimation.stop();
         }
     }
-
-
+    
     private void handleKeyInput(KeyCode code) {
         Rectangle paddle = myPaddle.getShape();
-        //Circle ball = myBall.getShape();
 
         if (code == KeyCode.RIGHT) {
             paddle.setX(paddle.getX() + PADDLE_SPEED);
@@ -95,7 +97,6 @@ public class Game extends Application {
             paddle.setX(paddle.getX() - PADDLE_SPEED);
         }
 
-        // launch ball somehow...
         if (code == KeyCode.SPACE) {
             if (myAnimation.getStatus() == Animation.Status.RUNNING) {
                 myAnimation.pause();
@@ -104,6 +105,5 @@ public class Game extends Application {
             }
         }
     }
-
 
 }
