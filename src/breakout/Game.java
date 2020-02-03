@@ -55,7 +55,7 @@ public class Game extends Application {
         Group root = new Group();
         myPaddle = new Paddle(WIDTH/2 - PADDLE_WIDTH/2, HEIGHT - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_COLOR);
         root.getChildren().add(myPaddle.getShape());
-        myBall = new Ball(WIDTH/2,HEIGHT - PADDLE_HEIGHT - BALL_RADIUS, BALL_RADIUS, BALL_COLOR);
+        myBall = new Ball(WIDTH/2,HEIGHT/2, BALL_RADIUS, BALL_COLOR);
         root.getChildren().add(myBall.getShape());
         myScene = new Scene(root, width, height, background);
         myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
@@ -82,14 +82,16 @@ public class Game extends Application {
         else if (Shape.intersect(ball, paddle).getBoundsInLocal().getWidth() != -1 || ball.getCenterY() < 0 + BALL_RADIUS) {
             dy *= -1;
         }
-        //currently stops game if ball stops... will later lose life and reset
         else if (ball.getCenterY() > myScene.getHeight()) {
-            myAnimation.stop();
+            myAnimation.pause();
+            ball.setCenterX(WIDTH/2);
+            ball.setCenterY(HEIGHT/2);
+            //need to subtract 1 from lives left once feature is implemented
         }
     }
-    
+
     private void handleKeyInput(KeyCode code) {
-        Rectangle paddle = myPaddle.getShape();
+        Rectangle paddle = myPaddle.getShape(); //check out frogger to see how the box wraps around screen
 
         if (code == KeyCode.RIGHT) {
             paddle.setX(paddle.getX() + PADDLE_SPEED);
