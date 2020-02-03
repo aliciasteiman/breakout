@@ -4,6 +4,8 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -20,16 +22,17 @@ import java.awt.*;
 public class Game extends Application {
 
     public static final int WIDTH = 500;
-    public static final int HEIGHT = 800;
+    public static final int HEIGHT = 500;
     public static final Paint BACKGROUND = Color.LAVENDERBLUSH;
 
     public static final int PADDLE_WIDTH = 120;
     public static final int PADDLE_HEIGHT = 15;
-    public static final int PADDLE_SPEED = 5;
-    public static final Paint PADDLE_COLOR = Color.DEEPPINK;
+    public static final int PADDLE_SPEED = 20;
+    public static final Paint PADDLE_COLOR = Color.GRAY;
 
     public static final int BALL_RADIUS = 15;
-    public static final int BALL_SPEEDUP_FACTOR = 2;
+    public static final Paint BALL_COLOR = Color.CORNFLOWERBLUE;
+    public static final int BALL_SPEED = 20;
 
     public static final int FRAMES_PER_SECOND = 60;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
@@ -38,7 +41,8 @@ public class Game extends Application {
     private Paddle myPaddle;
     private Ball myBall;
     private Timeline myAnimation;
-    private int myBallSpeed;
+    private int dx = 5;
+    private int dy = 5;
 
     @Override
     public void start (Stage stage) {
@@ -50,9 +54,9 @@ public class Game extends Application {
 
     public Scene setUpScene(int width, int height, Paint background) {
         Group root = new Group();
-        myPaddle = new Paddle(WIDTH/2 - PADDLE_WIDTH/2, HEIGHT - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT);
+        myPaddle = new Paddle(WIDTH/2 - PADDLE_WIDTH/2, HEIGHT - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_COLOR);
         root.getChildren().add(myPaddle.getShape());
-        myBall = new Ball(WIDTH/2,HEIGHT - PADDLE_HEIGHT - BALL_RADIUS + 10, BALL_RADIUS);
+        myBall = new Ball(WIDTH/2,HEIGHT - PADDLE_HEIGHT - BALL_RADIUS, BALL_RADIUS, BALL_COLOR);
         root.getChildren().add(myBall.getShape());
         myScene = new Scene(root, width, height, background);
         myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
@@ -66,16 +70,20 @@ public class Game extends Application {
         myAnimation.getKeyFrames().add(frame);
     }
 
+
     public void step(double elapsedTime) {
         Circle ball = myBall.getShape();
-        Rectangle paddle = myPaddle.getShape();
+        ball.setCenterX(ball.getCenterX() + dx * BALL_SPEED * elapsedTime);
+        ball.setCenterY(ball.getCenterY() + dy * BALL_SPEED * elapsedTime);
 
-        // do something with this??
-        if (Shape.intersect(ball, paddle).getBoundsInLocal().getWidth()!= -1) {
-            myBallSpeed += BALL_SPEEDUP_FACTOR;
-
+        if (ball.getCenterX() > myScene.getWidth() || ball.getCenterX() < 0) {
+            dx *= -1;
+        }
+        else if (ball.getCenterY() > myScene.getHeight() || ball.getCenterY() < 0) {
+            dy = -dy;
         }
     }
+
 
     private void handleKeyInput(KeyCode code) {
         Rectangle paddle = myPaddle.getShape();
@@ -87,7 +95,7 @@ public class Game extends Application {
             paddle.setX(paddle.getX() - PADDLE_SPEED);
         }
 
-        // laumch ball somehow... 
+        // launch ball somehow...
         if (code == KeyCode.SPACE) {
             if (myAnimation.getStatus() == Animation.Status.RUNNING) {
                 myAnimation.pause();
