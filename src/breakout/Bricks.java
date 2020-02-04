@@ -1,6 +1,7 @@
 package breakout;
 
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -37,6 +38,8 @@ public class Bricks extends Game {
                     //add(brick);
                     //Game.setUpScene.root.getChildren().add(brick);
                     brick.setFill(Color.DARKSALMON);
+//                    Group root = new Group();
+//                    root.getChildren().add(brick);
                 }
                 if(holder.charAt(column) == 1){
                     Rectangle brick= new Rectangle(WIDTH-(BRICK_WIDTH*column+1)-(BRICK_SEPARATION*column),HEIGHT/2-(BRICK_HEIGHT*(row+1))-(BRICK_SEPARATION*row), BRICK_WIDTH,BRICK_HEIGHT);
@@ -65,5 +68,4 @@ public class Bricks extends Game {
 
     }
 
-    public Rectangle getbrick(){return brick;}
 }

@@ -61,7 +61,7 @@ public class Game extends Application {
         myBall = new Ball(WIDTH/2,HEIGHT/2, BALL_RADIUS, BALL_COLOR);
         root.getChildren().add(myBall.getShape());
         myBrick=new Bricks();
-        root.getChildren().add(myBrick.getbrick());
+
         myScene = new Scene(root, width, height, background);
         myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         return myScene;
