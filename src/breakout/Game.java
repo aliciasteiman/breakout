@@ -18,6 +18,8 @@ import javafx.scene.shape.Shape;
 
 import java.awt.*;
 
+import static breakout.Bricks.drawbricks;
+
 public class Game extends Application {
 
     public static final int WIDTH = 500;
@@ -36,9 +38,10 @@ public class Game extends Application {
     public static final int FRAMES_PER_SECOND = 60;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
-    private Scene myScene;
-    private Paddle myPaddle;
-    private Ball myBall;
+    private static Scene myScene;
+    private static Paddle myPaddle;
+    private static Ball myBall;
+    private static Bricks myBrick;
     private Timeline myAnimation;
     private double dx = 1;
     private double dy = 1;
@@ -57,6 +60,8 @@ public class Game extends Application {
         root.getChildren().add(myPaddle.getShape());
         myBall = new Ball(WIDTH/2,HEIGHT/2, BALL_RADIUS, BALL_COLOR);
         root.getChildren().add(myBall.getShape());
+        myBrick=new Bricks();
+
         myScene = new Scene(root, width, height, background);
         myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         return myScene;
@@ -70,6 +75,7 @@ public class Game extends Application {
     }
 
     public void step(double elapsedTime) {
+        int LIVES =3;
         Circle ball = myBall.getShape();
         Rectangle paddle = myPaddle.getShape();
 
@@ -86,6 +92,7 @@ public class Game extends Application {
             //myAnimation.pause();
             ball.setCenterX(WIDTH/2);
             ball.setCenterY(HEIGHT/2);
+            LIVES--;
             //need to subtract 1 from lives left once feature is implemented
         }
 
