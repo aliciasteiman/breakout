@@ -89,7 +89,7 @@ public class Game extends Application {
             dy *= -1;
         }
         else if (ball.getCenterY() > myScene.getHeight()) {
-            myAnimation.pause();
+            //myAnimation.pause();
             ball.setCenterX(WIDTH/2);
             ball.setCenterY(HEIGHT/2);
             LIVES--;
