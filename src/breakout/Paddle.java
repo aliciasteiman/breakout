@@ -10,6 +10,7 @@ public class Paddle {
     public Paddle(int x, int y, int width, int height, Paint color) {
         myShape = new Rectangle(x, y, width, height);
         myShape.setFill(color);
+        myShape.setId("paddle");
     }
 
     public Rectangle getShape() {

@@ -11,6 +11,7 @@ public class Ball {
     public Ball(int x, int y, int rad, Paint color) {
         myShape = new Circle(x, y, rad);
         myShape.setFill(color);
+        myShape.setId("ball");
     }
 
     public Circle getShape() {
