@@ -31,7 +31,7 @@ public class Game extends Application {
 
     public static final int BALL_RADIUS = 15;
     public static final Paint BALL_COLOR = Color.CORNFLOWERBLUE;
-    public static final int BALL_SPEED = 20;
+    public static final int BALL_SPEED = 50;
 
     public static final int FRAMES_PER_SECOND = 60;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
@@ -40,8 +40,8 @@ public class Game extends Application {
     private Paddle myPaddle;
     private Ball myBall;
     private Timeline myAnimation;
-    private double dx = 5;
-    private double dy = 5;
+    private double dx = 1;
+    private double dy = 1;
 
     @Override
     public void start (Stage stage) {
@@ -88,23 +88,52 @@ public class Game extends Application {
             ball.setCenterY(HEIGHT/2);
             //need to subtract 1 from lives left once feature is implemented
         }
+
+        /*
+        int section = PADDLE_WIDTH/3;
+        if (Shape.intersect(ball, paddle).getBoundsInLocal().getWidth() != -1) {
+            if (ball.getCenterX() <= paddle.getX() + section) {
+                dx = -1;
+            }
+            if (ball.getCenterX() <= paddle.getX() + 2 * section) {
+                dx = 0;
+            }
+            if (ball.getCenterX() <= paddle.getX() + 3 * section) {
+                dx = -1;
+            }
+        }
+         */
     }
 
     private void handleKeyInput(KeyCode code) {
-        Rectangle paddle = myPaddle.getShape(); //check out frogger to see how the box wraps around screen
+        Rectangle paddle = myPaddle.getShape();
+        Circle ball = myBall.getShape();
 
-        if (code == KeyCode.RIGHT) {
+        if (code == KeyCode.RIGHT) { //moves paddle right
+            if (paddle.getX() > WIDTH) {
+                paddle.setX(0 - PADDLE_WIDTH);
+            }
             paddle.setX(paddle.getX() + PADDLE_SPEED);
-        } else if (code == KeyCode.LEFT) {
+        } else if (code == KeyCode.LEFT) { //moves paddle left
+            if (paddle.getX() < 0) {
+                paddle.setX(WIDTH + PADDLE_WIDTH);
+            }
             paddle.setX(paddle.getX() - PADDLE_SPEED);
         }
 
-        if (code == KeyCode.SPACE) {
+        if (code == KeyCode.SPACE) { //starts and pauses ball animation
             if (myAnimation.getStatus() == Animation.Status.RUNNING) {
                 myAnimation.pause();
             } else {
                 myAnimation.play();
             }
+        }
+
+        if (code == KeyCode.R) { //resets ball and paddle to center
+            ball.setCenterX(WIDTH/2);
+            ball.setCenterY(HEIGHT/2);
+            paddle.setX(WIDTH/2 - PADDLE_WIDTH/2);
+            paddle.setY(HEIGHT - PADDLE_HEIGHT);
         }
     }
 
