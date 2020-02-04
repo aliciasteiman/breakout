@@ -33,6 +33,7 @@ class GameTest extends DukeApplicationTest {
         assertEquals(250, myBall.getCenterX());
         assertEquals(250, myBall.getCenterY());
         assertEquals(15, myBall.getRadius());
+        // need to also test for velocity?
     }
 
     @Test
@@ -41,5 +42,15 @@ class GameTest extends DukeApplicationTest {
         assertEquals(500 - 15, myPaddle.getY());
         assertEquals(120, myPaddle.getWidth());
         assertEquals(15, myPaddle.getHeight());
+    }
+
+    @Test
+    public void testBallReset() {
+        myBall.setCenterY(myScene.getHeight() + 5);
+        myPaddle.setX(myScene.getWidth() - Game.PADDLE_WIDTH);
+        myGame.step(Game.SECOND_DELAY);
+        assertEquals(250, myBall.getCenterX());
+        assertEquals(250, myBall.getCenterY());
+        //only works when myAnimation.pause() is commented out
     }
 }
