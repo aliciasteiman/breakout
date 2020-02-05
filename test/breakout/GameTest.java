@@ -1,13 +1,11 @@
 package breakout;
 
 import java.util.concurrent.TimeUnit;
-
 import javafx.animation.Animation;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
@@ -22,7 +20,7 @@ class GameTest extends DukeApplicationTest {
     private Rectangle myPaddle;
 
     @Override
-    public void start (Stage stage) {
+    public void start(Stage stage) {
         myScene = myGame.setUpScene(Game.WIDTH, Game.HEIGHT, Game.BACKGROUND);
         stage.setScene(myScene);
         stage.show();
@@ -32,7 +30,7 @@ class GameTest extends DukeApplicationTest {
     }
 
     @Test
-    public void testBallInitialPosition(){
+    public void testBallInitialPosition() {
         assertEquals(250, myBall.getCenterX());
         assertEquals(250, myBall.getCenterY());
         assertEquals(15, myBall.getRadius());
@@ -51,10 +49,16 @@ class GameTest extends DukeApplicationTest {
     public void testBallReset() {
         myBall.setCenterY(myScene.getHeight() + 5);
         myPaddle.setX(myScene.getWidth() - Game.PADDLE_WIDTH);
-        myGame.step(Game.SECOND_DELAY);
+        myGame.step(Game.SECOND_DELAY); //checks for when ball hits bottom of screen
         assertEquals(250, myBall.getCenterX());
         assertEquals(250, myBall.getCenterY());
-        //only works when myAnimation.pause() is commented out
+        //only works when myAnimation.pause() is commented out of Game
+
+        myBall.setCenterY(myScene.getHeight());
+        myBall.setCenterX(myScene.getWidth());
+        press(myScene, KeyCode.R); //checks cheat key "R" = reset
+        assertEquals(250, myBall.getCenterX());
+        assertEquals(250, myBall.getCenterY());
     }
 
     @Test
@@ -67,46 +71,39 @@ class GameTest extends DukeApplicationTest {
         myPaddle.setX(250 - 60);
         myPaddle.setY(500 - 15);
         press(myScene, KeyCode.LEFT);
-        assertEquals(230 - 60, myPaddle.getX(),setAnimation(Stage stage);
-    }
-
-//    @Test
-//    public void testkeyblocks() {
-//
-//    }
-
-    @Test
-    public void testballtrajectory() {
-        myBall.setCenterY(myScene.getHeight() + 5);
-        while !(Shape.intersect(ball, paddle).getBoundsInLocal().getWidth() != -1 || ball.getCenterY() < 0 + BALL_RADIUS) {
-            dy *= -1;
-        myGame.step(Game.SECOND_DELAY);}
-        assertEquals(-(myBall.setCenterY(myScene.getHeight() + 5)),);
+        assertEquals(230 - 60, myPaddle.getX());
     }
 
     @Test
-    public void testballbounce() {
-        setUpScene(int width, int height, Paint background);
+    public void testBallObjectBounce() { //ball doesn't seem to be bouncing correctly?
+        myBall.setCenterY(myScene.getHeight() - 20);
+        //sleep(2, TimeUnit.SECONDS);
         myGame.step(Game.SECOND_DELAY);
-        assertEquals(250>myBall.getCenterY()>0,handleKeyInput(KeyCode.SPACE));
-//        if (code == KeyCode.SPACE) { //starts and pauses ball animation
-//            if (myAnimation.getStatus() == Animation.Status.RUNNING) {
-//                myAnimation.pause();
-//            } else {
-//                myAnimation.play();
-//            }
+        //sleep(2, TimeUnit.SECONDS);
+        assertEquals(0, myBall.getCenterY());
     }
 
     @Test
-    public void testballreset() {
-        setUpScene(int width, int height, Paint background);
-        setAnimation(Stage stage);
-        while !(ball.getCenterX() > myScene.getWidth() - BALL_RADIUS || ball.getCenterX() < 0 + BALL_RADIUS){
-            myGame.step(Game.SECOND_DELAY);
-        }
-        handleKeyInput(KeyCode.R);
-        assertEquals(250,myBall.getCenterX());
-        assertEquals(250,myBall.getCenterY());
-
+    public void testBallCornerBounce() {
+        myBall.setCenterX(0);
+        myBall.setCenterY(0);
+        myGame.step(Game.SECOND_DELAY);
+        assertEquals(50 * 1.0 / 60, myBall.getCenterX());
+        assertEquals(50 * 1.0 / 60, myBall.getCenterY());
     }
+
+    @Test
+    public void testKeyBlocks() {
+        for (int i = 0; i <= Bricks.myBricks.size() - 6; i += 6) { //checking first brick of each row
+            Bricks brick = Bricks.myBricks.get(i);
+            assertEquals(0, brick.getShape().getX());
+            assertEquals(i/6 * 22, brick.getShape().getY());
+        }
+        for (int i = 0; i < 6; i++) { //check first brick of each column)
+            Bricks brick = Bricks.myBricks.get(i);
+            assertEquals(i * (((500 - (6*2))/6) + 2), brick.getShape().getX()); //how do I get expected to be type double
+            assertEquals(0, brick.getShape().getY());
+        }
+    }
+
 }

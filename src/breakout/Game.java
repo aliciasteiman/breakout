@@ -38,7 +38,7 @@ public class Game extends Application {
     private Scene myScene;
     private Paddle myPaddle;
     private Ball myBall;
-    private ArrayList<Rectangle> myBrick;
+    private ArrayList<Bricks> myBricks;
     private Timeline myAnimation;
     private double dx = 1;
     private double dy = 1;
@@ -58,7 +58,8 @@ public class Game extends Application {
         root.getChildren().add(myPaddle.getShape());
         myBall = new Ball(WIDTH/2,HEIGHT/2, BALL_RADIUS, BALL_COLOR);
         root.getChildren().add(myBall.getShape());
-        for (Bricks brick: Bricks.drawBricks()) {
+        myBricks = Bricks.drawBricks();
+        for (Bricks brick: myBricks) {
             root.getChildren().add(brick.getShape());
         }
 
