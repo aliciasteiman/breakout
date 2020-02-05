@@ -70,10 +70,10 @@ class GameTest extends DukeApplicationTest {
         assertEquals(230 - 60, myPaddle.getX(),setAnimation(Stage stage);
     }
 
-    @Test
-    public void testkeyblocks() {
-
-    }
+//    @Test
+//    public void testkeyblocks() {
+//
+//    }
 
     @Test
     public void testballtrajectory() {
@@ -81,13 +81,14 @@ class GameTest extends DukeApplicationTest {
         while !(Shape.intersect(ball, paddle).getBoundsInLocal().getWidth() != -1 || ball.getCenterY() < 0 + BALL_RADIUS) {
             dy *= -1;
         myGame.step(Game.SECOND_DELAY);}
-        assertEquals(-myBall.setCenterY(myScene.getHeight() + 5),);
+        assertEquals(-(myBall.setCenterY(myScene.getHeight() + 5)),);
     }
 
     @Test
     public void testballbounce() {
         setUpScene(int width, int height, Paint background);
-        assertEquals(myAnimation.play(),handleKeyInput(KeyCode.SPACE));
+        myGame.step(Game.SECOND_DELAY);
+        assertEquals(250>myBall.getCenterY()>0,handleKeyInput(KeyCode.SPACE));
 //        if (code == KeyCode.SPACE) { //starts and pauses ball animation
 //            if (myAnimation.getStatus() == Animation.Status.RUNNING) {
 //                myAnimation.pause();
@@ -98,6 +99,14 @@ class GameTest extends DukeApplicationTest {
 
     @Test
     public void testballreset() {
+        setUpScene(int width, int height, Paint background);
+        setAnimation(Stage stage);
+        while !(ball.getCenterX() > myScene.getWidth() - BALL_RADIUS || ball.getCenterX() < 0 + BALL_RADIUS){
+            myGame.step(Game.SECOND_DELAY);
+        }
+        handleKeyInput(KeyCode.R);
+        assertEquals(250,myBall.getCenterX());
+        assertEquals(250,myBall.getCenterY());
 
     }
 }
