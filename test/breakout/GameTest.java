@@ -53,4 +53,17 @@ class GameTest extends DukeApplicationTest {
         assertEquals(250, myBall.getCenterY());
         //only works when myAnimation.pause() is commented out
     }
+
+    @Test
+    public void testPaddleKeys() {
+        myPaddle.setX(250 - 60);
+        myPaddle.setY(500 - 15);
+        press(myScene, KeyCode.RIGHT);
+        assertEquals(270 - 60, myPaddle.getX()); //-60 to account for half paddle width
+
+        myPaddle.setX(250 - 60);
+        myPaddle.setY(500 - 15);
+        press(myScene, KeyCode.LEFT);
+        assertEquals(230 - 60, myPaddle.getX());
+    }
 }

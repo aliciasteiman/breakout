@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Bricks extends Game {
     public static final String DATA_FILE = "line_config_small.txt";
     public static final int BRICK_HEIGHT = 20;
-    public static final int COL_SEPARATION = 3;
+    public static final int COL_SEPARATION = 2;
     public static final int ROW_SEPARATION = 2;
     public static ArrayList<Bricks> myBricks;
     private Rectangle myShape;
@@ -42,7 +42,6 @@ public class Bricks extends Game {
             String holder = s.replaceAll("\\s", "");
             int NUM_COLUMNS = holder.length();
             double BRICK_WIDTH = (double)(WIDTH - (NUM_COLUMNS * COL_SEPARATION)) / NUM_COLUMNS;
-            System.out.println(BRICK_WIDTH);
             Paint color = null;
 
             for (int column = 0; NUM_COLUMNS > column; column++) {
