@@ -15,6 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.testfx.api.FxToolkit;
@@ -30,7 +31,7 @@ import org.testfx.util.WaitForAsyncUtils;
  *
  * @author Robert C. Duvall
  */
-public class DukeApplicationTest extends ApplicationTest {
+public abstract class DukeApplicationTest extends ApplicationTest {
     // standard steps to do for all test applications so factor it out here
     @BeforeAll
     public static void setUpClass () {
@@ -108,4 +109,6 @@ public class DukeApplicationTest extends ApplicationTest {
         // make it "later" so the requested event has time to run
         WaitForAsyncUtils.waitForFxEvents();
     }
+
+    public abstract void start (Stage stage);
 }

@@ -1,10 +1,13 @@
 package breakout;
 
 import java.util.concurrent.TimeUnit;
+
+import javafx.animation.Animation;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
@@ -64,6 +67,37 @@ class GameTest extends DukeApplicationTest {
         myPaddle.setX(250 - 60);
         myPaddle.setY(500 - 15);
         press(myScene, KeyCode.LEFT);
-        assertEquals(230 - 60, myPaddle.getX());
+        assertEquals(230 - 60, myPaddle.getX(),setAnimation(Stage stage);
+    }
+
+    @Test
+    public void testkeyblocks() {
+
+    }
+
+    @Test
+    public void testballtrajectory() {
+        myBall.setCenterY(myScene.getHeight() + 5);
+        while !(Shape.intersect(ball, paddle).getBoundsInLocal().getWidth() != -1 || ball.getCenterY() < 0 + BALL_RADIUS) {
+            dy *= -1;
+        myGame.step(Game.SECOND_DELAY);}
+        assertEquals(-myBall.setCenterY(myScene.getHeight() + 5),);
+    }
+
+    @Test
+    public void testballbounce() {
+        setUpScene(int width, int height, Paint background);
+        assertEquals(myAnimation.play(),handleKeyInput(KeyCode.SPACE));
+//        if (code == KeyCode.SPACE) { //starts and pauses ball animation
+//            if (myAnimation.getStatus() == Animation.Status.RUNNING) {
+//                myAnimation.pause();
+//            } else {
+//                myAnimation.play();
+//            }
+    }
+
+    @Test
+    public void testballreset() {
+
     }
 }
