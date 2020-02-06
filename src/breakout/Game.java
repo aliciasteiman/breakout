@@ -15,8 +15,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.shape.Shape;
 
-
-import java.awt.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Game extends Application {
 
@@ -26,12 +26,12 @@ public class Game extends Application {
 
     public static final int PADDLE_WIDTH = 120;
     public static final int PADDLE_HEIGHT = 15;
-    public int PADDLE_SPEED = 20;
+    public int PADDLE_SPEED = 30;
     public static final Paint PADDLE_COLOR = Color.GRAY;
 
     public static final int BALL_RADIUS = 15;
     public static final Paint BALL_COLOR = Color.CORNFLOWERBLUE;
-    public static final int BALL_SPEED = 20;
+    public static final int BALL_SPEED = 60;
 
     public static final int FRAMES_PER_SECOND = 60;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
@@ -39,9 +39,11 @@ public class Game extends Application {
     private Scene myScene;
     private Paddle myPaddle;
     private Ball myBall;
+    private ArrayList<Bricks> myBricks;
     private Timeline myAnimation;
-    private double dx = 5;
-    private double dy = 5;
+    private double dx = 1;
+    private double dy = 1;
+
 
     @Override
     public void start (Stage stage) {
@@ -57,6 +59,11 @@ public class Game extends Application {
         root.getChildren().add(myPaddle.getShape());
         myBall = new Ball(WIDTH/2,HEIGHT/2, BALL_RADIUS, BALL_COLOR);
         root.getChildren().add(myBall.getShape());
+        myBricks = Bricks.drawBricks();
+        for (Bricks brick: myBricks) {
+            root.getChildren().add(brick.getShape());
+        }
+
         myScene = new Scene(root, width, height, background);
         myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         return myScene;
@@ -76,14 +83,28 @@ public class Game extends Application {
         ball.setCenterX(ball.getCenterX() + dx * BALL_SPEED * elapsedTime);
         ball.setCenterY(ball.getCenterY() + dy * BALL_SPEED * elapsedTime);
 
+        myBricks = Bricks.drawBricks();
+        Iterator<Bricks> iter = myBricks.iterator();
+        while (iter.hasNext()) {
+            Rectangle brick = iter.next().getShape();
+            if (Shape.intersect(ball, brick).getBoundsInLocal().getWidth() != -1) {
+                brick.setFill(Color.GRAY);
+                iter.remove();
+                dy *= -1;
+            }
+        }
+
         if (ball.getCenterX() > myScene.getWidth() - BALL_RADIUS || ball.getCenterX() < 0 + BALL_RADIUS) {
             dx *= -1;
         }
-        else if (Shape.intersect(ball, paddle).getBoundsInLocal().getWidth() != -1 || ball.getCenterY() < 0 + BALL_RADIUS) {
+        else if (ball.getCenterY() < 0 + BALL_RADIUS) {
+            dy *= -1;
+        }
+        else if (Shape.intersect(ball, paddle).getBoundsInLocal().getWidth() != -1) {
             dy *= -1;
         }
         else if (ball.getCenterY() > myScene.getHeight()) {
-            myAnimation.pause();
+            //myAnimation.pause();
             ball.setCenterX(WIDTH/2);
             ball.setCenterY(HEIGHT/2);
             //need to subtract 1 from lives left once feature is implemented
@@ -91,20 +112,34 @@ public class Game extends Application {
     }
 
     private void handleKeyInput(KeyCode code) {
-        Rectangle paddle = myPaddle.getShape(); 
+        Rectangle paddle = myPaddle.getShape();
+        Circle ball = myBall.getShape();
 
-        if (code == KeyCode.RIGHT) {
+        if (code == KeyCode.RIGHT) { //moves paddle right
+            if (paddle.getX() > WIDTH) {
+                paddle.setX(0 - PADDLE_WIDTH);
+            }
             paddle.setX(paddle.getX() + PADDLE_SPEED);
-        } else if (code == KeyCode.LEFT) {
+        } else if (code == KeyCode.LEFT) { //moves paddle left
+            if (paddle.getX() < 0) {
+                paddle.setX(WIDTH + PADDLE_WIDTH);
+            }
             paddle.setX(paddle.getX() - PADDLE_SPEED);
         }
 
-        if (code == KeyCode.SPACE) {
+        if (code == KeyCode.SPACE) { //starts and pauses ball animation
             if (myAnimation.getStatus() == Animation.Status.RUNNING) {
                 myAnimation.pause();
             } else {
                 myAnimation.play();
             }
+        }
+
+        if (code == KeyCode.R) { //resets ball and paddle to center
+            ball.setCenterX(WIDTH/2);
+            ball.setCenterY(HEIGHT/2);
+            paddle.setX(WIDTH/2 - PADDLE_WIDTH/2);
+            paddle.setY(HEIGHT - PADDLE_HEIGHT);
         }
     }
 

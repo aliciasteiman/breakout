@@ -5,15 +5,16 @@ import javafx.scene.shape.Rectangle;
 
 public class Paddle {
 
-    private Rectangle myShape;
+    private Rectangle myPaddle;
 
     public Paddle(int x, int y, int width, int height, Paint color) {
-        myShape = new Rectangle(x, y, width, height);
-        myShape.setFill(color);
+        myPaddle = new Rectangle(x, y, width, height);
+        myPaddle.setFill(color);
+        myPaddle.setId("paddle");
     }
 
     public Rectangle getShape() {
-        return myShape;
+        return myPaddle;
     }
 
 }
