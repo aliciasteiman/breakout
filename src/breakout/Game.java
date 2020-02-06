@@ -83,15 +83,8 @@ public class Game extends Application {
         ball.setCenterX(ball.getCenterX() + dx * BALL_SPEED * elapsedTime);
         ball.setCenterY(ball.getCenterY() + dy * BALL_SPEED * elapsedTime);
 
-        myBricks = Bricks.drawBricks();
-        Iterator<Bricks> iter = myBricks.iterator();
-        while (iter.hasNext()) {
-            Rectangle brick = iter.next().getShape();
-            if (Shape.intersect(ball, brick).getBoundsInLocal().getWidth() != -1) {
-                brick.setFill(Color.GRAY);
-                iter.remove();
-                dy *= -1;
-            }
+        if (Bricks.checkBricks(ball)) {
+            dy *= -1;
         }
 
         if (ball.getCenterX() > myScene.getWidth() - BALL_RADIUS || ball.getCenterX() < 0 + BALL_RADIUS) {

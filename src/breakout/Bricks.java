@@ -2,9 +2,12 @@ package breakout;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -72,6 +75,17 @@ public class Bricks extends Game {
 
     public static void removeBrick(Bricks brick) {
         brick.getShape().setFill(null);
+    }
 
+    public static boolean checkBricks(Circle ball) {
+        Iterator<Bricks> iter = myBricks.iterator();
+        while (iter.hasNext()) {
+            Bricks brick = iter.next();
+            if (Shape.intersect(ball, brick.getShape()).getBoundsInLocal().getWidth() != -1) {
+                removeBrick(brick);
+                return true;
+            }
+        }
+        return false;
     }
 }
