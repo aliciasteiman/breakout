@@ -3,18 +3,22 @@ package breakout;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+
+import java.util.ArrayList;
 
 public class Ball {
 
-    private Circle myShape;
+    private Circle myBall;
 
     public Ball(int x, int y, int rad, Paint color) {
-        myShape = new Circle(x, y, rad);
-        myShape.setFill(color);
-        myShape.setId("ball");
+        myBall = new Circle(x, y, rad);
+        myBall.setFill(color);
+        myBall.setId("ball");
     }
 
     public Circle getShape() {
-        return myShape;
+        return myBall;
     }
+
 }

@@ -41,7 +41,7 @@ public class Bricks extends Game {
             String s = configurations.get(row);
             String holder = s.replaceAll("\\s", "");
             int NUM_COLUMNS = holder.length();
-            double BRICK_WIDTH = (double)(WIDTH - (NUM_COLUMNS * COL_SEPARATION)) / NUM_COLUMNS;
+            double BRICK_WIDTH = (double) WIDTH / NUM_COLUMNS;
             Paint color = null;
 
             for (int column = 0; NUM_COLUMNS > column; column++) {
@@ -63,11 +63,15 @@ public class Bricks extends Game {
                 else if (holder.charAt(column) == '5') {
                     color = Color.CRIMSON;
                 }
-                Bricks brick = new Bricks(column * (BRICK_WIDTH + COL_SEPARATION), row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, color);
+                Bricks brick = new Bricks(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, color);
                 myBricks.add(brick);
             }
         }
         return myBricks;
     }
 
+    public static void removeBrick(Bricks brick) {
+        brick.getShape().setFill(null);
+
+    }
 }

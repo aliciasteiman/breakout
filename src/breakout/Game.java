@@ -16,6 +16,7 @@ import javafx.util.Duration;
 import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Game extends Application {
 
@@ -25,12 +26,12 @@ public class Game extends Application {
 
     public static final int PADDLE_WIDTH = 120;
     public static final int PADDLE_HEIGHT = 15;
-    public int PADDLE_SPEED = 20;
+    public int PADDLE_SPEED = 30;
     public static final Paint PADDLE_COLOR = Color.GRAY;
 
     public static final int BALL_RADIUS = 15;
     public static final Paint BALL_COLOR = Color.CORNFLOWERBLUE;
-    public static final int BALL_SPEED = 50;
+    public static final int BALL_SPEED = 60;
 
     public static final int FRAMES_PER_SECOND = 60;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
@@ -82,10 +83,24 @@ public class Game extends Application {
         ball.setCenterX(ball.getCenterX() + dx * BALL_SPEED * elapsedTime);
         ball.setCenterY(ball.getCenterY() + dy * BALL_SPEED * elapsedTime);
 
+        myBricks = Bricks.drawBricks();
+        Iterator<Bricks> iter = myBricks.iterator();
+        while (iter.hasNext()) {
+            Rectangle brick = iter.next().getShape();
+            if (Shape.intersect(ball, brick).getBoundsInLocal().getWidth() != -1) {
+                brick.setFill(Color.GRAY);
+                iter.remove();
+                dy *= -1;
+            }
+        }
+
         if (ball.getCenterX() > myScene.getWidth() - BALL_RADIUS || ball.getCenterX() < 0 + BALL_RADIUS) {
             dx *= -1;
         }
-        else if (Shape.intersect(ball, paddle).getBoundsInLocal().getWidth() != -1 || ball.getCenterY() < 0 + BALL_RADIUS) {
+        else if (ball.getCenterY() < 0 + BALL_RADIUS) {
+            dy *= -1;
+        }
+        else if (Shape.intersect(ball, paddle).getBoundsInLocal().getWidth() != -1) {
             dy *= -1;
         }
         else if (ball.getCenterY() > myScene.getHeight()) {
@@ -94,21 +109,6 @@ public class Game extends Application {
             ball.setCenterY(HEIGHT/2);
             //need to subtract 1 from lives left once feature is implemented
         }
-
-        /*
-        int section = PADDLE_WIDTH/3;
-        if (Shape.intersect(ball, paddle).getBoundsInLocal().getWidth() != -1) {
-            if (ball.getCenterX() <= paddle.getX() + section) {
-                dx = -1;
-            }
-            if (ball.getCenterX() <= paddle.getX() + 2 * section) {
-                dx = 0;
-            }
-            if (ball.getCenterX() <= paddle.getX() + 3 * section) {
-                dx = -1;
-            }
-        }
-         */
     }
 
     private void handleKeyInput(KeyCode code) {
