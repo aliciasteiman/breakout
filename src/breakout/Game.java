@@ -91,7 +91,7 @@ public class Game extends Application {
     }
 
     private void handleKeyInput(KeyCode code) {
-        Rectangle paddle = myPaddle.getShape(); //check out frogger to see how the box wraps around screen
+        Rectangle paddle = myPaddle.getShape(); 
 
         if (code == KeyCode.RIGHT) {
             paddle.setX(paddle.getX() + PADDLE_SPEED);
