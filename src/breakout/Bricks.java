@@ -14,7 +14,6 @@ import java.util.Scanner;
 public class Bricks extends Game {
     public static final String DATA_FILE = "line_config_small.txt";
     public static final int BRICK_HEIGHT = 20;
-    public static final int COL_SEPARATION = 2;
     public static final int ROW_SEPARATION = 2;
     public static ArrayList<Bricks> myBricks;
     private Rectangle myShape;
@@ -52,13 +51,13 @@ public class Bricks extends Game {
                     color = Color.DARKSALMON;
                 }
                 else if (holder.charAt(column) == '1') {
-                    color = Color.BLACK;
+                    color = Color.DARKCYAN;
                 }
                 else if (holder.charAt(column) == '2') {
-                    color = Color.BEIGE;
+                    color = Color.ORANGE;
                 }
                 else if (holder.charAt(column) == '3') {
-                    color = Color.CYAN;
+                    color = Color.FORESTGREEN;
                 }
                 else if (holder.charAt(column) == '4') {
                     color = Color.CHOCOLATE;

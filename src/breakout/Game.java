@@ -31,7 +31,7 @@ public class Game extends Application {
 
     public static final int BALL_RADIUS = 15;
     public static final Paint BALL_COLOR = Color.CORNFLOWERBLUE;
-    public static final int BALL_SPEED = 60;
+    public static final int BALL_SPEED = 100;
 
     public static final int FRAMES_PER_SECOND = 60;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;

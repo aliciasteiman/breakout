@@ -66,21 +66,21 @@ class GameTest extends DukeApplicationTest {
         myPaddle.setX(250 - 60);
         myPaddle.setY(500 - 15);
         press(myScene, KeyCode.RIGHT);
-        assertEquals(270 - 60, myPaddle.getX()); //-60 to account for half paddle width
+        assertEquals(280 - 60, myPaddle.getX()); //-60 to account for half paddle width
 
         myPaddle.setX(250 - 60);
         myPaddle.setY(500 - 15);
         press(myScene, KeyCode.LEFT);
-        assertEquals(230 - 60, myPaddle.getX());
+        assertEquals(220 - 60, myPaddle.getX());
     }
 
     @Test
-    public void testBallObjectBounce() { //ball doesn't seem to be bouncing correctly?
+    public void testBallPaddleBounce() { //ball doesn't seem to be bouncing correctly?
         myBall.setCenterY(myScene.getHeight() - 20);
         //sleep(2, TimeUnit.SECONDS);
         myGame.step(Game.SECOND_DELAY);
         //sleep(2, TimeUnit.SECONDS);
-        assertEquals(0, myBall.getCenterY());
+        assertEquals(0, myBall.getCenterY()); //what should this equal?
     }
 
     @Test
@@ -88,8 +88,8 @@ class GameTest extends DukeApplicationTest {
         myBall.setCenterX(0);
         myBall.setCenterY(0);
         myGame.step(Game.SECOND_DELAY);
-        assertEquals(50 * 1.0 / 60, myBall.getCenterX());
-        assertEquals(50 * 1.0 / 60, myBall.getCenterY());
+        assertEquals(100 * 1.0 / 60, myBall.getCenterX());
+        assertEquals(100 * 1.0 / 60, myBall.getCenterY());
     }
 
     @Test
@@ -104,6 +104,17 @@ class GameTest extends DukeApplicationTest {
             assertEquals(i * (((500 - (6*2))/6) + 2), brick.getShape().getX()); //how do I get expected to be type double
             assertEquals(0, brick.getShape().getY());
         }
+    }
+
+    @Test
+    public void testBallBreaksBrick() { //need to figure out where to actually set these and where exactly the ball hits
+        myBall.setCenterX(30);
+        myBall.setCenterY(95);
+        //sleep(2, TimeUnit.SECONDS);
+        myGame.step(Game.SECOND_DELAY);
+        //sleep(2, TimeUnit.SECONDS);
+        assertEquals(0, myBall.getCenterX());
+        assertEquals(88, myBall.getCenterY());
     }
 
 }
