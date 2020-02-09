@@ -40,7 +40,7 @@ public class Game extends Application {
     private Paddle myPaddle;
     private Ball myBall;
     private ArrayList<Bricks> myBricks;
-    private Timeline myAnimation;
+    public static Timeline myAnimation;
     private double dx = 1;
     private double dy = 1;
 
@@ -100,6 +100,7 @@ public class Game extends Application {
             //myAnimation.pause();
             ball.setCenterX(WIDTH/2);
             ball.setCenterY(HEIGHT/2);
+
             //need to subtract 1 from lives left once feature is implemented
         }
     }
@@ -125,6 +126,7 @@ public class Game extends Application {
                 myAnimation.pause();
             } else {
                 myAnimation.play();
+                Bricks.checkgameover();
             }
         }
 

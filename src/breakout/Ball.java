@@ -21,4 +21,8 @@ public class Ball {
         return myBall;
     }
 
+    public void checkballbounds(){
+
+    }
+
 }
