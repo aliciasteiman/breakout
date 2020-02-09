@@ -11,6 +11,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.shape.Shape;
@@ -35,6 +39,7 @@ public class Game extends Application {
 
     public static final int FRAMES_PER_SECOND = 60;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    public static int LIVES=3;
 
     private Scene myScene;
     private Paddle myPaddle;
@@ -49,6 +54,7 @@ public class Game extends Application {
     public void start (Stage stage) {
         Scene scene = setUpScene(WIDTH, HEIGHT, BACKGROUND);
         stage.setScene(scene);
+        stage.setTitle("Lives remaining: "+ String.valueOf(LIVES));
         stage.show();
         setAnimation(stage);
     }
@@ -97,9 +103,13 @@ public class Game extends Application {
             dy *= -1;
         }
         else if (ball.getCenterY() > myScene.getHeight()) {
-            //myAnimation.pause();
+            LIVES-=1;
+            //myAnimation.stop();
             ball.setCenterX(WIDTH/2);
             ball.setCenterY(HEIGHT/2);
+
+
+
 
             //need to subtract 1 from lives left once feature is implemented
         }
@@ -138,4 +148,18 @@ public class Game extends Application {
         }
     }
 
+    public void gameoverlivesversion(Stage stage){
+        if(LIVES==0){
+            myAnimation.stop();
+            Text text = new Text();
+            text.setText("You lost. Better luck next time");
+            text.setX(WIDTH/3);
+            text.setY(HEIGHT/2);
+            text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+            Group root = new Group(text);
+            myScene = new Scene(root,Game.WIDTH,Game.HEIGHT, Game.BACKGROUND);
+            stage.setScene(myScene);
+            stage.show();
+        }
+    }
 }
