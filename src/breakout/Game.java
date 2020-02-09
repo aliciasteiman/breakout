@@ -96,7 +96,7 @@ public class Game extends Application {
         if (ball.getCenterX() > myScene.getWidth() - BALL_RADIUS || ball.getCenterX() < 0 + BALL_RADIUS) {
             dx *= -1;
         }
-        else if (ball.getCenterY() < 0 + BALL_RADIUS || ball.getCenterY() > WIDTH - BALL_RADIUS) {
+        else if (ball.getCenterY() < 0 + BALL_RADIUS) {
             dy *= -1;
         }
         else if (Shape.intersect(ball, paddle).getBoundsInLocal().getWidth() != -1) {
@@ -143,6 +143,7 @@ public class Game extends Application {
         }
     }
 
+    /*
     public void gameoverlivesversion(Stage stage){
         if(LIVES==0){
             myAnimation.stop();
@@ -157,4 +158,5 @@ public class Game extends Application {
             stage.show();
         }
     }
+    */
 }
