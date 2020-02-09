@@ -90,16 +90,16 @@ public class Game extends Application {
         if (ball.getCenterX() > myScene.getWidth() - BALL_RADIUS || ball.getCenterX() < 0 + BALL_RADIUS) {
             dx *= -1;
         }
-        else if (ball.getCenterY() < 0 + BALL_RADIUS) {
+        else if (ball.getCenterY() < 0 + BALL_RADIUS || ball.getCenterY() > WIDTH - BALL_RADIUS) {
             dy *= -1;
         }
         else if (Shape.intersect(ball, paddle).getBoundsInLocal().getWidth() != -1) {
             dy *= -1;
         }
         else if (ball.getCenterY() > myScene.getHeight()) {
-            //myAnimation.pause();
             ball.setCenterX(WIDTH/2);
             ball.setCenterY(HEIGHT/2);
+            //myAnimation.pause();
             //need to subtract 1 from lives left once feature is implemented
         }
     }

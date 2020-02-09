@@ -99,7 +99,7 @@ class GameTest extends DukeApplicationTest {
             assertEquals(0, brick.getShape().getX());
             assertEquals(i/6 * 22, brick.getShape().getY());
         }
-        for (int i = 0; i < 6; i++) { //check first brick of each column)
+        for (int i = 0; i < 6; i++) { //check first brick of each column
             Bricks brick = Bricks.myBricks.get(i);
             assertEquals(i * (((500 - (6*2))/6) + 2), brick.getShape().getX()); //how do I get expected to be type double
             assertEquals(0, brick.getShape().getY());
