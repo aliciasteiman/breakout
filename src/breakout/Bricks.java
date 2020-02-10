@@ -98,6 +98,10 @@ public class Bricks extends Game {
                 Game.SCORE += 1;
                 return true;
             }
+            if (brickTracker == 0) {
+                Game.winningText.setVisible(true);
+                Game.myAnimation.stop();
+            }
         }
         return false;
     }

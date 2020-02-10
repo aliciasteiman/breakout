@@ -47,7 +47,7 @@ public class Game extends Application {
     private Ball myBall;
     private ArrayList<Bricks> myBricks;
     private Text livesLeft;
-    private Text winningText;
+    public static Text winningText; //deal with this?
     private Text losingText;
     private Text score;
     public static Timeline myAnimation;
@@ -81,7 +81,7 @@ public class Game extends Application {
         score = createText(score, "Score: " + SCORE, 8, 430, 15);
         root.getChildren().add(score);
 
-        winningText = createText(winningText, "You won! Congratulations!", 30, 200, 30);
+        winningText = createText(winningText, "You won! Congratulations!", 50, 200, 30);
         winningText.setVisible(false);
         root.getChildren().add(winningText);
 
