@@ -3,6 +3,7 @@ package breakout;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -21,6 +22,7 @@ import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
 
 public class Game extends Application {
 
@@ -44,26 +46,29 @@ public class Game extends Application {
     public static double dx = 1;
     public static double dy = 1;
 
-    // private Scene myScene;
+
     public static Stage myStage;
-   // private Paddle myPaddle;
     public static Ball myBall;
     public static Scene myScene;
     public static Paddle myPaddle;
-    //private Ball myBall;
-    private ArrayList<Bricks> myBricks;
-    private Text livesLeft;
+    public static ArrayList<Bricks> myBricks;
+    private static Text livesLeft;
     public static Text winningText; //deal with this?
     public static Text losingText;
-    private Text score;
+    private static Text score;
     public static Timeline myAnimation;
+ //   private AnimationTimer timer;
+//    private static double dx = 1;
+//    private static double dy = 1;
+
+
 
     @Override
     public void start (Stage stage) {
         //stage = myStage;
         Scene scene = setUpScene(WIDTH, HEIGHT, BACKGROUND);
         myStage.setScene(scene);
-        myStage.setTitle("Lives remaining: "+ String.valueOf(LIVES)+"   Score: "+ String.valueOf(Bricks.Score));
+        myStage.setTitle("Lives remaining: "+ String.valueOf(LIVES));
         myStage.show();
         setAnimation(myStage);
         stage.setScene(scene);
@@ -118,7 +123,7 @@ public class Game extends Application {
         myAnimation.getKeyFrames().add(frame);
     }
 
-    public void step(double elapsedTime) {
+    public static void step(double elapsedTime) {
         Circle ball = myBall.getShape();
         Rectangle paddle = myPaddle.getShape();
 
@@ -127,6 +132,7 @@ public class Game extends Application {
 
         ball.setCenterX(ball.getCenterX() + dx * BALL_SPEED * elapsedTime);
         ball.setCenterY(ball.getCenterY() + dy * BALL_SPEED * elapsedTime);
+
 
         if (Bricks.checkBricks(ball)) {
             dy *= -1;
@@ -146,14 +152,14 @@ public class Game extends Application {
             LIVES-=1;
             ball.setCenterX(WIDTH/2);
             ball.setCenterY(HEIGHT/2);
-            Bricks.checkgameover();
+            //Bricks.checkgameover();
         }
 
         Ball.checkBounds();
         Bricks.checkBricks(ball);
     }
 
-    private void handleKeyInput(KeyCode code) {
+    private static void handleKeyInput(KeyCode code) {
         Rectangle paddle = myPaddle.getShape();
         Circle ball = myBall.getShape();
 
@@ -185,5 +191,43 @@ public class Game extends Application {
             myBricks.clear();
         }
     }
-    }
+
+
+
+//    public void getcheats(KeyCode code){
+//        if (code == KeyCode.L) {
+//            LIVES+=1;
+//        }
+//        if (code == KeyCode.P) {
+//            cheatpaddlelength();
+//        }
+//        if (code == KeyCode.COLON) {
+//            Bricktracker= Bricktracker/2;
+//        }
+//    }
+
+
+//    public void cheatpaddlelength(){
+//        int cheatPADDLEWIDTH=PADDLE_WIDTH*2;
+//        Paddle cheatPaddle = new Paddle(Game.WIDTH/2 - Game.PADDLE_WIDTH/2, Game.HEIGHT - Game.PADDLE_HEIGHT, cheatPADDLEWIDTH, PADDLE_HEIGHT, PADDLE_COLOR);
+//        myPaddle=cheatPaddle;
+//    }
+
+//    public static void paddlepowerup(){
+//        int inter = unchangedBricktracker/6;
+//        if (Bricktracker==inter && inter%6==0){
+//            myAnimation = new Timeline();
+//            myAnimation.setCycleCount(Timeline.INDEFINITE);
+//            int cheatPADDLEWIDTH=PADDLE_WIDTH*2;
+//            Paddle cheatPaddle = new Paddle(Game.WIDTH/2 - Game.PADDLE_WIDTH/2, Game.HEIGHT - Game.PADDLE_HEIGHT, cheatPADDLEWIDTH, PADDLE_HEIGHT, PADDLE_COLOR);
+//            myPaddle=cheatPaddle;
+//            Group root = new Group();
+//            root.getChildren().add(myPaddle.getShape());
+//            KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step(SECOND_DELAY));
+//            myAnimation.getKeyFrames().add(frame);
+//            myAnimation.play();
+//
+//        }
+//    }
+}
 
