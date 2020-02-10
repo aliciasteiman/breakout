@@ -29,6 +29,7 @@ public class Bricks extends Game {
     public static final double WIDTH = 500.0;
     public static final double HEIGHT = 500.0;
     public static int Bricktracker=0;
+    public static int Score=0;
 
 
     public Bricks(double x, double y, double width, double height, Paint color) {
@@ -97,6 +98,7 @@ public class Bricks extends Game {
             if (Shape.intersect(ball, brick.getShape()).getBoundsInLocal().getWidth() != -1) {
                 removeBrick(brick);
                 Bricktracker-=1;
+                Score+=10;
                 return true;
             }
         }
@@ -135,18 +137,19 @@ public class Bricks extends Game {
         if (code == KeyCode.L) {
             LIVES+=1;
         }
-//        if (code == KeyCode.P) {
-//            cheatpaddlelength();
-//        }
+        if (code == KeyCode.P) {
+            cheatpaddlelength();
+        }
         if (code == KeyCode.COLON) {
             LIVES+=1;
         }
     }
 
 
-//    public void cheatpaddlelength(){
-//        int cheatPADDLEWIDTH=PADDLE_WIDTH*2;
-//        Paddle myPaddle = new Paddle(Game.WIDTH/2 - Game.PADDLE_WIDTH/2, Game.HEIGHT - Game.PADDLE_HEIGHT, cheatPADDLEWIDTH, PADDLE_HEIGHT, PADDLE_COLOR);
-//    }
+    public void cheatpaddlelength(){
+        int cheatPADDLEWIDTH=PADDLE_WIDTH*2;
+        Paddle myPaddle = new Paddle(Game.WIDTH/2 - Game.PADDLE_WIDTH/2, Game.HEIGHT - Game.PADDLE_HEIGHT, cheatPADDLEWIDTH, PADDLE_HEIGHT, PADDLE_COLOR);
+
+    }
 
 }

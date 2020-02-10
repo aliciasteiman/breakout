@@ -56,7 +56,7 @@ public class Game extends Application {
         //stage = myStage;
         Scene scene = setUpScene(WIDTH, HEIGHT, BACKGROUND);
         myStage.setScene(scene);
-        myStage.setTitle("Lives remaining: "+ String.valueOf(LIVES));
+        myStage.setTitle("Lives remaining: "+ String.valueOf(LIVES)+"   Score: "+ String.valueOf(Bricks.Score));
         myStage.show();
         setAnimation(myStage);
     }
@@ -110,12 +110,6 @@ public class Game extends Application {
             ball.setCenterX(WIDTH/2);
             ball.setCenterY(HEIGHT/2);
             Bricks.checkgameover();
-           // myAnimation.play();
-
-
-
-
-            //need to subtract 1 from lives left once feature is implemented
         }
     }
 
