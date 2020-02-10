@@ -2,13 +2,12 @@ package breakout;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
+import javafx.animation.Timeline;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -29,7 +28,9 @@ public class Bricks extends Game {
     public static final double WIDTH = 500.0;
     public static final double HEIGHT = 500.0;
     public static int Bricktracker=0;
+    public static int unchangedBricktracker;
     public static int Score=0;
+    private Timeline timeline;
 
 
     public Bricks(double x, double y, double width, double height, Paint color) {
@@ -82,8 +83,11 @@ public class Bricks extends Game {
                 Bricks brick = new Bricks(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, color);
                 myBricks.add(brick);
                 Bricktracker+=1;
+                unchangedBricktracker=Bricktracker;
             }
+
         }
+        //System.out.println(Bricktracker);
         return myBricks;
     }
 
@@ -133,23 +137,6 @@ public class Bricks extends Game {
         stage.show();
     }
 
-    public void getcheats(KeyCode code){
-        if (code == KeyCode.L) {
-            LIVES+=1;
-        }
-        if (code == KeyCode.P) {
-            cheatpaddlelength();
-        }
-        if (code == KeyCode.COLON) {
-            LIVES+=1;
-        }
-    }
 
-
-    public void cheatpaddlelength(){
-        int cheatPADDLEWIDTH=PADDLE_WIDTH*2;
-        Paddle myPaddle = new Paddle(Game.WIDTH/2 - Game.PADDLE_WIDTH/2, Game.HEIGHT - Game.PADDLE_HEIGHT, cheatPADDLEWIDTH, PADDLE_HEIGHT, PADDLE_COLOR);
-
-    }
 
 }
