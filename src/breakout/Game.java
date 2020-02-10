@@ -28,7 +28,7 @@ public class Game extends Application {
     public static final int HEIGHT = 500;
     public static final Paint BACKGROUND = Color.LAVENDERBLUSH;
 
-    public static final int PADDLE_WIDTH = 120;
+    public static int PADDLE_WIDTH = 120;
     public static final int PADDLE_HEIGHT = 15;
     public static int PADDLE_SPEED = 30;
     public static final Paint PADDLE_COLOR = Color.GRAY;

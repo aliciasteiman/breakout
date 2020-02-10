@@ -88,7 +88,7 @@ public class Bricks extends Game {
         brick.getShape().setFill(null);
     }
 
-    public static boolean checkBricks(Circle ball) {
+    public static void checkBricks(Circle ball) {
         Iterator<Bricks> iter = myBricks.iterator();
         while (iter.hasNext()) {
             Bricks brick = iter.next();
@@ -97,24 +97,12 @@ public class Bricks extends Game {
                 removeBrick(brick);
                 brickTracker -= 1;
                 Game.SCORE += 1;
-                return true;
             }
             if (brickTracker == 0) {
                 Game.winningText.setVisible(true);
                 Game.myAnimation.stop();
             }
         }
-        return false;
     }
-
-    public static boolean checkGameOver(){
-        Stage stage =new Stage();
-        if (brickTracker == 0) {
-            return true;
-        }
-        return false;
-    }
-
-
 
 }
