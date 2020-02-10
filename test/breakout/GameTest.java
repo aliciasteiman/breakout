@@ -126,4 +126,18 @@ class GameTest extends DukeApplicationTest {
         assertEquals(2, Game.LIVES);
     }
 
+    @Test
+    public void testScore() {
+        //Game.SCORE = 0;
+        myBall.setCenterX(30);
+        myBall.setCenterY(95);
+        myGame.step(Game.SECOND_DELAY);
+        assertEquals(1, Game.SCORE);
+
+        myBall.setCenterX(235);
+        myBall.setCenterY(95);
+        myGame.step(Game.SECOND_DELAY);
+        assertEquals(2, Game.SCORE);
+    }
+
 }

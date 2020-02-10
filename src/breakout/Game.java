@@ -40,6 +40,7 @@ public class Game extends Application {
     public static final int FRAMES_PER_SECOND = 60;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     public static int LIVES = 3;
+    public static int SCORE = 0;
 
     private Scene myScene;
     private Paddle myPaddle;
@@ -48,6 +49,7 @@ public class Game extends Application {
     private Text livesLeft;
     private Text winningText;
     private Text losingText;
+    private Text score;
     public static Timeline myAnimation;
     private double dx = 1;
     private double dy = 1;
@@ -75,6 +77,9 @@ public class Game extends Application {
 
         livesLeft = createText(livesLeft, "Lives remaining: " + LIVES, 8, 450, 15);
         root.getChildren().add(livesLeft);
+
+        score = createText(score, "Score: " + SCORE, 8, 430, 15);
+        root.getChildren().add(score);
 
         winningText = createText(winningText, "You won! Congratulations!", 30, 200, 30);
         winningText.setVisible(false);
@@ -110,6 +115,7 @@ public class Game extends Application {
         Rectangle paddle = myPaddle.getShape();
 
         livesLeft.setText("Lives remaining: " + LIVES);
+        score.setText("Score: " + SCORE);
 
         ball.setCenterX(ball.getCenterX() + dx * BALL_SPEED * elapsedTime);
         ball.setCenterY(ball.getCenterY() + dy * BALL_SPEED * elapsedTime);

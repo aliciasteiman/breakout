@@ -95,6 +95,7 @@ public class Bricks extends Game {
             if (Shape.intersect(ball, brick.getShape()).getBoundsInLocal().getWidth() != -1) {
                 removeBrick(brick);
                 brickTracker -= 1;
+                Game.SCORE += 1;
                 return true;
             }
         }
