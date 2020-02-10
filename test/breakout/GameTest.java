@@ -66,21 +66,22 @@ class GameTest extends DukeApplicationTest {
         myPaddle.setX(250 - 60);
         myPaddle.setY(500 - 15);
         press(myScene, KeyCode.RIGHT);
-        assertEquals(270 - 60, myPaddle.getX()); //-60 to account for half paddle width
+        assertEquals(280 - 60, myPaddle.getX()); //-60 to account for half paddle width
 
         myPaddle.setX(250 - 60);
         myPaddle.setY(500 - 15);
         press(myScene, KeyCode.LEFT);
-        assertEquals(230 - 60, myPaddle.getX());
+        assertEquals(220 - 60, myPaddle.getX());
     }
 
     @Test
-    public void testBallObjectBounce() { //ball doesn't seem to be bouncing correctly?
+    public void testBallPaddleBounce() {
         myBall.setCenterY(myScene.getHeight() - 20);
         //sleep(2, TimeUnit.SECONDS);
         myGame.step(Game.SECOND_DELAY);
         //sleep(2, TimeUnit.SECONDS);
-        assertEquals(0, myBall.getCenterY());
+        assertEquals(480 - 1 * 100 * 1.0/60, myBall.getCenterY());
+        assertEquals(1, Game.dy);
     }
 
     @Test
@@ -88,8 +89,18 @@ class GameTest extends DukeApplicationTest {
         myBall.setCenterX(0);
         myBall.setCenterY(0);
         myGame.step(Game.SECOND_DELAY);
-        assertEquals(50 * 1.0 / 60, myBall.getCenterX());
-        assertEquals(50 * 1.0 / 60, myBall.getCenterY());
+        assertEquals(100 * 1.0 / 60, myBall.getCenterX());
+        assertEquals(100 * 1.0 / 60, myBall.getCenterY());
+    }
+
+    @Test
+    public void testBallBrickBounce() {
+        myBall.setCenterX(30);
+        myBall.setCenterY(95);
+        myGame.step(Game.SECOND_DELAY);
+        assertEquals(-1, Game.dy);
+        assertEquals(30 + 1 * 100 * 1.0/60, myBall.getCenterX());
+        assertEquals(95 + 1 * 100 * 1.0/60, myBall.getCenterY());
     }
 
     @Test
@@ -99,11 +110,44 @@ class GameTest extends DukeApplicationTest {
             assertEquals(0, brick.getShape().getX());
             assertEquals(i/6 * 22, brick.getShape().getY());
         }
-        for (int i = 0; i < 6; i++) { //check first brick of each column)
+        for (int i = 0; i < 6; i++) { //check first brick of each column
             Bricks brick = Bricks.myBricks.get(i);
-            assertEquals(i * (((500 - (6*2))/6) + 2), brick.getShape().getX()); //how do I get expected to be type double
+            assertEquals(i * (((500 - (6*2))/6.0) + 2), brick.getShape().getX());
             assertEquals(0, brick.getShape().getY());
         }
+    }
+
+    @Test
+    public void testBallBreaksBrick() {
+        myBall.setCenterX(30);
+        myBall.setCenterY(95);
+        //sleep(2, TimeUnit.SECONDS);
+        myGame.step(Game.SECOND_DELAY);
+        //sleep(2, TimeUnit.SECONDS);
+        //what should I be checking for here? score? brick = null?
+    }
+
+    @Test
+    public void testLivesLeft() {
+        Game.LIVES = 3;
+        myBall.setCenterY(myScene.getHeight() + 5);
+        myPaddle.setX(myScene.getWidth() - Game.PADDLE_WIDTH);
+        myGame.step(Game.SECOND_DELAY);
+        assertEquals(2, Game.LIVES);
+    }
+
+    @Test
+    public void testScore() {
+        Game.SCORE = 0; //reset score to 0
+        myBall.setCenterX(30);
+        myBall.setCenterY(95);
+        myGame.step(Game.SECOND_DELAY);
+        assertEquals(1, Game.SCORE);
+
+        myBall.setCenterX(235);
+        myBall.setCenterY(95);
+        myGame.step(Game.SECOND_DELAY);
+        assertEquals(2, Game.SCORE);
     }
 
 }
