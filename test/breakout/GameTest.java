@@ -117,4 +117,13 @@ class GameTest extends DukeApplicationTest {
         assertEquals(88, myBall.getCenterY());
     }
 
+    @Test
+    public void testLivesLeft() {
+        Game.LIVES = 3;
+        myBall.setCenterY(myScene.getHeight() + 5);
+        myPaddle.setX(myScene.getWidth() - Game.PADDLE_WIDTH);
+        myGame.step(Game.SECOND_DELAY);
+        assertEquals(2, Game.LIVES);
+    }
+
 }

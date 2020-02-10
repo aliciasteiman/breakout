@@ -39,12 +39,13 @@ public class Game extends Application {
 
     public static final int FRAMES_PER_SECOND = 60;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-    public static int LIVES=3;
+    public static int LIVES = 3;
 
     private Scene myScene;
     private Paddle myPaddle;
     private Ball myBall;
     private ArrayList<Bricks> myBricks;
+    private Text livesLeft;
     public static Timeline myAnimation;
     private double dx = 1;
     private double dy = 1;
@@ -54,7 +55,7 @@ public class Game extends Application {
     public void start (Stage stage) {
         Scene scene = setUpScene(WIDTH, HEIGHT, BACKGROUND);
         stage.setScene(scene);
-        stage.setTitle("Lives remaining: "+ String.valueOf(LIVES));
+        stage.setTitle("Breakout Game");
         stage.show();
         setAnimation(stage);
     }
@@ -69,6 +70,12 @@ public class Game extends Application {
         for (Bricks brick: myBricks) {
             root.getChildren().add(brick.getShape());
         }
+
+        livesLeft = new Text();
+        livesLeft.setText("Lives remaining: " + LIVES);
+        livesLeft.setX(5);
+        livesLeft.setY(110);
+        root.getChildren().add(livesLeft);
 
         myScene = new Scene(root, width, height, background);
         myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
@@ -85,6 +92,8 @@ public class Game extends Application {
     public void step(double elapsedTime) {
         Circle ball = myBall.getShape();
         Rectangle paddle = myPaddle.getShape();
+
+        livesLeft.setText("Lives remaining: " + LIVES);
 
         ball.setCenterX(ball.getCenterX() + dx * BALL_SPEED * elapsedTime);
         ball.setCenterY(ball.getCenterY() + dy * BALL_SPEED * elapsedTime);
@@ -106,7 +115,7 @@ public class Game extends Application {
             LIVES -= 1;
             ball.setCenterX(WIDTH/2);
             ball.setCenterY(HEIGHT/2);
-            //myAnimation.pause();
+            //myAnimation.stop();
         }
     }
 
@@ -131,7 +140,6 @@ public class Game extends Application {
                 myAnimation.pause();
             } else {
                 myAnimation.play();
-                Bricks.checkgameover();
             }
         }
 
@@ -143,14 +151,13 @@ public class Game extends Application {
         }
     }
 
-    /*
-    public void gameoverlivesversion(Stage stage){
-        if(LIVES==0){
+    public void endGame(Stage stage) {
+        if (LIVES == 0 || Bricks.checkGameOver()) {
             myAnimation.stop();
             Text text = new Text();
-            text.setText("You lost. Better luck next time");
-            text.setX(WIDTH/3);
-            text.setY(HEIGHT/2);
+            text.setText("You lost. Better luck next time.");
+            text.setX(WIDTH / 3);
+            text.setY(HEIGHT / 2);
             text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
             Group root = new Group(text);
             myScene = new Scene(root,Game.WIDTH,Game.HEIGHT, Game.BACKGROUND);
@@ -158,5 +165,6 @@ public class Game extends Application {
             stage.show();
         }
     }
-    */
+
+
 }

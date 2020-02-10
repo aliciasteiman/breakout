@@ -26,7 +26,7 @@ public class Bricks extends Game {
     private Rectangle myShape;
     public static final double WIDTH = 500.0;
     public static final double HEIGHT = 500.0;
-    public static int Bricktracker=0;
+    public static int brickTracker = 0;
 
 
     public Bricks(double x, double y, double width, double height, Paint color) {
@@ -78,7 +78,7 @@ public class Bricks extends Game {
                 }
                 Bricks brick = new Bricks(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, color);
                 myBricks.add(brick);
-                Bricktracker+=1;
+                brickTracker += 1;
             }
         }
         return myBricks;
@@ -94,27 +94,19 @@ public class Bricks extends Game {
             Bricks brick = iter.next();
             if (Shape.intersect(ball, brick.getShape()).getBoundsInLocal().getWidth() != -1) {
                 removeBrick(brick);
-                Bricktracker-=1;
+                brickTracker -= 1;
                 return true;
             }
         }
         return false;
     }
 
-    public static void checkgameover(){
+    public static boolean checkGameOver(){
         Stage stage =new Stage();
-        if(Bricktracker==0){
-            Game.myAnimation.stop();
-            Text text = new Text();
-            text.setText("You won. Awesome!!!");
-            text.setX(WIDTH/3);
-            text.setY(HEIGHT/2);
-            text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
-            Group root = new Group(text);
-            myScene = new Scene(root,Game.WIDTH,Game.HEIGHT, Game.BACKGROUND);
-            stage.setScene(myScene);
-            stage.show();
+        if (brickTracker == 0) {
+            return true;
         }
+        return false;
     }
 
 
