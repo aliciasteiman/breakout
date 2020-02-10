@@ -41,6 +41,8 @@ public class Game extends Application {
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     public static int LIVES = 3;
     public static int SCORE = 0;
+    public static double dx = 1;
+    public static double dy = 1;
 
     private Scene myScene;
     private Paddle myPaddle;
@@ -51,9 +53,6 @@ public class Game extends Application {
     private Text losingText;
     private Text score;
     public static Timeline myAnimation;
-    private double dx = 1;
-    private double dy = 1;
-
 
     @Override
     public void start (Stage stage) {

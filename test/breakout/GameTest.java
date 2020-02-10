@@ -75,12 +75,13 @@ class GameTest extends DukeApplicationTest {
     }
 
     @Test
-    public void testBallPaddleBounce() { //ball doesn't seem to be bouncing correctly?
+    public void testBallPaddleBounce() {
         myBall.setCenterY(myScene.getHeight() - 20);
         //sleep(2, TimeUnit.SECONDS);
         myGame.step(Game.SECOND_DELAY);
         //sleep(2, TimeUnit.SECONDS);
-        assertEquals(0, myBall.getCenterY()); //what should this equal?
+        assertEquals(480 - 1 * 100 * 1.0/60, myBall.getCenterY());
+        assertEquals(1, Game.dy);
     }
 
     @Test
@@ -93,6 +94,16 @@ class GameTest extends DukeApplicationTest {
     }
 
     @Test
+    public void testBallBrickBounce() {
+        myBall.setCenterX(30);
+        myBall.setCenterY(95);
+        myGame.step(Game.SECOND_DELAY);
+        assertEquals(-1, Game.dy);
+        assertEquals(30 + 1 * 100 * 1.0/60, myBall.getCenterX());
+        assertEquals(95 + 1 * 100 * 1.0/60, myBall.getCenterY());
+    }
+
+    @Test
     public void testKeyBlocks() {
         for (int i = 0; i <= Bricks.myBricks.size() - 6; i += 6) { //checking first brick of each row
             Bricks brick = Bricks.myBricks.get(i);
@@ -101,20 +112,19 @@ class GameTest extends DukeApplicationTest {
         }
         for (int i = 0; i < 6; i++) { //check first brick of each column
             Bricks brick = Bricks.myBricks.get(i);
-            assertEquals(i * (((500 - (6*2))/6) + 2), brick.getShape().getX()); //how do I get expected to be type double
+            assertEquals(i * (((500 - (6*2))/6.0) + 2), brick.getShape().getX());
             assertEquals(0, brick.getShape().getY());
         }
     }
 
     @Test
-    public void testBallBreaksBrick() { //need to figure out where to actually set these and where exactly the ball hits
+    public void testBallBreaksBrick() {
         myBall.setCenterX(30);
         myBall.setCenterY(95);
         //sleep(2, TimeUnit.SECONDS);
         myGame.step(Game.SECOND_DELAY);
         //sleep(2, TimeUnit.SECONDS);
-        assertEquals(0, myBall.getCenterX());
-        assertEquals(88, myBall.getCenterY());
+        //what should I be checking for here? score? brick = null? 
     }
 
     @Test
@@ -128,7 +138,7 @@ class GameTest extends DukeApplicationTest {
 
     @Test
     public void testScore() {
-        //Game.SCORE = 0;
+        Game.SCORE = 0; //reset score to 0
         myBall.setCenterX(30);
         myBall.setCenterY(95);
         myGame.step(Game.SECOND_DELAY);
