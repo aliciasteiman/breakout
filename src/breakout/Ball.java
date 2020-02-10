@@ -7,9 +7,10 @@ import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 
-public class Ball {
+public class Ball extends Game {
 
-    private Circle myBall;
+    private static Circle myBall;
+    private int myLives = 1;
 
     public Ball(int x, int y, int rad, Paint color) {
         myBall = new Circle(x, y, rad);
@@ -21,8 +22,31 @@ public class Ball {
         return myBall;
     }
 
-    public void checkballbounds(){
+    public int getLives() {
+        return myLives;
+    }
 
+    public static void checkBounds() {
+        Rectangle paddle = myPaddle.getShape();
+        if (myBall.getCenterX() > myScene.getWidth() - BALL_RADIUS || myBall.getCenterX() < 0 + BALL_RADIUS) {
+            dx *= -1;
+        }
+        else if (myBall.getCenterY() < 0 + BALL_RADIUS) {
+            dy *= -1;
+        }
+        else if (Shape.intersect(myBall, paddle).getBoundsInLocal().getWidth() != -1) {
+            dy *= -1;
+        }
+        else if (myBall.getCenterY() > myScene.getHeight()) {
+            LIVES -= 1;
+            myBall.setCenterX(WIDTH/2);
+            myBall.setCenterY(HEIGHT/2);
+            //myAnimation.stop();
+            if (LIVES == 0) {
+                losingText.setVisible(true);
+                myAnimation.stop();
+            }
+        }
     }
 
 

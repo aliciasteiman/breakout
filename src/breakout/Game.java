@@ -30,7 +30,7 @@ public class Game extends Application {
 
     public static final int PADDLE_WIDTH = 120;
     public static final int PADDLE_HEIGHT = 15;
-    public int PADDLE_SPEED = 30;
+    public static int PADDLE_SPEED = 30;
     public static final Paint PADDLE_COLOR = Color.GRAY;
 
     public static final int BALL_RADIUS = 15;
@@ -39,26 +39,37 @@ public class Game extends Application {
 
     public static final int FRAMES_PER_SECOND = 60;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-    public static int LIVES=3;
+    public static int LIVES = 3;
+    public static int SCORE = 0;
+    public static double dx = 1;
+    public static double dy = 1;
 
-    private Scene myScene;
+    // private Scene myScene;
     public static Stage myStage;
-    private Paddle myPaddle;
+   // private Paddle myPaddle;
     public static Ball myBall;
+    public static Scene myScene;
+    public static Paddle myPaddle;
+    //private Ball myBall;
     private ArrayList<Bricks> myBricks;
+    private Text livesLeft;
+    public static Text winningText; //deal with this?
+    public static Text losingText;
+    private Text score;
     public static Timeline myAnimation;
-    private double dx = 1;
-    private double dy = 1;
-
 
     @Override
-    public void start (Stage myStage) {
+    public void start (Stage stage) {
         //stage = myStage;
         Scene scene = setUpScene(WIDTH, HEIGHT, BACKGROUND);
         myStage.setScene(scene);
         myStage.setTitle("Lives remaining: "+ String.valueOf(LIVES)+"   Score: "+ String.valueOf(Bricks.Score));
         myStage.show();
         setAnimation(myStage);
+        stage.setScene(scene);
+        stage.setTitle("Breakout Game");
+        stage.show();
+        setAnimation(stage);
     }
 
     public Scene setUpScene(int width, int height, Paint background) {
@@ -72,9 +83,32 @@ public class Game extends Application {
             root.getChildren().add(brick.getShape());
         }
 
+        livesLeft = createText(livesLeft, "Lives remaining: " + LIVES, 8, 450, 15);
+        root.getChildren().add(livesLeft);
+
+        score = createText(score, "Score: " + SCORE, 8, 430, 15);
+        root.getChildren().add(score);
+
+        winningText = createText(winningText, "You won! Congratulations!", 50, 200, 30);
+        winningText.setVisible(false);
+        root.getChildren().add(winningText);
+
+        losingText = createText(losingText, "You lost. Better luck next time.", 30, 200, 30);
+        losingText.setVisible(false);
+        root.getChildren().add(losingText);
+
         myScene = new Scene(root, width, height, background);
         myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         return myScene;
+    }
+
+    private Text createText(Text text, String message, double xPos, double yPos, int size) {
+        text = new Text();
+        text.setText(message);
+        text.setX(xPos);
+        text.setY(yPos);
+        text.setFont(Font.font(size));
+        return text;
     }
 
     public void setAnimation(Stage stage) {
@@ -87,6 +121,9 @@ public class Game extends Application {
     public void step(double elapsedTime) {
         Circle ball = myBall.getShape();
         Rectangle paddle = myPaddle.getShape();
+
+        livesLeft.setText("Lives remaining: " + LIVES);
+        score.setText("Score: " + SCORE);
 
         ball.setCenterX(ball.getCenterX() + dx * BALL_SPEED * elapsedTime);
         ball.setCenterY(ball.getCenterY() + dy * BALL_SPEED * elapsedTime);
@@ -111,30 +148,22 @@ public class Game extends Application {
             ball.setCenterY(HEIGHT/2);
             Bricks.checkgameover();
         }
+
+        Ball.checkBounds();
+        Bricks.checkBricks(ball);
     }
 
     private void handleKeyInput(KeyCode code) {
         Rectangle paddle = myPaddle.getShape();
         Circle ball = myBall.getShape();
 
-        if (code == KeyCode.RIGHT) { //moves paddle right
-            if (paddle.getX() > WIDTH) {
-                paddle.setX(0 - PADDLE_WIDTH);
-            }
-            paddle.setX(paddle.getX() + PADDLE_SPEED);
-        } else if (code == KeyCode.LEFT) { //moves paddle left
-            if (paddle.getX() < 0) {
-                paddle.setX(WIDTH + PADDLE_WIDTH);
-            }
-            paddle.setX(paddle.getX() - PADDLE_SPEED);
-        }
+        Paddle.movePaddle(code);
 
         if (code == KeyCode.SPACE) { //starts and pauses ball animation
             if (myAnimation.getStatus() == Animation.Status.RUNNING) {
                 myAnimation.pause();
             } else {
                 myAnimation.play();
-                Bricks.checkgameover();
             }
         }
 
@@ -144,5 +173,17 @@ public class Game extends Application {
             paddle.setX(WIDTH / 2 - PADDLE_WIDTH / 2);
             paddle.setY(HEIGHT - PADDLE_HEIGHT);
         }
+
+        if (code == KeyCode.L) { //adds additional lives
+            LIVES += 1;
+        }
+
+        if (code == KeyCode.C) { //clear all bricks
+            for (Bricks brick : myBricks) {
+                brick.getShape().setFill(null);
+            }
+            myBricks.clear();
+        }
     }
-}
+    }
+

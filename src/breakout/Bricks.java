@@ -28,8 +28,11 @@ public class Bricks extends Game {
     private Rectangle myShape;
     public static final double WIDTH = 500.0;
     public static final double HEIGHT = 500.0;
+
     public static int Bricktracker=0;
-    public static int Score=0;
+    //public static int Score=0;
+    public static int brickTracker = 0;
+
 
 
     public Bricks(double x, double y, double width, double height, Paint color) {
@@ -81,7 +84,7 @@ public class Bricks extends Game {
                 }
                 Bricks brick = new Bricks(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, color);
                 myBricks.add(brick);
-                Bricktracker+=1;
+                brickTracker += 1;
             }
         }
         return myBricks;
@@ -96,60 +99,79 @@ public class Bricks extends Game {
         while (iter.hasNext()) {
             Bricks brick = iter.next();
             if (Shape.intersect(ball, brick.getShape()).getBoundsInLocal().getWidth() != -1) {
+                dy *= -1;
                 removeBrick(brick);
-                Bricktracker-=1;
-                Score+=10;
+
+//                Bricktracker-=1;
+//                Score+=10;
+
+                brickTracker -= 1;
+                Game.SCORE += 1;
+
                 return true;
+            }
+            if (brickTracker == 0) {
+                Game.winningText.setVisible(true);
+                Game.myAnimation.stop();
             }
         }
         return false;
     }
 
-    public static void checkgameover(){
 
-        if(Bricktracker==0) {
-            Text text = new Text();
-            text.setText("You won. Awesome!!!");
-            gameovertext(text);
+//    public static void checkgameover(){
+//
+//        if(Bricktracker==0) {
+//            Text text = new Text();
+//            text.setText("You won. Awesome!!!");
+//            gameovertext(text);
+//        }
+//         if(LIVES==0){
+//            Text text = new Text();
+//            text.setText("You lost. Better luck next time");
+//             gameovertext(text);
+//         }
+
+
+    public static boolean checkGameOver(){
+        Stage stage =new Stage();
+        if (brickTracker == 0) {
+            return true;
         }
-         if(LIVES==0){
-            Text text = new Text();
-            text.setText("You lost. Better luck next time");
-             gameovertext(text);
-         }
+        return false;
 
     }
 
-    public static void gameovertext(Text text) {
-        myAnimation.pause();
-        Stage stage = new Stage();
-        text.setX(0);
-        text.setY(HEIGHT / 2);
-        text.setFont(Font.font("elephant", FontWeight.EXTRA_BOLD, FontPosture.ITALIC, 30));
-        text.setFill(Color.BLUEVIOLET);
-        Group root = new Group(text);
-        myScene = new Scene(root, Game.WIDTH, Game.HEIGHT, Color.TAN);
-        stage.setScene(myScene);
-        stage.show();
-    }
+//    public static void gameovertext(Text text) {
+//        myAnimation.pause();
+//        Stage stage = new Stage();
+//        text.setX(0);
+//        text.setY(HEIGHT / 2);
+//        text.setFont(Font.font("elephant", FontWeight.EXTRA_BOLD, FontPosture.ITALIC, 30));
+//        text.setFill(Color.BLUEVIOLET);
+//        Group root = new Group(text);
+//        myScene = new Scene(root, Game.WIDTH, Game.HEIGHT, Color.TAN);
+//        stage.setScene(myScene);
+//        stage.show();
+//    }
 
-    public void getcheats(KeyCode code){
-        if (code == KeyCode.L) {
-            LIVES+=1;
-        }
-        if (code == KeyCode.P) {
-            cheatpaddlelength();
-        }
-        if (code == KeyCode.COLON) {
-            LIVES+=1;
-        }
-    }
-
-
-    public void cheatpaddlelength(){
-        int cheatPADDLEWIDTH=PADDLE_WIDTH*2;
-        Paddle myPaddle = new Paddle(Game.WIDTH/2 - Game.PADDLE_WIDTH/2, Game.HEIGHT - Game.PADDLE_HEIGHT, cheatPADDLEWIDTH, PADDLE_HEIGHT, PADDLE_COLOR);
-
-    }
+//    public void getcheats(KeyCode code){
+//        if (code == KeyCode.L) {
+//            LIVES+=1;
+//        }
+//        if (code == KeyCode.P) {
+//            cheatpaddlelength();
+//        }
+//        if (code == KeyCode.COLON) {
+//            LIVES+=1;
+//        }
+//    }
+//
+//
+//    public void cheatpaddlelength(){
+//        int cheatPADDLEWIDTH=PADDLE_WIDTH*2;
+//        Paddle myPaddle = new Paddle(Game.WIDTH/2 - Game.PADDLE_WIDTH/2, Game.HEIGHT - Game.PADDLE_HEIGHT, cheatPADDLEWIDTH, PADDLE_HEIGHT, PADDLE_COLOR);
+//
+//    }
 
 }
