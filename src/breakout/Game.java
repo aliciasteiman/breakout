@@ -46,6 +46,8 @@ public class Game extends Application {
     private Ball myBall;
     private ArrayList<Bricks> myBricks;
     private Text livesLeft;
+    private Text winningText;
+    private Text losingText;
     public static Timeline myAnimation;
     private double dx = 1;
     private double dy = 1;
@@ -71,15 +73,29 @@ public class Game extends Application {
             root.getChildren().add(brick.getShape());
         }
 
-        livesLeft = new Text();
-        livesLeft.setText("Lives remaining: " + LIVES);
-        livesLeft.setX(5);
-        livesLeft.setY(110);
+        livesLeft = createText(livesLeft, "Lives remaining: " + LIVES, 8, 450, 15);
         root.getChildren().add(livesLeft);
+
+        winningText = createText(winningText, "You won! Congratulations!", 30, 200, 30);
+        winningText.setVisible(false);
+        root.getChildren().add(winningText);
+
+        losingText = createText(losingText, "You lost. Better luck next time.", 30, 200, 30);
+        losingText.setVisible(false);
+        root.getChildren().add(losingText);
 
         myScene = new Scene(root, width, height, background);
         myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         return myScene;
+    }
+
+    private Text createText(Text text, String message, double xPos, double yPos, int size) {
+        text = new Text();
+        text.setText(message);
+        text.setX(xPos);
+        text.setY(yPos);
+        text.setFont(Font.font(size));
+        return text;
     }
 
     public void setAnimation(Stage stage) {
@@ -116,6 +132,10 @@ public class Game extends Application {
             ball.setCenterX(WIDTH/2);
             ball.setCenterY(HEIGHT/2);
             //myAnimation.stop();
+            if (LIVES == 0) {
+                losingText.setVisible(true);
+                myAnimation.stop();
+            }
         }
     }
 
@@ -144,27 +164,22 @@ public class Game extends Application {
         }
 
         if (code == KeyCode.R) { //resets ball and paddle to center
-            ball.setCenterX(WIDTH/2);
-            ball.setCenterY(HEIGHT/2);
-            paddle.setX(WIDTH/2 - PADDLE_WIDTH/2);
+            ball.setCenterX(WIDTH / 2);
+            ball.setCenterY(HEIGHT / 2);
+            paddle.setX(WIDTH / 2 - PADDLE_WIDTH / 2);
             paddle.setY(HEIGHT - PADDLE_HEIGHT);
         }
-    }
 
-    public void endGame(Stage stage) {
-        if (LIVES == 0 || Bricks.checkGameOver()) {
-            myAnimation.stop();
-            Text text = new Text();
-            text.setText("You lost. Better luck next time.");
-            text.setX(WIDTH / 3);
-            text.setY(HEIGHT / 2);
-            text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
-            Group root = new Group(text);
-            myScene = new Scene(root,Game.WIDTH,Game.HEIGHT, Game.BACKGROUND);
-            stage.setScene(myScene);
-            stage.show();
+        if (code == KeyCode.L) { //adds additional lives
+            LIVES += 1;
+        }
+
+        if (code == KeyCode.C) { //clear all bricks
+            for (Bricks brick : myBricks) {
+                brick.getShape().setFill(null);
+            }
+            myBricks.clear();
         }
     }
-
 
 }

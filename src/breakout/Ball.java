@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class Ball {
 
     private Circle myBall;
+    private int myLives = 1;
 
     public Ball(int x, int y, int rad, Paint color) {
         myBall = new Circle(x, y, rad);
@@ -21,8 +22,8 @@ public class Ball {
         return myBall;
     }
 
-    public void checkballbounds(){
-
+    public int getLives() {
+        return myLives;
     }
 
 }
