@@ -93,6 +93,7 @@ public class Bricks extends Game {
         while (iter.hasNext()) {
             Bricks brick = iter.next();
             if (Shape.intersect(ball, brick.getShape()).getBoundsInLocal().getWidth() != -1) {
+                dy *= -1;
                 removeBrick(brick);
                 brickTracker -= 1;
                 Game.SCORE += 1;

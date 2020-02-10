@@ -124,7 +124,7 @@ class GameTest extends DukeApplicationTest {
         //sleep(2, TimeUnit.SECONDS);
         myGame.step(Game.SECOND_DELAY);
         //sleep(2, TimeUnit.SECONDS);
-        //what should I be checking for here? score? brick = null? 
+        //what should I be checking for here? score? brick = null?
     }
 
     @Test

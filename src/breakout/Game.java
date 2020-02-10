@@ -30,7 +30,7 @@ public class Game extends Application {
 
     public static final int PADDLE_WIDTH = 120;
     public static final int PADDLE_HEIGHT = 15;
-    public int PADDLE_SPEED = 30;
+    public static int PADDLE_SPEED = 30;
     public static final Paint PADDLE_COLOR = Color.GRAY;
 
     public static final int BALL_RADIUS = 15;
@@ -44,13 +44,13 @@ public class Game extends Application {
     public static double dx = 1;
     public static double dy = 1;
 
-    private Scene myScene;
-    private Paddle myPaddle;
+    public static Scene myScene;
+    public static Paddle myPaddle;
     private Ball myBall;
     private ArrayList<Bricks> myBricks;
     private Text livesLeft;
     public static Text winningText; //deal with this?
-    private Text losingText;
+    public static Text losingText;
     private Text score;
     public static Timeline myAnimation;
 
@@ -119,46 +119,15 @@ public class Game extends Application {
         ball.setCenterX(ball.getCenterX() + dx * BALL_SPEED * elapsedTime);
         ball.setCenterY(ball.getCenterY() + dy * BALL_SPEED * elapsedTime);
 
-        if (Bricks.checkBricks(ball)) {
-            dy *= -1;
-        }
-
-        if (ball.getCenterX() > myScene.getWidth() - BALL_RADIUS || ball.getCenterX() < 0 + BALL_RADIUS) {
-            dx *= -1;
-        }
-        else if (ball.getCenterY() < 0 + BALL_RADIUS) {
-            dy *= -1;
-        }
-        else if (Shape.intersect(ball, paddle).getBoundsInLocal().getWidth() != -1) {
-            dy *= -1;
-        }
-        else if (ball.getCenterY() > myScene.getHeight()) {
-            LIVES -= 1;
-            ball.setCenterX(WIDTH/2);
-            ball.setCenterY(HEIGHT/2);
-            //myAnimation.stop();
-            if (LIVES == 0) {
-                losingText.setVisible(true);
-                myAnimation.stop();
-            }
-        }
+        Ball.checkBounds();
+        Bricks.checkBricks(ball);
     }
 
     private void handleKeyInput(KeyCode code) {
         Rectangle paddle = myPaddle.getShape();
         Circle ball = myBall.getShape();
 
-        if (code == KeyCode.RIGHT) { //moves paddle right
-            if (paddle.getX() > WIDTH) {
-                paddle.setX(0 - PADDLE_WIDTH);
-            }
-            paddle.setX(paddle.getX() + PADDLE_SPEED);
-        } else if (code == KeyCode.LEFT) { //moves paddle left
-            if (paddle.getX() < 0) {
-                paddle.setX(WIDTH + PADDLE_WIDTH);
-            }
-            paddle.setX(paddle.getX() - PADDLE_SPEED);
-        }
+        Paddle.movePaddle(code);
 
         if (code == KeyCode.SPACE) { //starts and pauses ball animation
             if (myAnimation.getStatus() == Animation.Status.RUNNING) {
