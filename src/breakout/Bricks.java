@@ -130,29 +130,6 @@ public class Bricks extends Game {
     }
 
 
-    public static boolean checkGameOver(){
-        Stage stage =new Stage();
-        if (brickTracker == 0) {
-            return true;
-        }
-        return false;
-
-
-    }
-
-//    public static void gameovertext(Text text) {
-//        myAnimation.pause();
-//        Stage stage = new Stage();
-//        text.setX(0);
-//        text.setY(HEIGHT / 2);
-//        text.setFont(Font.font("elephant", FontWeight.EXTRA_BOLD, FontPosture.ITALIC, 30));
-//        text.setFill(Color.BLUEVIOLET);
-//        Group root = new Group(text);
-//        myScene = new Scene(root, Game.WIDTH, Game.HEIGHT, Color.TAN);
-//        stage.setScene(myScene);
-//        stage.show();
-//    }
-
 //    public void getcheats(KeyCode code){
 //        if (code == KeyCode.L) {
 //            LIVES+=1;
