@@ -2,11 +2,13 @@ package breakout;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -102,21 +104,49 @@ public class Bricks extends Game {
     }
 
     public static void checkgameover(){
-        Stage stage =new Stage();
-        if(Bricktracker==0){
-            Game.myAnimation.stop();
+
+        if(Bricktracker==0) {
             Text text = new Text();
             text.setText("You won. Awesome!!!");
-            text.setX(WIDTH/3);
-            text.setY(HEIGHT/2);
-            text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
-            Group root = new Group(text);
-            myScene = new Scene(root,Game.WIDTH,Game.HEIGHT, Game.BACKGROUND);
-            stage.setScene(myScene);
-            stage.show();
+            gameovertext(text);
+        }
+         if(LIVES==0){
+            Text text = new Text();
+            text.setText("You lost. Better luck next time");
+             gameovertext(text);
+         }
+
+    }
+
+    public static void gameovertext(Text text) {
+        myAnimation.pause();
+        Stage stage = new Stage();
+        text.setX(0);
+        text.setY(HEIGHT / 2);
+        text.setFont(Font.font("elephant", FontWeight.EXTRA_BOLD, FontPosture.ITALIC, 30));
+        text.setFill(Color.BLUEVIOLET);
+        Group root = new Group(text);
+        myScene = new Scene(root, Game.WIDTH, Game.HEIGHT, Color.TAN);
+        stage.setScene(myScene);
+        stage.show();
+    }
+
+    public void getcheats(KeyCode code){
+        if (code == KeyCode.L) {
+            LIVES+=1;
+        }
+//        if (code == KeyCode.P) {
+//            cheatpaddlelength();
+//        }
+        if (code == KeyCode.COLON) {
+            LIVES+=1;
         }
     }
 
 
+//    public void cheatpaddlelength(){
+//        int cheatPADDLEWIDTH=PADDLE_WIDTH*2;
+//        Paddle myPaddle = new Paddle(Game.WIDTH/2 - Game.PADDLE_WIDTH/2, Game.HEIGHT - Game.PADDLE_HEIGHT, cheatPADDLEWIDTH, PADDLE_HEIGHT, PADDLE_COLOR);
+//    }
 
 }

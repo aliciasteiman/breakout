@@ -42,8 +42,9 @@ public class Game extends Application {
     public static int LIVES=3;
 
     private Scene myScene;
+    public static Stage myStage;
     private Paddle myPaddle;
-    private Ball myBall;
+    public static Ball myBall;
     private ArrayList<Bricks> myBricks;
     public static Timeline myAnimation;
     private double dx = 1;
@@ -51,12 +52,13 @@ public class Game extends Application {
 
 
     @Override
-    public void start (Stage stage) {
+    public void start (Stage myStage) {
+        //stage = myStage;
         Scene scene = setUpScene(WIDTH, HEIGHT, BACKGROUND);
-        stage.setScene(scene);
-        stage.setTitle("Lives remaining: "+ String.valueOf(LIVES));
-        stage.show();
-        setAnimation(stage);
+        myStage.setScene(scene);
+        myStage.setTitle("Lives remaining: "+ String.valueOf(LIVES));
+        myStage.show();
+        setAnimation(myStage);
     }
 
     public Scene setUpScene(int width, int height, Paint background) {
@@ -103,10 +105,12 @@ public class Game extends Application {
             dy *= -1;
         }
         else if (ball.getCenterY() > myScene.getHeight()) {
+            myAnimation.pause();
             LIVES-=1;
-            //myAnimation.stop();
             ball.setCenterX(WIDTH/2);
             ball.setCenterY(HEIGHT/2);
+            Bricks.checkgameover();
+           // myAnimation.play();
 
 
 
@@ -141,25 +145,10 @@ public class Game extends Application {
         }
 
         if (code == KeyCode.R) { //resets ball and paddle to center
-            ball.setCenterX(WIDTH/2);
-            ball.setCenterY(HEIGHT/2);
-            paddle.setX(WIDTH/2 - PADDLE_WIDTH/2);
+            ball.setCenterX(WIDTH / 2);
+            ball.setCenterY(HEIGHT / 2);
+            paddle.setX(WIDTH / 2 - PADDLE_WIDTH / 2);
             paddle.setY(HEIGHT - PADDLE_HEIGHT);
-        }
-    }
-
-    public void gameoverlivesversion(Stage stage){
-        if(LIVES==0){
-            myAnimation.stop();
-            Text text = new Text();
-            text.setText("You lost. Better luck next time");
-            text.setX(WIDTH/3);
-            text.setY(HEIGHT/2);
-            text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
-            Group root = new Group(text);
-            myScene = new Scene(root,Game.WIDTH,Game.HEIGHT, Game.BACKGROUND);
-            stage.setScene(myScene);
-            stage.show();
         }
     }
 }
