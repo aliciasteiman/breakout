@@ -7,12 +7,20 @@ import javafx.scene.image.*;
 public class PowerUp extends Game{
     private ArrayList<PowerUp> myPowerups;
     public static ArrayList<Bricks> myBricks;
+    //private Brick brick;
 
-    public void createpowerup(){
-        ArrayList<PowerUp> myPowerups = new ArrayList<>();
+
+
+
+
+    public void createpowerup(ArrayList<Bricks> myBricks){
+        myBricks = Bricks.myBricks;
         Collections.shuffle(myBricks);
+        ArrayList<PowerUp> myPowerups = new ArrayList<>();
         for (int i=0; i<6;i++){
-            
+//            PowerUp up= new PowerUp(myBricks.get(i));
+//            up.PowerUp.setVisible(false);
+
         }
 
     }
