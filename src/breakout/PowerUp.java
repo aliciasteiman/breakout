@@ -2,12 +2,18 @@ package breakout;
 import java.util.*;
 import javafx.scene.*;
 import javafx.scene.image.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
+
+import static javafx.scene.paint.Paint.*;
 
 
 public class PowerUp extends Game{
     private ArrayList<PowerUp> myPowerups;
     public static ArrayList<Bricks> myBricks;
     //private Brick brick;
+    public int NUM_POWERUPS;
 
 
 
@@ -16,10 +22,10 @@ public class PowerUp extends Game{
     public void createpowerup(ArrayList<Bricks> myBricks){
         myBricks = Bricks.myBricks;
         Collections.shuffle(myBricks);
-        ArrayList<PowerUp> myPowerups = new ArrayList<>();
-        for (int i=0; i<6;i++){
-//            PowerUp up= new PowerUp(myBricks.get(i));
-//            up.PowerUp.setVisible(false);
+        List<PowerUp> myPowerups = new ArrayList<>();
+        for (int i=0; i<NUM_POWERUPS;i++){
+            Rectangle p1= new Rectangle();
+
 
         }
 
@@ -33,14 +39,23 @@ public class PowerUp extends Game{
         listpowers.add("ballspeedup");
         listpowers.add("ballslowdown");
         //Collections.shuffle(listpowers);
+        NUM_POWERUPS=listpowers.size();
        return listpowers.get(0);
     }
 
-    public void longerpaddle(ImageView myPaddle){
-        myPaddle.setFitWidth(PADDLE_WIDTH*2);
+    public void longerpaddle(Paddle myPaddle){
+        myPaddle.WIDTH=myPaddle.WIDTH*2;
     }
 
-    public void shorterpaddle(ImageView myPaddle){
-        myPaddle.setFitWidth(PADDLE_WIDTH/2);
+    public void shorterpaddle(Paddle myPaddle){
+        myPaddle.WIDTH=myPaddle.WIDTH/2;
+    }
+
+    public void ballspeedup(Ball myBall){
+        myBall.BALL_SPEED=myBall.BALL_SPEED*3;
+    }
+
+    public void ballslowdown(Ball myBall){
+        myBall.BALL_SPEED=myBall.BALL_SPEED/3;
     }
 }

@@ -22,11 +22,12 @@ import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 
 public class Game extends Application {
 
-    public static final int WIDTH = 500;
+    public static int WIDTH = 500;
     public static final int HEIGHT = 500;
     public static final Paint BACKGROUND = Color.LAVENDERBLUSH;
 
@@ -37,7 +38,7 @@ public class Game extends Application {
 
     public static final int BALL_RADIUS = 15;
     public static final Paint BALL_COLOR = Color.CORNFLOWERBLUE;
-    public static final int BALL_SPEED = 100;
+    public static int BALL_SPEED = 100;
 
     public static final int FRAMES_PER_SECOND = 60;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
@@ -51,7 +52,7 @@ public class Game extends Application {
     public static Ball myBall;
     public static Scene myScene;
     public static Paddle myPaddle;
-    public static ArrayList<Bricks> myBricks;
+    public static List<Bricks> myBricks;
     private static Text livesLeft;
     public static Text winningText;
     public static Text losingText;
