@@ -5,14 +5,12 @@ import javafx.scene.image.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
-
-import static javafx.scene.paint.Paint.*;
+import javafx.scene.paint.Paint.*;
 
 
 public class PowerUp extends Game{
     private ArrayList<PowerUp> myPowerups;
     public static ArrayList<Bricks> myBricks;
-    //private Brick brick;
     public int NUM_POWERUPS;
 
 
@@ -44,18 +42,22 @@ public class PowerUp extends Game{
     }
 
     public void longerpaddle(Paddle myPaddle){
-        myPaddle.WIDTH=myPaddle.WIDTH*2;
+        int new_width =myPaddle.WIDTH*2;
+        myPaddle.WIDTH=new_width;
     }
 
     public void shorterpaddle(Paddle myPaddle){
-        myPaddle.WIDTH=myPaddle.WIDTH/2;
+        int new_width= myPaddle.WIDTH/2;
+        myPaddle.WIDTH=new_width;
     }
 
     public void ballspeedup(Ball myBall){
-        myBall.BALL_SPEED=myBall.BALL_SPEED*3;
+        int new_speed= myBall.BALL_SPEED*3;
+        myBall.BALL_SPEED=new_speed;
     }
 
     public void ballslowdown(Ball myBall){
-        myBall.BALL_SPEED=myBall.BALL_SPEED/3;
+        int new_speed= myBall.BALL_SPEED/3;
+        myBall.BALL_SPEED=new_speed;
     }
 }
