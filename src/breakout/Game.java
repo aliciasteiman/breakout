@@ -26,13 +26,13 @@ import java.util.Iterator;
 
 public class Game extends Application {
 
-    private static final int WIDTH = 500;
-    private static final int HEIGHT = 500;
+    public static final int WIDTH = 500;
+    public static final int HEIGHT = 500;
     private static final Paint BACKGROUND = Color.LAVENDERBLUSH;
 
-    public static int PADDLE_WIDTH = 120;
+    public static final int PADDLE_WIDTH = 120;
     public static final int PADDLE_HEIGHT = 15;
-    public static int PADDLE_SPEED = 30;
+    public static final int PADDLE_SPEED = 30;
     public static final Paint PADDLE_COLOR = Color.GRAY;
 
     public static final int BALL_RADIUS = 15;
@@ -41,8 +41,9 @@ public class Game extends Application {
 
     public static final int FRAMES_PER_SECOND = 60;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-    public static int LIVES = 3;
-    public static int SCORE = 0;
+
+    public static final int LIVES = 3;
+    public static int SCORE = 0; //protected = accessible from a subclass
     public static double dx = 1;
     public static double dy = 1;
 

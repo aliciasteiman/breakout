@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Ball extends Game {
 
     private static Circle myBall;
-    private int myLives = 3;
+    private int myLives = LIVES;
 
     public Ball(int x, int y, int rad, Paint color) {
         myBall = new Circle(x, y, rad);
