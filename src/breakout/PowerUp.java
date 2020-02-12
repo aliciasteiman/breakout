@@ -9,6 +9,7 @@ public class PowerUp extends Game {
     private ArrayList<PowerUp> myPowerUps;
     private int NUM_POWERUPS;
     public static ArrayList<Bricks> myBricks;
+    //private Brick brick;
 
 
     public void createPowerUps(){
@@ -16,8 +17,7 @@ public class PowerUp extends Game {
         Collections.shuffle(myBricks);
         for (int i = 0; i < NUM_POWERUPS; i++){
             //put power ups in bricks
-            //add power ups to myPowerUps
-        }
+            //add power ups to myPowerUp
 
     }
 

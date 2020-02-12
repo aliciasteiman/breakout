@@ -26,9 +26,9 @@ import java.util.Iterator;
 
 public class Game extends Application {
 
-    public static final int WIDTH = 500;
-    public static final int HEIGHT = 500;
-    public static final Paint BACKGROUND = Color.LAVENDERBLUSH;
+    private static final int WIDTH = 500;
+    private static final int HEIGHT = 500;
+    private static final Paint BACKGROUND = Color.LAVENDERBLUSH;
 
     public static int PADDLE_WIDTH = 120;
     public static final int PADDLE_HEIGHT = 15;
