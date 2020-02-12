@@ -62,7 +62,7 @@ public class Game extends Application {
 //    private static double dx = 1;
 //    private static double dy = 1;
 
-
+//putting in comment
     @Override
     public void start (Stage stage) {
         Scene scene = setUpScene(WIDTH, HEIGHT, BACKGROUND);
