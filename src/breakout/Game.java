@@ -27,7 +27,7 @@ import java.util.List;
 
 public class Game extends Application {
 
-    public static int WIDTH = 500;
+    public static final int WIDTH = 500;
     public static final int HEIGHT = 500;
     private static final Paint BACKGROUND = Color.LAVENDERBLUSH;
 
@@ -38,27 +38,29 @@ public class Game extends Application {
 
     public static final int BALL_RADIUS = 15;
     public static final Paint BALL_COLOR = Color.CORNFLOWERBLUE;
-    public static int BALL_SPEED = 100;
+    public static final int BALL_SPEED = 100;
 
     public static final int FRAMES_PER_SECOND = 60;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
-    public static final int LIVES = 3;
-    public static int SCORE = 0; //protected = accessible from a subclass
-    public static double dx = 1;
-    public static double dy = 1;
+    protected int LIVES = 3;
+    protected int SCORE = 0; //protected = accessible from a subclass
+    protected double dx = 1;
+    protected double dy = 1;
 
 
-    public static Stage myStage;
-    public static Ball myBall;
+    private Stage myStage;
+    protected Timeline myAnimation;
+
+    protected Ball myBall;
     public static Scene myScene;
     public static Paddle myPaddle;
     public static List<Bricks> myBricks;
-    private static Text livesLeft;
-    public static Text winningText;
-    public static Text losingText;
-    private static Text score;
-    public static Timeline myAnimation;
+
+    private Text livesLeft;
+    protected Text winningText;
+    protected Text losingText;
+    private Text score;
  //   private AnimationTimer timer;
 //    private static double dx = 1;
 //    private static double dy = 1;

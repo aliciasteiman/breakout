@@ -9,38 +9,38 @@ import java.util.ArrayList;
 
 public class Ball extends Game {
 
-    private static Circle myBall;
+    private Circle myShape;
     private int myLives = LIVES;
 
     public Ball(int x, int y, int rad, Paint color) {
-        myBall = new Circle(x, y, rad);
-        myBall.setFill(color);
-        myBall.setId("ball");
+        myShape = new Circle(x, y, rad);
+        myShape.setFill(color);
+        myShape.setId("ball");
     }
 
     public Circle getShape() {
-        return myBall;
+        return myShape;
     }
 
     public int getLives() {
         return myLives;
     }
 
-    public static void checkBounds() {
+    public void checkBounds() {
         Rectangle paddle = myPaddle.getShape();
-        if (myBall.getCenterX() > myScene.getWidth() - BALL_RADIUS || myBall.getCenterX() < 0 + BALL_RADIUS) {
+        if (myShape.getCenterX() > myScene.getWidth() - BALL_RADIUS || myShape.getCenterX() < 0 + BALL_RADIUS) {
             dx *= -1;
         }
-        else if (myBall.getCenterY() < 0 + BALL_RADIUS) {
+        else if (myShape.getCenterY() < 0 + BALL_RADIUS) {
             dy *= -1;
         }
-        else if (Shape.intersect(myBall, paddle).getBoundsInLocal().getWidth() != -1) {
+        else if (Shape.intersect(myShape, paddle).getBoundsInLocal().getWidth() != -1) {
             dy *= -1;
         }
-        else if (myBall.getCenterY() > myScene.getHeight()) {
+        else if (myShape.getCenterY() > myScene.getHeight()) {
             LIVES -= 1;
-            myBall.setCenterX(WIDTH/2);
-            myBall.setCenterY(HEIGHT/2);
+            myShape.setCenterX(WIDTH/2);
+            myShape.setCenterY(HEIGHT/2);
             //myAnimation.stop();
 
             if (LIVES == 0) {

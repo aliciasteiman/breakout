@@ -30,7 +30,7 @@ public class Bricks extends Game {
     //public static int Bricktracker=0;
 
     //public static int Score=0;
-    public static int brickTracker = 0;
+    private int brickTracker = 0;
 
 
 //    public static int unchangedBricktracker;
@@ -49,7 +49,7 @@ public class Bricks extends Game {
     }
 
 
-    public static List<Bricks> drawBricks(){
+    public List<Bricks> drawBricks(){
         List<String> configurations = new ArrayList<>();
         myBricks = new ArrayList<>();
         Scanner input = new Scanner(Bricks.class.getClassLoader().getResourceAsStream(DATA_FILE));
@@ -108,11 +108,11 @@ public class Bricks extends Game {
         return myBricks;
     }
 
-    public static void removeBrick(Bricks brick) {
+    public void removeBrick(Bricks brick) {
         brick.getShape().setFill(null);
     }
 
-    public static boolean checkBricks(Circle ball) {
+    public boolean checkBricks(Circle ball) {
         Iterator<Bricks> iter = myBricks.iterator();
         while (iter.hasNext()) {
             Bricks brick = iter.next();
@@ -125,12 +125,12 @@ public class Bricks extends Game {
 //                Score+=10;
 
                 brickTracker -= 1;
-                Game.SCORE += 1;
+                SCORE += 1;
                 return true;
             }
             if (brickTracker == 0) {
-                Game.winningText.setVisible(true);
-                Game.myAnimation.stop();
+                winningText.setVisible(true);
+                myAnimation.stop();
             }
         }
         return false;
