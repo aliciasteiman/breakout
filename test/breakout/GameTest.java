@@ -119,11 +119,13 @@ class GameTest extends DukeApplicationTest {
 
     @Test
     public void testBallBreaksBrick() {
+        //Bricks brick = new Bricks();
         myBall.setCenterX(30);
         myBall.setCenterY(95);
         //sleep(2, TimeUnit.SECONDS);
         myGame.step(Game.SECOND_DELAY);
         //sleep(2, TimeUnit.SECONDS);
+        //assertTrue(! myBricks.contains());
         //what should I be checking for here? score? brick = null?
     }
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Ball extends Game {
 
     private static Circle myBall;
-    private int myLives = 1;
+    private int myLives = 3;
 
     public Ball(int x, int y, int rad, Paint color) {
         myBall = new Circle(x, y, rad);
@@ -42,6 +42,7 @@ public class Ball extends Game {
             myBall.setCenterX(WIDTH/2);
             myBall.setCenterY(HEIGHT/2);
             //myAnimation.stop();
+
             if (LIVES == 0) {
                 losingText.setVisible(true);
                 myAnimation.stop();

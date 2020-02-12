@@ -13,10 +13,8 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
+
+import java.util.*;
 
 public class Bricks extends Game {
     private static Scene myScene;
@@ -27,6 +25,7 @@ public class Bricks extends Game {
     private Rectangle myShape;
     public static final double WIDTH = 500.0;
     public static final double HEIGHT = 500.0;
+    public Paint myColor;
 
     //public static int Bricktracker=0;
 
@@ -66,9 +65,10 @@ public class Bricks extends Game {
             String holder = s.replaceAll("\\s", "");
             int NUM_COLUMNS = holder.length();
             double BRICK_WIDTH = (double) WIDTH / NUM_COLUMNS;
-            Paint color = null;
+            //Paint color = null;
 
             for (int column = 0; NUM_COLUMNS > column; column++) {
+                /*
                 if (holder.charAt(column) == '0') {
                     color = Color.DARKSALMON;
                 }
@@ -87,6 +87,12 @@ public class Bricks extends Game {
                 else if (holder.charAt(column) == '5') {
                     color = Color.CRIMSON;
                 }
+                 */
+                Random rand = new Random();
+                int red = rand.nextInt(255);
+                int green = rand.nextInt(255);
+                int blue = rand.nextInt(255);
+                Paint color = Color.rgb(red, green, blue);
                 Bricks brick = new Bricks(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, color);
                 myBricks.add(brick);
 
