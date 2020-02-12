@@ -49,7 +49,7 @@ public class Bricks extends Game {
     }
 
 
-    public static ArrayList<Bricks> drawBricks(){
+    public static List<Bricks> drawBricks(){
         List<String> configurations = new ArrayList<>();
         myBricks = new ArrayList<>();
         Scanner input = new Scanner(Bricks.class.getClassLoader().getResourceAsStream(DATA_FILE));
@@ -117,6 +117,7 @@ public class Bricks extends Game {
         while (iter.hasNext()) {
             Bricks brick = iter.next();
             if (Shape.intersect(ball, brick.getShape()).getBoundsInLocal().getWidth() != -1) {
+                //if (brick.hasPowerUp(powerup) then call dropPowerUp()
                 dy *= -1;
                 removeBrick(brick);
 
