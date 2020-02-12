@@ -30,7 +30,7 @@ public class Game extends Application {
     public static final int HEIGHT = 500;
     public static final Paint BACKGROUND = Color.LAVENDERBLUSH;
 
-    public static final int PADDLE_WIDTH = 120;
+    public static int PADDLE_WIDTH = 120;
     public static final int PADDLE_HEIGHT = 15;
     public static int PADDLE_SPEED = 30;
     public static final Paint PADDLE_COLOR = Color.GRAY;
@@ -53,7 +53,7 @@ public class Game extends Application {
     public static Paddle myPaddle;
     public static ArrayList<Bricks> myBricks;
     private static Text livesLeft;
-    public static Text winningText; //deal with this?
+    public static Text winningText;
     public static Text losingText;
     private static Text score;
     public static Timeline myAnimation;
@@ -62,15 +62,9 @@ public class Game extends Application {
 //    private static double dy = 1;
 
 
-
     @Override
     public void start (Stage stage) {
-        //stage = myStage;
         Scene scene = setUpScene(WIDTH, HEIGHT, BACKGROUND);
-        myStage.setScene(scene);
-        myStage.setTitle("Lives remaining: "+ String.valueOf(LIVES));
-        myStage.show();
-        setAnimation(myStage);
         stage.setScene(scene);
         stage.setTitle("Breakout Game");
         stage.show();
@@ -123,7 +117,7 @@ public class Game extends Application {
         myAnimation.getKeyFrames().add(frame);
     }
 
-    public static void step(double elapsedTime) {
+    public void step(double elapsedTime) {
         Circle ball = myBall.getShape();
         Rectangle paddle = myPaddle.getShape();
 
@@ -133,31 +127,10 @@ public class Game extends Application {
         ball.setCenterX(ball.getCenterX() + dx * BALL_SPEED * elapsedTime);
         ball.setCenterY(ball.getCenterY() + dy * BALL_SPEED * elapsedTime);
 
-
-        if (Bricks.checkBricks(ball)) {
-            dy *= -1;
-        }
-
-        if (ball.getCenterX() > myScene.getWidth() - BALL_RADIUS || ball.getCenterX() < 0 + BALL_RADIUS) {
-            dx *= -1;
-        }
-        else if (ball.getCenterY() < 0 + BALL_RADIUS) {
-            dy *= -1;
-        }
-        else if (Shape.intersect(ball, paddle).getBoundsInLocal().getWidth() != -1) {
-            dy *= -1;
-        }
-        else if (ball.getCenterY() > myScene.getHeight()) {
-            myAnimation.pause();
-            LIVES-=1;
-            ball.setCenterX(WIDTH/2);
-            ball.setCenterY(HEIGHT/2);
-            //Bricks.checkgameover();
-        }
-
         Ball.checkBounds();
         Bricks.checkBricks(ball);
     }
+
 
     private static void handleKeyInput(KeyCode code) {
         Rectangle paddle = myPaddle.getShape();
