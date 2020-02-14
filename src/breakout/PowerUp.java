@@ -5,7 +5,7 @@ import java.util.*;
 public class PowerUp extends Sprite {
     private ArrayList<PowerUp> myPowerUps;
     private int NUM_POWERUPS;
-    public static ArrayList<BrickConfiguration> myBricks;
+    public static ArrayList<Bricks> myBricks;
 
 /*
     public void createPowerUps(){

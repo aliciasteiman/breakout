@@ -16,7 +16,7 @@ class GameTest extends DukeApplicationTest {
     private Scene myScene;
     private Circle myBall;
     private Rectangle myPaddle;
-    private BrickConfiguration myBricks;
+    private Bricks myBricks;
 
     @Override
     public void start(Stage stage) {

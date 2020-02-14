@@ -50,7 +50,7 @@ public class Game extends Application {
     private Ball myBall;
     private Scene myScene;
     private Paddle myPaddle;
-    private BrickConfiguration myBricks;
+    private Bricks myBricks;
 
     private Text livesLeft;
     protected Text winningText;
@@ -78,7 +78,7 @@ public class Game extends Application {
         myBall = new Ball(WIDTH/2,HEIGHT/2, BALL_RADIUS, BALL_COLOR);
         root.getChildren().add(myBall.getShape());
 
-        myBricks = new BrickConfiguration("line_config_small.txt");
+        myBricks = new Bricks("line_config_small.txt");
         for (Brick brick: myBricks.getBricks()) {
             root.getChildren().add(brick.getShape());
         }
@@ -124,48 +124,9 @@ public class Game extends Application {
         livesLeft.setText("Lives remaining: " + LIVES);
         score.setText("Score: " + SCORE);
 
+        myBall.checkBounds(WIDTH, HEIGHT, paddle, elapsedTime);
+        myBricks.checkBricks(myBall, elapsedTime);
         //myBall.updatePosition(elapsedTime);
-        ball.setCenterX(ball.getCenterX() + dx * BALL_SPEED * elapsedTime);
-        ball.setCenterY(ball.getCenterY() + dy * BALL_SPEED * elapsedTime);
-
-        //myBall.checkBounds(); //code currently having issue with this
-        if (ball.getCenterX() > WIDTH - BALL_RADIUS || ball.getCenterX() < 0 + BALL_RADIUS) {
-            dx *= -1;
-        }
-        else if (ball.getCenterY() < 0 + BALL_RADIUS) {
-            dy *= -1;
-        }
-        else if (Shape.intersect(ball, paddle).getBoundsInLocal().getWidth() != -1) {
-            System.out.println("hits");
-            dy *= -1;
-        }
-        else if (ball.getCenterY() > HEIGHT) {
-            LIVES -= 1;
-            ball.setCenterX(WIDTH / 2);
-            ball.setCenterY(HEIGHT / 2);
-            //myAnimation.stop();
-
-            if (LIVES == 0) {
-                losingText.setVisible(true);
-                //Game.myAnimation.stop();
-            }
-        }
-        //myBricks.checkBricks(ball);
-        Iterator<Brick> iter = myBricks.getBricks().iterator();
-        while (iter.hasNext()) {
-            Brick brick = iter.next();
-            if (Shape.intersect(ball, brick.getShape()).getBoundsInLocal().getWidth() != -1) {
-                //if (brick.hasPowerUp(powerup) then call dropPowerUp()
-                dy *= -1;
-                myBricks.removeBrick(brick);
-                //brickTracker -= 1;
-                SCORE += 1;
-            }
-            //if (brickTracker == 0) {
-            //winningText.setVisible(true);
-            //Game.myAnimation.stop();
-            //}
-        }
     }
 
 
@@ -173,17 +134,7 @@ public class Game extends Application {
         Rectangle paddle = myPaddle.getShape();
         Circle ball = myBall.getShape();
 
-        if (code == KeyCode.RIGHT) { //moves paddle right
-            if (paddle.getX() > WIDTH) {
-                paddle.setX(0 - PADDLE_WIDTH);
-            }
-            paddle.setX(paddle.getX() + PADDLE_SPEED);
-        } else if (code == KeyCode.LEFT) { //moves paddle left
-            if (paddle.getX() < 0) {
-                paddle.setX(WIDTH + PADDLE_WIDTH);
-            }
-            paddle.setX(paddle.getX() - PADDLE_SPEED);
-        }
+        myPaddle.movePaddle(code, WIDTH);
 
         if (code == KeyCode.SPACE) { //starts and pauses ball animation
             if (myAnimation.getStatus() == Animation.Status.RUNNING) {
