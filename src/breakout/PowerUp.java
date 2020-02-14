@@ -1,21 +1,31 @@
 package breakout;
-import java.util.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class PowerUp extends Sprite {
-    private ArrayList<PowerUp> myPowerUps;
+    private List<Brick> myPowerUps;
+    //private List<Brick> bricks;
     private int NUM_POWERUPS;
-    public static ArrayList<Bricks> myBricks;
 
-/*
-    public void createPowerUps(){
-        ArrayList<PowerUp> myPowerUps = new ArrayList<>();
-        Collections.shuffle(myBricks);
-        for (int i = 0; i < NUM_POWERUPS; i++){
-            //put power ups in bricks
-            //add power ups to myPowerUp
-
+    public PowerUp() {
+        myPowerUps = new ArrayList<>();
+        List<Brick> bricks = myBricks.getBricks();
+        Collections.shuffle(bricks);
+        for (int i = 0; i < NUM_POWERUPS; i++) {
+            Rectangle brick = bricks.get(i).getShape();
+            Brick powerUp = new Brick(brick.getX(), brick.getY(), 50, 20, Color.BLACK);
+            myPowerUps.add(powerUp);
+        }
     }
+
+    public List<Brick> getPowerUps() {
+        return myPowerUps;
+    }
+
 
     public String getPower() {
         ArrayList<String> allPowers = new ArrayList<>();
@@ -26,7 +36,19 @@ public class PowerUp extends Sprite {
         allPowers.add("ballSlowDown");
         NUM_POWERUPS = allPowers.size();
         Collections.shuffle(allPowers);
-       return allPowers.get(0);
+        return allPowers.get(0);
+    }
+
+    public String setPower(){
+        ArrayList<String> powersList = new ArrayList<>();
+        powersList.add("longerpaddle");
+        powersList.add("shorterpaddle");
+        powersList.add("multipleballs");
+        powersList.add("ballspeedup");
+        powersList.add("ballslowdown");
+        Collections.shuffle(powersList);
+        NUM_POWERUPS = powersList.size();
+       return powersList.get(0);
     }
 
     public void longerPaddle(Paddle myPaddle){
@@ -35,46 +57,16 @@ public class PowerUp extends Sprite {
 
     public void shorterPaddle(Paddle myPaddle) {
         myPaddle.getShape().setWidth(PADDLE_WIDTH/2);
-        List<PowerUp> myPowerups = new ArrayList<>();
-        for (int i=0; i<NUM_POWERUPS;i++){
-            Rectangle p1= new Rectangle();
-
-
-        }
-
     }
 
-    public String setPower(){
-        ArrayList<String> listpowers = new ArrayList<>();
-        listpowers.add("longerpaddle");
-        listpowers.add("shorterpaddle");
-        listpowers.add("multipleballs");
-        listpowers.add("ballspeedup");
-        listpowers.add("ballslowdown");
-        //Collections.shuffle(listpowers);
-        NUM_POWERUPS=listpowers.size();
-       return listpowers.get(0);
-    }
-
-    public void longerpaddle(Paddle myPaddle){
-        int new_width =myPaddle.WIDTH*2;
-        myPaddle.WIDTH=new_width;
-    }
-
-    public void shorterpaddle(Paddle myPaddle){
-        int new_width= myPaddle.WIDTH/2;
-        myPaddle.WIDTH=new_width;
-    }
-
-    public void ballspeedup(Ball myBall){
-        int new_speed= myBall.BALL_SPEED*3;
-        myBall.BALL_SPEED=new_speed;
+    public void ballSpeedUp(Ball myBall){
+        int fastSpeed = myBall.BALL_SPEED * 3;
+        myBall.BALL_SPEED = fastSpeed;
     }
 
     public void ballslowdown(Ball myBall){
-        int new_speed= myBall.BALL_SPEED/3;
-        myBall.BALL_SPEED=new_speed;
+        int slowSpeed= myBall.BALL_SPEED/3;
+        myBall.BALL_SPEED = slowSpeed;
     }
 
- */
 }

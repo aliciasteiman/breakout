@@ -11,6 +11,7 @@ public class Bricks extends Sprite {
     private final int BRICK_HEIGHT = 20;
     private final int ROW_SEPARATION = 2;
     private int brickTracker = 0;
+    private int SCORE = 0;
 
     private List<Brick> bricks;
 
@@ -43,28 +44,30 @@ public class Bricks extends Sprite {
         }
     }
 
-
     public List<Brick> getBricks() {
         return bricks;
     }
 
-    public void checkBricks(Ball ball, double elapsedTime) {
+    public void checkBrickCollision(Ball ball, double elapsedTime) {
         Iterator<Brick> iter = bricks.iterator();
         while (iter.hasNext()) {
             Brick brick = iter.next();
             if (checkCollision(ball.getShape(), brick.getShape())) {
                 //if (brick.hasPowerUp(powerup) then call dropPowerUp()
                 dy *= -1;
-                ball.updatePosition(elapsedTime);
                 brick.removeBrick();
                 brickTracker -= 1;
-                Game.SCORE += 1;
-            }
-            if (brickTracker == 0) {
-                //winningText.setVisible(true);
-                //Game.myAnimation.stop();
+                SCORE += 1;
             }
         }
+    }
+
+    public boolean checkBricksClear() {
+        return brickTracker == 0;
+    }
+
+    public int getScore() {
+        return SCORE;
     }
 
 

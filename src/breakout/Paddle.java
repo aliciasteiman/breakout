@@ -7,9 +7,9 @@ import javafx.scene.shape.Rectangle;
 public class Paddle extends Sprite {
 
     private Rectangle myShape;
-    private final int PADDLE_WIDTH = 120;
-    private final int PADDLE_HEIGHT = 15;
-    private final int PADDLE_SPEED = 30;
+    //private final int PADDLE_WIDTH = 120;
+    //private final int PADDLE_HEIGHT = 15;
+    //private final int PADDLE_SPEED = 30;
 
     public Paddle(int x, int y, int width, int height, Paint color) {
         myShape = new Rectangle(x, y, width, height);

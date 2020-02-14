@@ -11,13 +11,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.util.Iterator;
 
 
 public class Game extends Application {
@@ -51,6 +48,7 @@ public class Game extends Application {
     private Scene myScene;
     private Paddle myPaddle;
     private Bricks myBricks;
+    private PowerUp myPowerUps;
 
     private Text livesLeft;
     protected Text winningText;
@@ -80,6 +78,11 @@ public class Game extends Application {
 
         myBricks = new Bricks("line_config_small.txt");
         for (Brick brick: myBricks.getBricks()) {
+            root.getChildren().add(brick.getShape());
+        }
+
+        myPowerUps = new PowerUp();
+        for (Brick brick : myPowerUps.getPowerUps()) {
             root.getChildren().add(brick.getShape());
         }
 
@@ -118,15 +121,21 @@ public class Game extends Application {
     }
 
     public void step(double elapsedTime) {
-        Circle ball = myBall.getShape();
-        Rectangle paddle = myPaddle.getShape();
+        livesLeft.setText("Lives remaining: " + myBall.getLives());
+        score.setText("Score: " + myBricks.getScore());
 
-        livesLeft.setText("Lives remaining: " + LIVES);
-        score.setText("Score: " + SCORE);
+        myBall.checkBounds(WIDTH, HEIGHT, myPaddle, elapsedTime);
+        myBricks.checkBrickCollision(myBall, elapsedTime);
 
-        myBall.checkBounds(WIDTH, HEIGHT, paddle, elapsedTime);
-        myBricks.checkBricks(myBall, elapsedTime);
-        //myBall.updatePosition(elapsedTime);
+        if (myBricks.checkBricksClear()) {
+            winningText.setVisible(true);
+            myAnimation.stop();
+        }
+
+        if (myBall.checkLivesLeft()) {
+            losingText.setVisible(true);
+            myAnimation.stop();
+        }
     }
 
 
