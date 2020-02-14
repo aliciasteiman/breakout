@@ -3,7 +3,8 @@ game
 
 This project implements the game of Breakout.
 
-Name: 
+Name: Suomo Ammah
+      Alicia Steiman
 
 ### Timeline
 
