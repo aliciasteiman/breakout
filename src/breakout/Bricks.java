@@ -29,7 +29,7 @@ public class Bricks extends Sprite {
             String s = configurations.get(row);
             String holder = s.replaceAll("\\s", "");
             int NUM_COLUMNS = holder.length();
-            double BRICK_WIDTH = (double) Game.WIDTH / NUM_COLUMNS;
+            double BRICK_WIDTH = (double) 500 / NUM_COLUMNS;
 
             for (int column = 0; NUM_COLUMNS > column; column++) {
                 Random rand = new Random();
@@ -42,6 +42,7 @@ public class Bricks extends Sprite {
                 brickTracker += 1;
             }
         }
+        //bricks.setId("bricks");
     }
 
     public List<Brick> getBricks() {
