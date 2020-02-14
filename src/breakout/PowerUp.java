@@ -10,10 +10,19 @@ public class PowerUp extends Sprite {
     private List<Brick> myPowerUps;
     //private List<Brick> bricks;
     private int NUM_POWERUPS;
-
+/*
     public PowerUp() {
         myPowerUps = new ArrayList<>();
         List<Brick> bricks = myBricks.getBricks();
+
+        //not working because bricks isn't in the Sprite constructor, but has a Stack overflow error when in constructor
+        //because too many myBricks are being created (because they're also created in Game
+        //does Sprite just suck
+        //how do I make my classes interact without depending on each other
+        //help
+        //oh also my ball isn't updating its position when it hits a brick, not sure where to fix that
+        //does my code just need mega reorganizing
+
         Collections.shuffle(bricks);
         for (int i = 0; i < NUM_POWERUPS; i++) {
             Rectangle brick = bricks.get(i).getShape();
@@ -22,6 +31,8 @@ public class PowerUp extends Sprite {
         }
     }
 
+
+ */
     public List<Brick> getPowerUps() {
         return myPowerUps;
     }

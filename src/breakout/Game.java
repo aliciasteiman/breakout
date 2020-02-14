@@ -80,11 +80,13 @@ public class Game extends Application {
         for (Brick brick: myBricks.getBricks()) {
             root.getChildren().add(brick.getShape());
         }
-
+/*
         myPowerUps = new PowerUp();
         for (Brick brick : myPowerUps.getPowerUps()) {
             root.getChildren().add(brick.getShape());
         }
+
+ */
 
         livesLeft = createText(livesLeft, "Lives remaining: " + LIVES, 8, 450, 15, true);
         root.getChildren().add(livesLeft);

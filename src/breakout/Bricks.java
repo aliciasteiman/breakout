@@ -54,7 +54,7 @@ public class Bricks extends Sprite {
             Brick brick = iter.next();
             if (checkCollision(ball.getShape(), brick.getShape())) {
                 //if (brick.hasPowerUp(powerup) then call dropPowerUp()
-                dy *= -1;
+                ball.bounce(elapsedTime);
                 brick.removeBrick();
                 brickTracker -= 1;
                 SCORE += 1;

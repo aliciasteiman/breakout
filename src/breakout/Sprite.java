@@ -4,18 +4,14 @@ package breakout;
 import javafx.scene.shape.Shape;
 
 
-public abstract class Sprite {
-
-    protected Ball myBall;
-    protected Bricks myBricks;
-    protected Paddle myPaddle;
+public abstract class Sprite { //think about if this class is really necessary
 
     protected int PADDLE_WIDTH = 120;
     protected int PADDLE_HEIGHT = 15;
     protected int PADDLE_SPEED = 30;
 
 
-    protected int dx = 1;
+    protected int dx = 1;//move to ball
     protected int dy = 1;
     protected int BALL_SPEED = 100;
 

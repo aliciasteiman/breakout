@@ -27,10 +27,14 @@ public class Ball extends Sprite {
         return myLives;
     }
 
-    //@Override
     public void updatePosition(double elapsedTime) {
         myShape.setCenterX(myShape.getCenterX() + dx * BALL_SPEED * elapsedTime);
         myShape.setCenterY(myShape.getCenterY() + dy * BALL_SPEED * elapsedTime);
+    }
+
+    public void bounce(double elapsedTime) {
+        dy *= -1;
+        updatePosition(elapsedTime);
     }
 
     public void checkBounds(int width, int height, Paddle paddle, double elapsedTime) {
