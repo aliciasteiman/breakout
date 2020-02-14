@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -43,7 +42,7 @@ public class Game extends Application {
     private Scene myGame;
     private Scene myInstructions;
 
-    private Bricks myBricks;
+    private Level myLevel;
     private PowerUp myPowerUps;
 
     private Text livesLeft;
@@ -95,8 +94,8 @@ public class Game extends Application {
         myBall = new Ball(WIDTH/2,HEIGHT/2, BALL_RADIUS, BALL_COLOR);
         root.getChildren().add(myBall.getShape());
 
-        myBricks = new Bricks("line_config_small.txt");
-        for (Brick brick: myBricks.getBricks()) {
+        myLevel = new Level("line_config_small.txt");
+        for (Brick brick: myLevel.getBricks()) {
             root.getChildren().add(brick.getShape());
         }
 /*
@@ -108,7 +107,7 @@ public class Game extends Application {
         livesLeft = createText(livesLeft, "Lives remaining: " + myBall.getLives(), 8, 450, 15, true);
         root.getChildren().add(livesLeft);
 
-        score = createText(score, "Score: " + myBricks.getScore(), 8, 430, 15, true);
+        score = createText(score, "Score: " + myLevel.getScore(), 8, 430, 15, true);
         root.getChildren().add(score);
 
         winningText = createText(winningText, "You won! Congratulations!", 50, 200, 30, false);
@@ -141,12 +140,12 @@ public class Game extends Application {
 
     public void step(double elapsedTime) {
         livesLeft.setText("Lives remaining: " + myBall.getLives());
-        score.setText("Score: " + myBricks.getScore());
+        score.setText("Score: " + myLevel.getScore());
 
         myBall.checkBounds(WIDTH, HEIGHT, myPaddle, elapsedTime);
-        myBricks.checkBrickCollision(myBall, elapsedTime);
+        myLevel.checkBrickCollision(myBall, elapsedTime);
 
-        if (myBricks.checkBricksClear()) {
+        if (myLevel.checkBricksClear()) {
             winningText.setVisible(true);
             myAnimation.stop();
         }
@@ -184,10 +183,10 @@ public class Game extends Application {
         }
 
         if (code == KeyCode.C) { //clear all bricks
-            for (Brick brick : myBricks.getBricks()) {
+            for (Brick brick : myLevel.getBricks()) {
                 brick.getShape().setFill(null);
             }
-            myBricks.getBricks().clear();
+            myLevel.getBricks().clear();
         }
     }
 

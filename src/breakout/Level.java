@@ -2,11 +2,10 @@ package breakout;
 
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 
 import java.util.*;
 
-public class Bricks extends Sprite {
+public class Level extends Sprite {
 
     private final int BRICK_HEIGHT = 20;
     private final int ROW_SEPARATION = 2;
@@ -15,10 +14,10 @@ public class Bricks extends Sprite {
 
     private List<Brick> bricks;
 
-    public Bricks(String file) {
+    public Level(String file) {
         List<String> configurations = new ArrayList<>();
         bricks = new ArrayList<>();
-        Scanner input = new Scanner(Bricks.class.getClassLoader().getResourceAsStream(file));
+        Scanner input = new Scanner(Level.class.getClassLoader().getResourceAsStream(file));
 
         while (input.hasNext()){
             configurations.add(input.nextLine());

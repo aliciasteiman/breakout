@@ -9,8 +9,6 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
-import java.util.concurrent.TimeUnit;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -20,7 +18,7 @@ class GameTest extends DukeApplicationTest {
     private Scene myScene;
     private Circle myBall;
     private Rectangle myPaddle;
-    private Bricks myBricks;
+    private Level myLevel;
 
     @Override
     public void start(Stage stage) {
@@ -109,13 +107,13 @@ class GameTest extends DukeApplicationTest {
 
     @Test
     public void testKeyBlocks() {
-        for (int i = 0; i <= myBricks.getBricks().size() - 6; i += 6) { //checking first brick of each row
-            Brick brick = myBricks.getBricks().get(i);
+        for (int i = 0; i <= myLevel.getBricks().size() - 6; i += 6) { //checking first brick of each row
+            Brick brick = myLevel.getBricks().get(i);
             assertEquals(0, brick.getShape().getX());
             assertEquals(i/6 * 22, brick.getShape().getY());
         }
         for (int i = 0; i < 6; i++) { //check first brick of each column
-            Brick brick = myBricks.getBricks().get(i);
+            Brick brick = myLevel.getBricks().get(i);
             assertEquals(i * (((500 - (6*2))/6.0) + 2), brick.getShape().getX());
             assertEquals(0, brick.getShape().getY());
         }
@@ -146,14 +144,15 @@ class GameTest extends DukeApplicationTest {
         myBall.setCenterX(30);
         myBall.setCenterY(95);
         myGame.step(1.0/60);
-        assertEquals(1, myBricks.getScore());
+        assertEquals(1, myLevel.getScore());
 
         myBall.setCenterX(235);
         myBall.setCenterY(95);
         myGame.step(1.0/60);
-        assertEquals(2, myBricks.getScore());
+        assertEquals(2, myLevel.getScore());
     }
 
-
+//move some tests around so they're in more appropriate classes, if the step method isn't involved, consider moving
+    //the method
 
 }
