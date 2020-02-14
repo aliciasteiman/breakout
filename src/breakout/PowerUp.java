@@ -1,23 +1,13 @@
 package breakout;
-import java.awt.*;
 import java.util.*;
-import java.util.List;
-
-import javafx.scene.*;
-import javafx.scene.image.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.paint.Paint.*;
 
 
-public class PowerUp extends Game {
+public class PowerUp extends Sprite {
     private ArrayList<PowerUp> myPowerUps;
     private int NUM_POWERUPS;
-    public static ArrayList<Bricks> myBricks;
-    public int NUM_POWERUPS;
+    public static ArrayList<BrickConfiguration> myBricks;
 
-
+/*
     public void createPowerUps(){
         ArrayList<PowerUp> myPowerUps = new ArrayList<>();
         Collections.shuffle(myBricks);
@@ -85,4 +75,6 @@ public class PowerUp extends Game {
         int new_speed= myBall.BALL_SPEED/3;
         myBall.BALL_SPEED=new_speed;
     }
+
+ */
 }

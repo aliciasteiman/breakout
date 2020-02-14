@@ -3,7 +3,6 @@ package breakout;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -12,24 +11,20 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.scene.shape.Shape;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 
 public class Game extends Application {
 
     public static final int WIDTH = 500;
     public static final int HEIGHT = 500;
-    private static final Paint BACKGROUND = Color.LAVENDERBLUSH;
+    public static final Paint BACKGROUND = Color.LAVENDERBLUSH;
 
     public static final int PADDLE_WIDTH = 120;
     public static final int PADDLE_HEIGHT = 15;
@@ -43,19 +38,19 @@ public class Game extends Application {
     public static final int FRAMES_PER_SECOND = 60;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
-    protected int LIVES = 3;
-    protected int SCORE = 0; //protected = accessible from a subclass
-    protected double dx = 1;
-    protected double dy = 1;
+    public static int LIVES = 3;
+    public static int SCORE = 0; //protected = accessible from a subclass
+    public double dx = 1;
+    public double dy = 1;
 
 
     private Stage myStage;
-    protected Timeline myAnimation;
+    private Timeline myAnimation;
 
-    protected Ball myBall;
-    public static Scene myScene;
-    public static Paddle myPaddle;
-    public static List<Bricks> myBricks;
+    private Ball myBall;
+    private Scene myScene;
+    private Paddle myPaddle;
+    private BrickConfiguration myBricks;
 
     private Text livesLeft;
     protected Text winningText;
@@ -65,7 +60,7 @@ public class Game extends Application {
 //    private static double dx = 1;
 //    private static double dy = 1;
 
-//putting in comment
+
     @Override
     public void start (Stage stage) {
         Scene scene = setUpScene(WIDTH, HEIGHT, BACKGROUND);
@@ -79,25 +74,25 @@ public class Game extends Application {
         Group root = new Group();
         myPaddle = new Paddle(WIDTH/2 - PADDLE_WIDTH/2, HEIGHT - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_COLOR);
         root.getChildren().add(myPaddle.getShape());
+
         myBall = new Ball(WIDTH/2,HEIGHT/2, BALL_RADIUS, BALL_COLOR);
         root.getChildren().add(myBall.getShape());
-        myBricks = Bricks.drawBricks();
-        for (Bricks brick: myBricks) {
+
+        myBricks = new BrickConfiguration("line_config_small.txt");
+        for (Brick brick: myBricks.getBricks()) {
             root.getChildren().add(brick.getShape());
         }
 
-        livesLeft = createText(livesLeft, "Lives remaining: " + LIVES, 8, 450, 15);
+        livesLeft = createText(livesLeft, "Lives remaining: " + LIVES, 8, 450, 15, true);
         root.getChildren().add(livesLeft);
 
-        score = createText(score, "Score: " + SCORE, 8, 430, 15);
+        score = createText(score, "Score: " + SCORE, 8, 430, 15, true);
         root.getChildren().add(score);
 
-        winningText = createText(winningText, "You won! Congratulations!", 50, 200, 30);
-        winningText.setVisible(false);
+        winningText = createText(winningText, "You won! Congratulations!", 50, 200, 30, false);
         root.getChildren().add(winningText);
 
-        losingText = createText(losingText, "You lost. Better luck next time.", 30, 200, 30);
-        losingText.setVisible(false);
+        losingText = createText(losingText, "You lost. Better luck next time.", 30, 200, 30, false);
         root.getChildren().add(losingText);
 
         myScene = new Scene(root, width, height, background);
@@ -105,12 +100,13 @@ public class Game extends Application {
         return myScene;
     }
 
-    private Text createText(Text text, String message, double xPos, double yPos, int size) {
+    private Text createText(Text text, String message, double xPos, double yPos, int size, boolean visibiity) {
         text = new Text();
         text.setText(message);
         text.setX(xPos);
         text.setY(yPos);
         text.setFont(Font.font(size));
+        text.setVisible(visibiity);
         return text;
     }
 
@@ -128,19 +124,66 @@ public class Game extends Application {
         livesLeft.setText("Lives remaining: " + LIVES);
         score.setText("Score: " + SCORE);
 
+        //myBall.updatePosition(elapsedTime);
         ball.setCenterX(ball.getCenterX() + dx * BALL_SPEED * elapsedTime);
         ball.setCenterY(ball.getCenterY() + dy * BALL_SPEED * elapsedTime);
 
-        Ball.checkBounds();
-        Bricks.checkBricks(ball);
+        //myBall.checkBounds(); //code currently having issue with this
+        if (ball.getCenterX() > WIDTH - BALL_RADIUS || ball.getCenterX() < 0 + BALL_RADIUS) {
+            dx *= -1;
+        }
+        else if (ball.getCenterY() < 0 + BALL_RADIUS) {
+            dy *= -1;
+        }
+        else if (Shape.intersect(ball, paddle).getBoundsInLocal().getWidth() != -1) {
+            System.out.println("hits");
+            dy *= -1;
+        }
+        else if (ball.getCenterY() > HEIGHT) {
+            LIVES -= 1;
+            ball.setCenterX(WIDTH / 2);
+            ball.setCenterY(HEIGHT / 2);
+            //myAnimation.stop();
+
+            if (LIVES == 0) {
+                losingText.setVisible(true);
+                //Game.myAnimation.stop();
+            }
+        }
+        //myBricks.checkBricks(ball);
+        Iterator<Brick> iter = myBricks.getBricks().iterator();
+        while (iter.hasNext()) {
+            Brick brick = iter.next();
+            if (Shape.intersect(ball, brick.getShape()).getBoundsInLocal().getWidth() != -1) {
+                //if (brick.hasPowerUp(powerup) then call dropPowerUp()
+                dy *= -1;
+                myBricks.removeBrick(brick);
+                //brickTracker -= 1;
+                SCORE += 1;
+            }
+            //if (brickTracker == 0) {
+            //winningText.setVisible(true);
+            //Game.myAnimation.stop();
+            //}
+        }
     }
 
 
-    private static void handleKeyInput(KeyCode code) {
+    private void handleKeyInput(KeyCode code) {
         Rectangle paddle = myPaddle.getShape();
         Circle ball = myBall.getShape();
 
-        Paddle.movePaddle(code);
+        if (code == KeyCode.RIGHT) { //moves paddle right
+            if (paddle.getX() > WIDTH) {
+                paddle.setX(0 - PADDLE_WIDTH);
+            }
+            paddle.setX(paddle.getX() + PADDLE_SPEED);
+        } else if (code == KeyCode.LEFT) { //moves paddle left
+            if (paddle.getX() < 0) {
+                paddle.setX(WIDTH + PADDLE_WIDTH);
+            }
+            paddle.setX(paddle.getX() - PADDLE_SPEED);
+        }
 
         if (code == KeyCode.SPACE) { //starts and pauses ball animation
             if (myAnimation.getStatus() == Animation.Status.RUNNING) {
@@ -162,49 +205,12 @@ public class Game extends Application {
         }
 
         if (code == KeyCode.C) { //clear all bricks
-            for (Bricks brick : myBricks) {
+            for (Brick brick : myBricks.getBricks()) {
                 brick.getShape().setFill(null);
             }
-            myBricks.clear();
+            myBricks.getBricks().clear();
         }
     }
 
-
-
-//    public void getcheats(KeyCode code){
-//        if (code == KeyCode.L) {
-//            LIVES+=1;
-//        }
-//        if (code == KeyCode.P) {
-//            cheatpaddlelength();
-//        }
-//        if (code == KeyCode.COLON) {
-//            Bricktracker= Bricktracker/2;
-//        }
-//    }
-
-
-//    public void cheatpaddlelength(){
-//        int cheatPADDLEWIDTH=PADDLE_WIDTH*2;
-//        Paddle cheatPaddle = new Paddle(Game.WIDTH/2 - Game.PADDLE_WIDTH/2, Game.HEIGHT - Game.PADDLE_HEIGHT, cheatPADDLEWIDTH, PADDLE_HEIGHT, PADDLE_COLOR);
-//        myPaddle=cheatPaddle;
-//    }
-
-//    public static void paddlepowerup(){
-//        int inter = unchangedBricktracker/6;
-//        if (Bricktracker==inter && inter%6==0){
-//            myAnimation = new Timeline();
-//            myAnimation.setCycleCount(Timeline.INDEFINITE);
-//            int cheatPADDLEWIDTH=PADDLE_WIDTH*2;
-//            Paddle cheatPaddle = new Paddle(Game.WIDTH/2 - Game.PADDLE_WIDTH/2, Game.HEIGHT - Game.PADDLE_HEIGHT, cheatPADDLEWIDTH, PADDLE_HEIGHT, PADDLE_COLOR);
-//            myPaddle=cheatPaddle;
-//            Group root = new Group();
-//            root.getChildren().add(myPaddle.getShape());
-//            KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step(SECOND_DELAY));
-//            myAnimation.getKeyFrames().add(frame);
-//            myAnimation.play();
-//
-//        }
-//    }
 }
 
