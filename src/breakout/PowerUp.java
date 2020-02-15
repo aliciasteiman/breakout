@@ -1,83 +1,29 @@
 package breakout;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Ellipse;
 
-public class PowerUp extends Sprite {
-    private List<Brick> myPowerUps;
-    //private List<Brick> bricks;
-    private int NUM_POWERUPS;
-/*
-    public PowerUp() {
-        myPowerUps = new ArrayList<>();
-        List<Brick> bricks = myBricks.getBricks();
+public abstract class PowerUp extends Sprite {
 
-        //not working because bricks isn't in the Sprite constructor, but has a Stack overflow error when in constructor
-        //because too many myBricks are being created (because they're also created in Game
-        //does Sprite just suck
-        //how do I make my classes interact without depending on each other
-        //help
-        //oh also my ball isn't updating its position when it hits a brick, not sure where to fix that
-        //does my code just need mega reorganizing
+    protected Ellipse myShape;
+    private int POWERUP_SPEED = 50;
 
-        Collections.shuffle(bricks);
-        for (int i = 0; i < NUM_POWERUPS; i++) {
-            Rectangle brick = bricks.get(i).getShape();
-            Brick powerUp = new Brick(brick.getX(), brick.getY(), 50, 20, Color.BLACK);
-            myPowerUps.add(powerUp);
-        }
+    public PowerUp(double xPos, double yPos, double xRad, double yRad, Paint color) {
+        myShape = new Ellipse(xPos, yPos, xRad, yRad);
+        myShape.setFill(color);
     }
 
-
- */
-    public List<Brick> getPowerUps() {
-        return myPowerUps;
+    public Ellipse getShape() {
+        return myShape;
     }
 
-
-    public String getPower() {
-        ArrayList<String> allPowers = new ArrayList<>();
-        allPowers.add("longerPaddle");
-        allPowers.add("shorterPaddle");
-        allPowers.add("multipleBalls");
-        allPowers.add("ballSpeedUp");
-        allPowers.add("ballSlowDown");
-        NUM_POWERUPS = allPowers.size();
-        Collections.shuffle(allPowers);
-        return allPowers.get(0);
+    public void dropPowerUp(double elapsedTime) {
+        myShape.setCenterY(myShape.getCenterY() + POWERUP_SPEED * elapsedTime);
     }
 
-    public String setPower(){
-        ArrayList<String> powersList = new ArrayList<>();
-        powersList.add("longerpaddle");
-        powersList.add("shorterpaddle");
-        powersList.add("multipleballs");
-        powersList.add("ballspeedup");
-        powersList.add("ballslowdown");
-        Collections.shuffle(powersList);
-        NUM_POWERUPS = powersList.size();
-       return powersList.get(0);
-    }
+    public abstract void applyPowerUp(Paddle myPaddle);
 
-    public void longerPaddle(Paddle myPaddle){
-        myPaddle.getShape().setWidth(PADDLE_WIDTH * 2);
+    public void removePowerUp() {
+        myShape.setFill(null);
     }
-
-    public void shorterPaddle(Paddle myPaddle) {
-        myPaddle.getShape().setWidth(PADDLE_WIDTH/2);
-    }
-
-    public void ballSpeedUp(Ball myBall){
-        int fastSpeed = myBall.BALL_SPEED * 3;
-        myBall.BALL_SPEED = fastSpeed;
-    }
-
-    public void ballslowdown(Ball myBall){
-        int slowSpeed= myBall.BALL_SPEED/3;
-        myBall.BALL_SPEED = slowSpeed;
-    }
-
 }

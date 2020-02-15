@@ -6,6 +6,7 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -13,6 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -60,6 +62,8 @@ public class Game extends Application {
 
     private String LEVEL_ONE = "line_config_small.txt";
 
+    private PowerUp longerPaddle;
+
     @Override
     public void start (Stage stage) {
         myStage = stage;
@@ -84,7 +88,7 @@ public class Game extends Application {
         playGame = new Button("Play game");
         playGame.setLayoutX(WIDTH/2 - playGame.getWidth());
         playGame.setLayoutY(400);
-        playGame.setOnMouseClicked(e -> handleMouseInputPlay(e.getX(), e.getY()));
+        playGame.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
         root.getChildren().add(playGame);
 
         myInstructions = new Scene(root, width, height, background);
@@ -103,13 +107,13 @@ public class Game extends Application {
         playAgain = new Button("Yes");
         playAgain.setLayoutX(WIDTH/4);
         playAgain.setLayoutY(400);
-        playAgain.setOnMouseClicked(e -> handleMouseInputPlayAgain(e.getX(), e.getY()));
+        playAgain.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
         root.getChildren().add(playAgain);
 
         quitGame = new Button("No");
         quitGame.setLayoutX(WIDTH/2);
         quitGame.setLayoutY(400);
-        quitGame.setOnMouseClicked(e -> handleMouseInputPlay(e.getX(), e.getY()));
+        quitGame.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
         root.getChildren().add(quitGame);
 
         myRestart = new Scene(root, width, height, background);
@@ -123,6 +127,9 @@ public class Game extends Application {
 
         myBall = new Ball(WIDTH/2,HEIGHT/2, BALL_RADIUS, BALL_COLOR);
         root.getChildren().add(myBall.getShape());
+
+        longerPaddle = new LongerPaddle(200, 10, 5, 5, Color.ORANGE);
+        root.getChildren().add(longerPaddle.getShape());
 
         myLevel = level;
         for (Brick brick: myLevel.createConfiguration()) {
@@ -188,6 +195,13 @@ public class Game extends Application {
             myAnimation.pause();
             myStage.setScene(setUpPlayAgainScene(WIDTH, HEIGHT, BACKGROUND));
         }
+        if (myLevel.getScore() % 3 == 0) {
+            longerPaddle.dropPowerUp(elapsedTime);
+        }
+        if (Shape.intersect(longerPaddle.getShape(), myPaddle.getShape()).getBoundsInLocal().getWidth() != -1) {
+            longerPaddle.applyPowerUp(myPaddle);
+            longerPaddle.removePowerUp();
+        }
     }
 
 
@@ -228,21 +242,18 @@ public class Game extends Application {
         }
     }
 
-    private void handleMouseInputPlay(double x, double y) {
+    private void handleMouseInput(double x, double y) {
         if (playGame.contains(x, y)) {
             myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelOne(LEVEL_ONE)));
         }
-    }
-
-    private void handleMouseInputPlayAgain(double x, double y) {
-        if (playAgain.contains(x, y)) {
-            //have this access what level the user was on?
-            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelOne(LEVEL_ONE)));
+        else if (playAgain.contains(x, y)) {
+            System.out.println(myLevel);
+            //have this access what level the user was on....
+            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, myLevel));
         }
-        if (quitGame.contains(x, y)) {
+        else if (quitGame.contains(x, y)) {
             myStage.close();
         }
     }
-
 }
 
