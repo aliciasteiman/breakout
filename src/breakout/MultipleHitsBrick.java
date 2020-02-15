@@ -17,11 +17,11 @@ public class MultipleHitsBrick extends Brick {
     @Override
     public boolean checkBreak(Ball ball) { //executing three times? why?
         if (checkCollision(ball.getShape(), myShape)) {
-            System.out.println("hits level 2");
             NUM_HITS -= 1;
             double opacity = myShape.getOpacity();
             opacity -= 1.0/3;
             myShape.setOpacity(opacity);
+            System.out.println("hits level 2");
             System.out.println(NUM_HITS);
             System.out.println(myShape.getOpacity());
             if (NUM_HITS == 0) {

@@ -58,7 +58,7 @@ public class Ball extends Sprite {
         updatePosition(elapsedTime);
     }
 
-    public boolean checkLivesLeft() {
+    public boolean checkNoLivesLeft() {
         return myLives == 0;
     }
 
