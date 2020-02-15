@@ -21,13 +21,11 @@ public class MultipleHitsBrick extends Brick {
             double opacity = myShape.getOpacity();
             opacity -= 1.0/3;
             myShape.setOpacity(opacity);
-            System.out.println("hits level 2");
-            System.out.println(NUM_HITS);
-            System.out.println(myShape.getOpacity());
             if (NUM_HITS == 0) {
                 removeBrick();
                 return true;
             }
+            return true;
         }
         return false;
     }

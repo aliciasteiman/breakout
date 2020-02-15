@@ -47,7 +47,6 @@ public class LevelTwo extends Level {
         while (iter.hasNext()) {
             Brick brick = iter.next();
             if (brick.checkBreak(ball)) {
-                System.out.println("ball hit multiple hit brick");
                 ball.bounce(elapsedTime);
                 SCORE += 1;
             }
@@ -58,6 +57,11 @@ public class LevelTwo extends Level {
     public List<Brick> getBricks() {
         createConfiguration();
         return bricksLevelTwo;
+    }
+
+    @Override
+    public String getLevel() {
+        return "2";
     }
 
 }

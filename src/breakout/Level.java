@@ -37,5 +37,7 @@ public abstract class Level extends Sprite {
         return SCORE;
     }
 
+    public abstract String getLevel();
+
 
 }
