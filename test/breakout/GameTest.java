@@ -18,11 +18,11 @@ class GameTest extends DukeApplicationTest {
     private Scene myScene;
     private Circle myBall;
     private Rectangle myPaddle;
-    private Level myLevel;
+    private LevelOne myLevel;
 
     @Override
     public void start(Stage stage) {
-        myScene = myGame.setUpGameScene(500, 500, Color.LAVENDERBLUSH);
+        myScene = myGame.setUpLevelOneScene(500, 500, Color.LAVENDERBLUSH);
         stage.setScene(myScene);
         stage.show();
 

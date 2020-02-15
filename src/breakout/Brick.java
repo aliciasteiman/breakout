@@ -3,7 +3,10 @@ package breakout;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 
-public class Brick extends Sprite {
+import java.util.Iterator;
+import java.util.List;
+
+public abstract class Brick extends Sprite {
 
     private Rectangle myShape;
 
@@ -19,4 +22,6 @@ public class Brick extends Sprite {
     public void removeBrick() {
         myShape.setFill(null);
     }
+
+    public abstract boolean checkBreak(Ball ball);
 }

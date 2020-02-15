@@ -62,4 +62,9 @@ public class Ball extends Sprite {
         return myLives == 0;
     }
 
+    public int resetLives() {
+        myLives = 0;
+        return myLives;
+    }
+
 }

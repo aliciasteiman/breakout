@@ -42,7 +42,10 @@ public class Game extends Application {
     private Scene myGame;
     private Scene myInstructions;
 
-    private Level myLevel;
+    private Scene myLevelTwo;
+    private LevelTwo levelTwo;
+
+    private LevelOne myLevel;
     private PowerUp myPowerUps;
 
     private Text livesLeft;
@@ -53,6 +56,8 @@ public class Game extends Application {
 
     private Button playGame;
     private Label myLabel;
+
+    private String LEVEL_ONE = "line_config_small.txt";
 
     @Override
     public void start (Stage stage) {
@@ -86,7 +91,7 @@ public class Game extends Application {
     }
 
 
-    public Scene setUpGameScene(int width, int height, Paint background) {
+    public Scene setUpLevelOneScene(int width, int height, Paint background) {
         Group root = new Group();
         myPaddle = new Paddle(WIDTH/2 - PADDLE_WIDTH/2, HEIGHT - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_COLOR);
         root.getChildren().add(myPaddle.getShape());
@@ -94,16 +99,39 @@ public class Game extends Application {
         myBall = new Ball(WIDTH/2,HEIGHT/2, BALL_RADIUS, BALL_COLOR);
         root.getChildren().add(myBall.getShape());
 
-        myLevel = new Level("line_config_small.txt");
+        myLevel = new LevelOne(LEVEL_ONE);
         for (Brick brick: myLevel.getBricks()) {
             root.getChildren().add(brick.getShape());
         }
-/*
-        myPowerUps = new PowerUp();
-        for (Brick brick : myPowerUps.getPowerUps()) {
+
+        setDisplayText(root);
+
+        myGame = new Scene(root, width, height, background);
+        myGame.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
+        return myGame;
+    }
+
+    public Scene setUpLevelTwoScene(int width, int height, Paint background) {
+        Group root = new Group();
+        myPaddle = new Paddle(WIDTH/2 - PADDLE_WIDTH/2, HEIGHT - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_COLOR);
+        root.getChildren().add(myPaddle.getShape());
+
+        myBall = new Ball(WIDTH/2,HEIGHT/2, BALL_RADIUS, BALL_COLOR);
+        root.getChildren().add(myBall.getShape());
+
+        levelTwo = new LevelTwo(LEVEL_ONE);
+        for (MultipleHitsBrick brick: levelTwo.getBricksMH()) {
             root.getChildren().add(brick.getShape());
         }
- */
+
+        setDisplayText(root);
+
+        myLevelTwo = new Scene(root, width, height, background);
+        myLevelTwo.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
+        return myLevelTwo;
+    }
+
+    private void setDisplayText(Group root) {
         livesLeft = createText(livesLeft, "Lives remaining: " + myBall.getLives(), 8, 450, 15, true);
         root.getChildren().add(livesLeft);
 
@@ -115,10 +143,6 @@ public class Game extends Application {
 
         losingText = createText(losingText, "You lost. Better luck next time.", 30, 200, 30, false);
         root.getChildren().add(losingText);
-
-        myGame = new Scene(root, width, height, background);
-        myGame.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
-        return myGame;
     }
 
     private Text createText(Text text, String message, double xPos, double yPos, int size, boolean visibiity) {
@@ -188,12 +212,15 @@ public class Game extends Application {
             }
             myLevel.getBricks().clear();
         }
+
+        if (code == KeyCode.DIGIT2) {
+            myStage.setScene(setUpLevelTwoScene(WIDTH, HEIGHT, BACKGROUND));
+        }
     }
 
     private void handleMouseInput(double x, double y) {
         if (playGame.contains(x, y)) {
-            System.out.println("Button clicked");
-            myStage.setScene(setUpGameScene(WIDTH, HEIGHT, BACKGROUND));
+            myStage.setScene(setUpLevelOneScene(WIDTH, HEIGHT, BACKGROUND));
         }
     }
 
