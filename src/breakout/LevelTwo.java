@@ -18,7 +18,7 @@ public class LevelTwo extends Level {
     }
 
     @Override
-    public void createConfiguration() {
+    public List<Brick> createConfiguration() {
         bricksLevelTwo = new ArrayList<>();
         int NUM_ROWS = configurations.size();
         for (int row = 0; row < NUM_ROWS; row++) {
@@ -38,7 +38,7 @@ public class LevelTwo extends Level {
                 brickTracker += 1;
             }
         }
-        //bricks.setId("bricks");
+        return bricksLevelTwo;
     }
 
     @Override
@@ -51,12 +51,6 @@ public class LevelTwo extends Level {
                 SCORE += 1;
             }
         }
-    }
-
-    @Override
-    public List<Brick> getBricks() {
-        createConfiguration();
-        return bricksLevelTwo;
     }
 
     @Override

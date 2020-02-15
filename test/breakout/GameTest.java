@@ -108,13 +108,13 @@ class GameTest extends DukeApplicationTest {
 
     @Test
     public void testKeyBlocks() {
-        for (int i = 0; i <= myLevel.getBricks().size() - 6; i += 6) { //checking first brick of each row
-            Brick brick = myLevel.getBricks().get(i);
+        for (int i = 0; i <= myLevel.createConfiguration().size() - 6; i += 6) { //checking first brick of each row
+            Brick brick = myLevel.createConfiguration().get(i);
             assertEquals(0, brick.getShape().getX());
             assertEquals(i/6 * 22, brick.getShape().getY());
         }
         for (int i = 0; i < 6; i++) { //check first brick of each column
-            Brick brick = myLevel.getBricks().get(i);
+            Brick brick = myLevel.createConfiguration().get(i);
             assertEquals(i * (((500 - (6*2))/6.0) + 2), brick.getShape().getX());
             assertEquals(0, brick.getShape().getY());
         }

@@ -23,9 +23,7 @@ public abstract class Level extends Sprite {
         }
     }
 
-    public abstract void createConfiguration();
-
-    public abstract List<Brick> getBricks();
+    public abstract List<Brick> createConfiguration();
 
     public abstract void checkBrickCollision(Ball ball, double elapsedTime);
 

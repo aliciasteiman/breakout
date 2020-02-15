@@ -125,7 +125,7 @@ public class Game extends Application {
         root.getChildren().add(myBall.getShape());
 
         myLevel = level;
-        for (Brick brick: myLevel.getBricks()) {
+        for (Brick brick: myLevel.createConfiguration()) {
             root.getChildren().add(brick.getShape());
         }
 
@@ -217,10 +217,10 @@ public class Game extends Application {
         }
 
         if (code == KeyCode.C) { //clear all bricks
-            for (Brick brick : myLevel.getBricks()) {
+            for (Brick brick : myLevel.createConfiguration()) {
                 brick.getShape().setFill(null);
             }
-            myLevel.getBricks().clear();
+            myLevel.createConfiguration().clear();
         }
 
         if (code == KeyCode.DIGIT2) {
