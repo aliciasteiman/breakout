@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class Brick extends Sprite {
 
-    private Rectangle myShape;
+    protected Rectangle myShape;
 
     public Brick(double x, double y, double width, double height, Paint color) {
         myShape = new Rectangle(x, y, width, height);

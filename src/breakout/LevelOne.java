@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class LevelOne extends Level {
 
-    private List<SingleHitBrick> bricksLevelOne;
+    private List<Brick> bricksLevelOne;
     private SingleHitBrick brick;
 
     public LevelOne(String file) {
@@ -42,10 +42,11 @@ public class LevelOne extends Level {
     }
 
     public void checkBrickCollision(Ball ball, double elapsedTime) {
-        Iterator<SingleHitBrick> iter = bricksLevelOne.iterator();
+        Iterator<Brick> iter = bricksLevelOne.iterator();
         while (iter.hasNext()) {
-            SingleHitBrick brick = iter.next();
+            Brick brick = iter.next();
             if (brick.checkBreak(ball)) {
+                System.out.println("ball hit single hit brick");
                 ball.bounce(elapsedTime);
                 brickTracker -= 1;
                 SCORE += 1;
@@ -53,7 +54,8 @@ public class LevelOne extends Level {
         }
     }
 
-    public List<SingleHitBrick> getBricks() {
+    @Override
+    public List<Brick> getBricks() {
         createConfiguration();
         return bricksLevelOne;
     }

@@ -10,8 +10,8 @@ import java.util.Random;
 
 public class LevelTwo extends Level {
 
-    private List<MultipleHitsBrick> bricksLevelTwo;
-    private MultipleHitsBrick brickMH;
+    private List<Brick> bricksLevelTwo;
+    private Brick brick;
 
     public LevelTwo(String file) {
         super(file);
@@ -33,8 +33,8 @@ public class LevelTwo extends Level {
                 int green = rand.nextInt(255);
                 int blue = rand.nextInt(255);
                 Paint color = Color.rgb(red, green, blue);
-                brickMH = new MultipleHitsBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, color);
-                bricksLevelTwo.add(brickMH);
+                brick = new MultipleHitsBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, color);
+                bricksLevelTwo.add(brick);
                 brickTracker += 1;
             }
         }
@@ -43,18 +43,19 @@ public class LevelTwo extends Level {
 
     @Override
     public void checkBrickCollision(Ball ball, double elapsedTime) {
-        Iterator<MultipleHitsBrick> iter = bricksLevelTwo.iterator();
+        Iterator<Brick> iter = bricksLevelTwo.iterator();
         while (iter.hasNext()) {
-            MultipleHitsBrick brick = iter.next();
+            Brick brick = iter.next();
             if (brick.checkBreak(ball)) {
+                System.out.println("ball hit multiple hit brick");
                 ball.bounce(elapsedTime);
                 SCORE += 1;
             }
         }
     }
 
-    //@Override
-    public List<MultipleHitsBrick> getBricksMH() {
+    @Override
+    public List<Brick> getBricks() {
         createConfiguration();
         return bricksLevelTwo;
     }

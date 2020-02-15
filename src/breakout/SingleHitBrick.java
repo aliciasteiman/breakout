@@ -5,12 +5,12 @@ import javafx.scene.shape.Rectangle;
 
 public class SingleHitBrick extends Brick {
 
-    private Rectangle myShape;
+    //private Rectangle myShape;
 
     public SingleHitBrick(double x, double y, double width, double height, Paint color) {
         super(x, y, width, height, color);
-        myShape = new Rectangle(x, y, width, height);
-        myShape.setFill(color);
+        //myShape = new Rectangle(x, y, width, height);
+        //myShape.setFill(color);
     }
 
     @Override
