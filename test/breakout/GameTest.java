@@ -79,11 +79,12 @@ class GameTest extends DukeApplicationTest {
 
     @Test
     public void testBallPaddleBounce() {
+        myBall.setCenterX(myPaddle.getWidth()/2 - 15);
         myBall.setCenterY(myScene.getHeight() - 20);
         //sleep(2, TimeUnit.SECONDS);
         myGame.step(1.0/60);
         //sleep(2, TimeUnit.SECONDS);
-        assertEquals(480 - 1 * 100 * 1.0/60, myBall.getCenterY());
+        assertEquals(480 + 1 * 100 * 1.0/60, myBall.getCenterY());
         //assertEquals(1, Game.dy);
     }
 

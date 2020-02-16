@@ -8,6 +8,8 @@ import java.util.*;
 public abstract class Level extends Sprite {
 
     //look at duplication in LevelOne and LevelTwo and see if there is any way to remove it
+    //maybe make createConfiguration NOT abstract and implement it here because the file will eventually
+    //indicate what type of Brick object to create based on a number
 
     protected final int BRICK_HEIGHT = 20;
     protected final int ROW_SEPARATION = 2;
