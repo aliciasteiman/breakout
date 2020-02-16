@@ -13,10 +13,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Game extends Application {
@@ -36,8 +40,8 @@ public class Game extends Application {
 
     private Level myLevel;
 
-    private final int FRAMES_PER_SECOND = 60;
-    private final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    public static final int FRAMES_PER_SECOND = 60;
+    public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
     private Stage myStage;
     private Timeline myAnimation;
@@ -60,6 +64,7 @@ public class Game extends Application {
 
     private String LEVEL_ONE = "line_config_small.txt";
     private PowerUp powerUp;
+    private List<PowerUp> myPowerUps;
 
     /**
      * Sets and shows the stage (which contains the scene of objects that the player sees)
@@ -122,13 +127,13 @@ public class Game extends Application {
         playAgain = new Button("Yes");
         playAgain.setLayoutX(WIDTH/4);
         playAgain.setLayoutY(400);
-        playAgain.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
+        playAgain.setOnMouseClicked(e -> handleMousePlayAgain(e.getX(), e.getY()));
         root.getChildren().add(playAgain);
 
         quitGame = new Button("No");
         quitGame.setLayoutX(WIDTH/2);
         quitGame.setLayoutY(400);
-        quitGame.setOnMouseClicked(e -> handleMouseInput(e.getX(), e.getY()));
+        quitGame.setOnMouseClicked(e -> handleMousePlayAgain(e.getX(), e.getY()));
         root.getChildren().add(quitGame);
 
         myRestart = new Scene(root, width, height, background);
@@ -146,6 +151,8 @@ public class Game extends Application {
      */
     public Scene setUpLevelScene(int width, int height, Paint background, Level level) {
         Group root = new Group();
+        myPowerUps = new ArrayList<>();
+
         myPaddle = new Paddle(WIDTH/2 - PADDLE_WIDTH/2, HEIGHT - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_COLOR);
         root.getChildren().add(myPaddle.getShape());
 
@@ -156,10 +163,15 @@ public class Game extends Application {
         for (Brick brick: myLevel.createConfiguration()) {
             if (brick.hasPowerUp()) {
                 powerUp = brick.getPowerUp();
+                myPowerUps.add(powerUp);
                 root.getChildren().add(powerUp.getShape());
             }
             root.getChildren().add(brick.getShape());
         }
+
+        //check = new LongerPaddle(50, HEIGHT - PADDLE_HEIGHT, 10, 10, Color.ORANGE);
+        //root.getChildren().add(check.getShape());
+
 
         setDisplayText(root);
 
@@ -235,10 +247,16 @@ public class Game extends Application {
         myBall.hitPaddle(myPaddle, elapsedTime);
         myLevel.checkBrickCollision(myBall, elapsedTime);
 
+        for (PowerUp p : myPowerUps) {
+            p.checkHitPaddle(myPaddle);
+        }
+
         if (myLevel.checkBricksClear()) {
             winningText.setVisible(true);
             myAnimation.stop();
         }
+
+        //get the time of when powerup is dropped and then x amount of time later remove it
 
         if (myBall.checkNoLivesLeft()) {
             losingText.setVisible(true);
@@ -275,7 +293,7 @@ public class Game extends Application {
         }
 
         if (code == KeyCode.L) { //adds additional lives
-            //myBall.getLives() += 1; fix this
+            myBall.updateLives(1);
         }
 
         if (code == KeyCode.C) { //clear all bricks
@@ -300,9 +318,11 @@ public class Game extends Application {
         if (playGame.contains(x, y)) {
             myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelOne(LEVEL_ONE)));
         }
-        else if (playAgain.contains(x, y)) {
+    }
+
+    private void handleMousePlayAgain(double x, double y) {
+        if (playAgain.contains(x, y)) {
             System.out.println(myLevel);
-            //have this access what level the user was on....
             myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, myLevel));
         }
         else if (quitGame.contains(x, y)) {

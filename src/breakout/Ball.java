@@ -38,6 +38,14 @@ public class Ball extends Sprite {
         return myLives;
     }
 
+    /**
+     * Increases ball lives by parameter value
+     * @param num
+     */
+    public void updateLives(int num) {
+        myLives += num;
+    }
+
     public void updatePosition(double elapsedTime) {
         myShape.setCenterX(myShape.getCenterX() + dx * BALL_SPEED * elapsedTime);
         myShape.setCenterY(myShape.getCenterY() + dy * BALL_SPEED * elapsedTime);

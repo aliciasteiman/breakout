@@ -42,7 +42,7 @@ public class LevelOne extends Level {
                 int green = rand.nextInt(255);
                 int blue = rand.nextInt(255);
                 Paint color = Color.rgb(red, green, blue);
-                if (column % 2 == 0) {
+                if (column % 2 == 1) {
                     brick = new PowerUpBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, color);
                 }
                 else {

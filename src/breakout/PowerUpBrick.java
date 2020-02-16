@@ -20,6 +20,7 @@ public class PowerUpBrick extends Brick {
     public boolean checkBreak(Ball ball) {
         if (checkCollision(ball.getShape(), myShape)) {
             removeBrick();
+            powerup.setPowerUpDrop();
             return true;
         }
         return false;
