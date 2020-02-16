@@ -10,6 +10,7 @@ public abstract class Brick extends Sprite {
 
     protected Rectangle myShape;
 
+
     public Brick(double x, double y, double width, double height, Paint color) {
         myShape = new Rectangle(x, y, width, height);
         myShape.setFill(color);
@@ -24,4 +25,15 @@ public abstract class Brick extends Sprite {
     }
 
     public abstract boolean checkBreak(Ball ball);
+
+    public boolean brick_canbreak(boolean BREAKABLE){return BREAKABLE;}
+
+
+  public int decreaseScore(int score) {
+      score -= 1;
+      return score;
+  }
+
+
+
 }

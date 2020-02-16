@@ -226,6 +226,10 @@ public class Game extends Application {
         if (code == KeyCode.DIGIT2) {
             myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelTwo(LEVEL_ONE)));
         }
+
+        if (code == KeyCode.DIGIT3) {
+            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelThree(LEVEL_ONE)));
+        }
     }
 
     private void handleMouseInputPlay(double x, double y) {
