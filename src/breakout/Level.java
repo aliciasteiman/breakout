@@ -29,7 +29,14 @@ public class Level extends Sprite {
             String holder = s.replaceAll("\\s", "");
             int NUM_COLUMNS = holder.length();
             double BRICK_WIDTH = (double) 500 / NUM_COLUMNS;
-
+/**
+ * 1 is for a regular brick
+ * 2 is a small brick
+ * 3 is a multiple hit brick
+ * 6 is a no hit brick
+ * 4 is a specific hit brick(must be hit a couple of times then becomes no hit)
+ * 5 is a multiple hit brick too
+ */
             for (int column = 0; NUM_COLUMNS > column; column++) {
                 Random rand = new Random();
                 int red = rand.nextInt(255);

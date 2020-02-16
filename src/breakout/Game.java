@@ -72,7 +72,8 @@ public class Game extends Application {
         myLabel.setLayoutY(10);
         root.getChildren().add(myLabel);
 
-        rules = createText(rules, "Fill this in with rules", 10, 100, 20, true);
+        rules = createText(rules, "Welcome to the Breakout game.\nThe rules are simple,clear the screen of all\n necessary bricks.\n" +
+                "Be careful though, some bricks are better avoided.\nMay the odds be in your favor. ", 10, 100, 20, true);
         root.getChildren().add(rules);
 
         playGame = new Button("Play game");
