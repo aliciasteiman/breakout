@@ -52,13 +52,13 @@ public abstract class PowerUp extends Sprite {
 
     public abstract void applyPaddlePowerUp(Paddle paddle);
 
-    public void checkHitPaddle(Paddle paddle) {
+    public boolean checkHitPaddle(Paddle paddle) {
         if (checkCollision(myShape, paddle.getShape())) {
-            removePowerUp();
+            //removePowerUp();
             applyPaddlePowerUp(paddle);
             setPowerUpLife();
-            //return true;
+            return true;
         }
-        //return false;
+        return false;
     }
 }

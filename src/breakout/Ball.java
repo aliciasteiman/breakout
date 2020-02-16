@@ -64,12 +64,9 @@ public class Ball extends Sprite {
      * Checks if ball hits sides or top of scene and updates ball position accordingly
      * @param width
      * @param height
-     * @param paddle
      * @param elapsedTime
      */
-    public void checkBounds(int width, int height, Paddle paddle, double elapsedTime) {
-        Rectangle paddleShape = paddle.getShape();
-
+    public void checkBounds(int width, int height, double elapsedTime) {
         if (myShape.getCenterX() > width - BALL_RADIUS || myShape.getCenterX() < 0 + BALL_RADIUS) {
             dx *= -1;
         }

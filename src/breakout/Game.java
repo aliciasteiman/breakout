@@ -243,7 +243,7 @@ public class Game extends Application {
         livesLeft.setText("Lives remaining: " + myBall.getLives());
         score.setText("Score: " + myLevel.getScore());
 
-        myBall.checkBounds(WIDTH, HEIGHT, myPaddle, elapsedTime);
+        myBall.checkBounds(WIDTH, HEIGHT, elapsedTime);
         myBall.hitPaddle(myPaddle, elapsedTime);
         myLevel.checkBrickCollision(myBall, elapsedTime);
 

@@ -9,8 +9,13 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+
+//move some tests around so they're in more appropriate classes, if the step method isn't involved, consider moving
+//the method
 
 class GameTest extends DukeApplicationTest {
 
@@ -29,17 +34,21 @@ class GameTest extends DukeApplicationTest {
 
         myBall = lookup("#ball").query();
         myPaddle = lookup("#paddle").query();
-        //myBricks = lookup("#bricks").query();
     }
 
+    /**
+     * Tests if ball is initially set to center of screen with correct radius and velocity.
+     */
     @Test
     public void testBallInitialPosition() {
         assertEquals(250, myBall.getCenterX());
         assertEquals(250, myBall.getCenterY());
         assertEquals(15, myBall.getRadius());
-        // need to also test for velocity?
     }
 
+    /**
+     * Tests if paddle is initially set to bottom center of screen with correct dimensions.
+     */
     @Test
     public void testPaddleInitialPosition() {
         assertEquals(250 - 60, myPaddle.getX());
@@ -48,6 +57,9 @@ class GameTest extends DukeApplicationTest {
         assertEquals(15, myPaddle.getHeight());
     }
 
+    /**
+     * Tests if ball is reset to center of screen if it hits the bottom or if cheat key "R" is pressed.
+     */
     @Test
     public void testBallReset() {
         myBall.setCenterY(myScene.getHeight() + 5);
@@ -64,39 +76,24 @@ class GameTest extends DukeApplicationTest {
         assertEquals(250, myBall.getCenterY());
     }
 
-    @Test
-    public void testPaddleKeys() {
-        myPaddle.setX(250 - 60);
-        myPaddle.setY(500 - 15);
-        press(myScene, KeyCode.RIGHT);
-        assertEquals(280 - 60, myPaddle.getX()); //-60 to account for half paddle width
 
-        myPaddle.setX(250 - 60);
-        myPaddle.setY(500 - 15);
-        press(myScene, KeyCode.LEFT);
-        assertEquals(220 - 60, myPaddle.getX());
-    }
-
-    @Test
-    public void testBallPaddleBounce() {
-        myBall.setCenterX(myPaddle.getWidth()/2 - 15);
-        myBall.setCenterY(myScene.getHeight() - 20);
-        //sleep(2, TimeUnit.SECONDS);
-        myGame.step(1.0/60);
-        //sleep(2, TimeUnit.SECONDS);
-        assertEquals(480 + 1 * 100 * 1.0/60, myBall.getCenterY());
-        //assertEquals(1, Game.dy);
-    }
-
+    /**
+     * Tests if ball bounces off corner. (Sets it to bottom right corner, same logic can apply to other corners).
+     */
     @Test
     public void testBallCornerBounce() {
         myBall.setCenterX(500);
         myBall.setCenterY(500);
+        //sleep(2, TimeUnit.SECONDS);
         myGame.step(1.0/60);
+        //sleep(2, TimeUnit.SECONDS);
         assertEquals(500 - 1 * 100 * 1.0 / 60, myBall.getCenterX());
         assertEquals(500 + 1 * 100 * 1.0 / 60, myBall.getCenterY());
     }
 
+    /**
+     * Tests if ball bounces off a Brick object.
+     */
     @Test
     public void testBallBrickBounce() {
         myBall.setCenterX(30);
@@ -107,6 +104,10 @@ class GameTest extends DukeApplicationTest {
         assertEquals(95 + 1 * 100 * 1.0/60, myBall.getCenterY());
     }
 
+    /**
+     * Tests if the first Brick of each row and first Brick of each column is set to the correct position.
+     * Tests if the createConfiguration() method in Level works.
+     */
     @Test
     public void testKeyBlocks() {
         for (int i = 0; i <= myLevel.createConfiguration().size() - 6; i += 6) { //checking first brick of each row
@@ -121,6 +122,9 @@ class GameTest extends DukeApplicationTest {
         }
     }
 
+    /**
+     * Tests if brick is removed after a ball/brick collision occurs.
+     */
     @Test
     public void testBallBreaksBrick() {
         //Bricks brick = new Bricks();
@@ -133,14 +137,10 @@ class GameTest extends DukeApplicationTest {
         //what should I be checking for here? score? brick = null?
     }
 
-    @Test
-    public void testLivesLeft() {
-        myBall.setCenterY(myScene.getHeight() + 5);
-        myPaddle.setX(myScene.getWidth() - 120);
-        myGame.step(1.0/60);
-        //assertEquals(2, myBall.getLives());
-    }
 
+    /**
+     * Tests that score increases by 1 each time a brick is hit.
+     */
     @Test
     public void testScore() {
         myBall.setCenterX(30);
@@ -153,8 +153,5 @@ class GameTest extends DukeApplicationTest {
         myGame.step(1.0/60);
         assertEquals(2, myLevel.getScore());
     }
-
-//move some tests around so they're in more appropriate classes, if the step method isn't involved, consider moving
-    //the method
 
 }

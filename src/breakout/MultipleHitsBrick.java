@@ -22,7 +22,7 @@ public class MultipleHitsBrick extends Brick {
      * @return true if ball hits brick, false otherwise
      */
     @Override
-    public boolean checkBreak(Ball ball) { //executing three times? why?
+    public boolean checkBreak(Ball ball) {
         if (checkCollision(ball.getShape(), myShape)) {
             NUM_HITS -= 1;
             double opacity = myShape.getOpacity();
