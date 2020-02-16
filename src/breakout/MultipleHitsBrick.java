@@ -1,6 +1,7 @@
 package breakout;
 
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 
 public class MultipleHitsBrick extends Brick {
@@ -27,6 +28,16 @@ public class MultipleHitsBrick extends Brick {
             }
             return true;
         }
+        return false;
+    }
+
+    @Override
+    public PowerUp getPowerUp() {
+        return null;
+    }
+
+    @Override
+    public boolean hasPowerUp() {
         return false;
     }
 

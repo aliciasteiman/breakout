@@ -1,6 +1,7 @@
 package breakout;
 
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 
 import java.util.Iterator;
@@ -24,4 +25,8 @@ public abstract class Brick extends Sprite {
     }
 
     public abstract boolean checkBreak(Ball ball);
+
+    public abstract PowerUp getPowerUp();
+
+    public abstract boolean hasPowerUp();
 }

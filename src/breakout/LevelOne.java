@@ -11,7 +11,7 @@ import java.util.Random;
 public class LevelOne extends Level {
 
     private List<Brick> bricksLevelOne;
-    private SingleHitBrick brick;
+    private Brick brick;
 
     public LevelOne(String file) {
         super(file);
@@ -33,7 +33,12 @@ public class LevelOne extends Level {
                 int green = rand.nextInt(255);
                 int blue = rand.nextInt(255);
                 Paint color = Color.rgb(red, green, blue);
-                brick = new SingleHitBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, color);
+                if (column % 2 == 0) {
+                    brick = new PowerUpBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, color);
+                }
+                else {
+                    brick = new SingleHitBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, color);
+                }
                 bricksLevelOne.add(brick);
                 brickTracker += 1;
             }

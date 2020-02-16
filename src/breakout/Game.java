@@ -61,8 +61,8 @@ public class Game extends Application {
     private Label myUserPrompt;
 
     private String LEVEL_ONE = "line_config_small.txt";
+    private PowerUp powerUp;
 
-    private PowerUp longerPaddle;
 
     @Override
     public void start (Stage stage) {
@@ -128,12 +128,13 @@ public class Game extends Application {
         myBall = new Ball(WIDTH/2,HEIGHT/2, BALL_RADIUS, BALL_COLOR);
         root.getChildren().add(myBall.getShape());
 
-        longerPaddle = new LongerPaddle(200, 10, 5, 5, Color.ORANGE);
-        root.getChildren().add(longerPaddle.getShape());
-
         myLevel = level;
         for (Brick brick: myLevel.createConfiguration()) {
             root.getChildren().add(brick.getShape());
+            if (brick.hasPowerUp()) {
+                powerUp = brick.getPowerUp();
+                root.getChildren().add(powerUp.getShape());
+            }
         }
 
         setDisplayText(root);
@@ -195,15 +196,8 @@ public class Game extends Application {
             myAnimation.pause();
             myStage.setScene(setUpPlayAgainScene(WIDTH, HEIGHT, BACKGROUND));
         }
-        if (myLevel.getScore() % 3 == 0) {
-            longerPaddle.dropPowerUp(elapsedTime);
-        }
-        if (Shape.intersect(longerPaddle.getShape(), myPaddle.getShape()).getBoundsInLocal().getWidth() != -1) {
-            longerPaddle.applyPowerUp(myPaddle);
-            longerPaddle.removePowerUp();
-        }
-    }
 
+    }
 
     private void handleKeyInput(KeyCode code) {
         Rectangle paddle = myPaddle.getShape();
