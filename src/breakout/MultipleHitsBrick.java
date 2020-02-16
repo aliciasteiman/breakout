@@ -1,18 +1,14 @@
 package breakout;
 
 import javafx.scene.paint.Paint;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Rectangle;
+import java.util.Random;
 
 public class MultipleHitsBrick extends Brick {
 
-    private int NUM_HITS = 3;
-    //private Rectangle myShape;
+    private int NUM_HITS;
 
     public MultipleHitsBrick(double x, double y, double width, double height, Paint color) {
         super(x, y, width, height, color);
-        //myShape = new Rectangle(x, y, width, height);
-        //myShape.setFill(color);
     }
 
     /**
@@ -23,10 +19,12 @@ public class MultipleHitsBrick extends Brick {
      */
     @Override
     public boolean checkBreak(Ball ball) {
+        Random ran = new Random();
+        NUM_HITS= ran.nextInt(3) + 2;
         if (checkCollision(ball.getShape(), myShape)) {
             NUM_HITS -= 1;
             double opacity = myShape.getOpacity();
-            opacity -= 1.0/3;
+            opacity -= 1.0/NUM_HITS;
             myShape.setOpacity(opacity);
             if (NUM_HITS == 0) {
                 removeBrick();

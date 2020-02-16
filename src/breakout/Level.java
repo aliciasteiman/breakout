@@ -15,7 +15,6 @@ public abstract class Level extends Sprite {
     protected final int ROW_SEPARATION = 2;
     protected int brickTracker = 0;
     protected int SCORE = 0;
-
     protected List<String> configurations;
 
     /**
