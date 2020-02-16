@@ -21,4 +21,5 @@ public abstract class Sprite { //think about if this class is really necessary
     public boolean checkCollision(Shape a, Shape b) {
         return (Shape.intersect(a, b).getBoundsInLocal().getWidth() != -1);
     }
+
 }

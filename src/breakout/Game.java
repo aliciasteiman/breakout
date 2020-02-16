@@ -6,7 +6,6 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -14,7 +13,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -62,7 +60,6 @@ public class Game extends Application {
 
     private String LEVEL_ONE = "line_config_small.txt";
     private PowerUp powerUp;
-
 
     @Override
     public void start (Stage stage) {
@@ -130,11 +127,11 @@ public class Game extends Application {
 
         myLevel = level;
         for (Brick brick: myLevel.createConfiguration()) {
-            root.getChildren().add(brick.getShape());
             if (brick.hasPowerUp()) {
                 powerUp = brick.getPowerUp();
                 root.getChildren().add(powerUp.getShape());
             }
+            root.getChildren().add(brick.getShape());
         }
 
         setDisplayText(root);
@@ -184,6 +181,7 @@ public class Game extends Application {
         score.setText("Score: " + myLevel.getScore());
 
         myBall.checkBounds(WIDTH, HEIGHT, myPaddle, elapsedTime);
+        myBall.hitPaddle(myPaddle, elapsedTime);
         myLevel.checkBrickCollision(myBall, elapsedTime);
 
         if (myLevel.checkBricksClear()) {

@@ -17,27 +17,20 @@ public class PowerUpBrick extends Brick {
     @Override
     public boolean checkBreak(Ball ball) {
         if (checkCollision(ball.getShape(), myShape)) {
-            System.out.println("power up brick");
             removeBrick();
-            //Random rand = new Random();
-            int num = 0;
-            if (num == 0) {
-                powerup = new LongerPaddle(myShape.getX(), myShape.getY(), 10, 10, Color.BLUEVIOLET);
-            }
             return true;
         }
         return false;
     }
 
-    public void dropPowerUp(PowerUp powerup) {
-        Ellipse myShape = powerup.getShape();
-        myShape.setCenterY(myShape.getCenterY() + 20);
-    }
-
+    @Override
     public PowerUp getPowerUp() {
+        powerup = new LongerPaddle(myShape.getX() + myShape.getWidth()/2, myShape.getY() + myShape.getHeight()/2,
+                10, 10, Color.BLUEVIOLET);
         return powerup;
     }
 
+    @Override
     public boolean hasPowerUp() {
         return true;
     }

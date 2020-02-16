@@ -21,8 +21,6 @@ public abstract class PowerUp extends Sprite {
         myShape.setCenterY(myShape.getCenterY() + POWERUP_SPEED * elapsedTime);
     }
 
-    public abstract void applyPowerUp(Paddle myPaddle);
-
     public void removePowerUp() {
         myShape.setFill(null);
     }
