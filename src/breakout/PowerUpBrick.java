@@ -8,6 +8,8 @@ import java.util.Random;
 
 public class PowerUpBrick extends Brick {
 
+    //work in progress!!!
+
     private PowerUp powerup;
 
     public PowerUpBrick(double x, double y, double width, double height, Paint color) {

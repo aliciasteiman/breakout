@@ -17,6 +17,12 @@ public class LevelTwo extends Level {
         super(file);
     }
 
+    /**
+     * Determines number of rows/columns based on configurations (list of each line of the file passed to Level)
+     * Loops through each row (i.e. line of data) and creates a Brick object based on the number in the row
+     * Adds 1 to brickTracker to determine total number of bricks
+     * @return bricksLevelTwo = list of Brick objects
+     */
     @Override
     public List<Brick> createConfiguration() {
         bricksLevelTwo = new ArrayList<>();
@@ -41,6 +47,12 @@ public class LevelTwo extends Level {
         return bricksLevelTwo;
     }
 
+    /**
+     * Loops through all the bricks during each step and determines if the Ball object hit a Brick object
+     * If ball hit brick --> ball bounces of brick, score increases by 1, brickTracker decreases by 1
+     * @param ball
+     * @param elapsedTime
+     */
     @Override
     public void checkBrickCollision(Ball ball, double elapsedTime) {
         Iterator<Brick> iter = bricksLevelTwo.iterator();

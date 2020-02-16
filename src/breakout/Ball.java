@@ -8,21 +8,32 @@ public class Ball extends Sprite {
 
     private Circle myShape;
     private int myLives = 3;
-    //private final int BALL_SPEED = 100;
     public static final int BALL_RADIUS = 15;
-    //private int dx = 1;
-    //private int dy = 1;
+    //private final int BALL_SPEED = 100;
 
+    /**
+     * Constructs ball object
+     * @param x = x position
+     * @param y = y position
+     * @param rad = radius of ball shape
+     * @param color = ball color
+     */
     public Ball(int x, int y, int rad, Paint color) {
         myShape = new Circle(x, y, rad);
         myShape.setFill(color);
         myShape.setId("ball");
     }
 
+    /**
+     * @return myShape = Circle (shape of the ball object)
+     */
     public Circle getShape() {
         return myShape;
     }
 
+    /**
+     * @return myLives = int number of lives
+     */
     public int getLives() {
         return myLives;
     }
@@ -32,11 +43,22 @@ public class Ball extends Sprite {
         myShape.setCenterY(myShape.getCenterY() + dy * BALL_SPEED * elapsedTime);
     }
 
+    /**
+     * Changes y-direction of ball and updates position
+     * @param elapsedTime (comes from step/animation in Game)
+     */
     public void bounce(double elapsedTime) {
         dy *= -1;
         updatePosition(elapsedTime);
     }
 
+    /**
+     * Checks if ball hits sides or top of scene and updates ball position accordingly
+     * @param width
+     * @param height
+     * @param paddle
+     * @param elapsedTime
+     */
     public void checkBounds(int width, int height, Paddle paddle, double elapsedTime) {
         Rectangle paddleShape = paddle.getShape();
 
@@ -46,9 +68,6 @@ public class Ball extends Sprite {
         else if (myShape.getCenterY() < 0 + BALL_RADIUS) {
             dy *= -1;
         }
-        //else if (checkCollision(myShape, paddleShape)) {
-            //dy *= -1;
-        //}
         else if (myShape.getCenterY() > height) {
             myLives -= 1;
             myShape.setCenterX(width/2);
@@ -58,16 +77,19 @@ public class Ball extends Sprite {
         updatePosition(elapsedTime);
     }
 
+    /**
+     * Checks if ball hits paddle and dynamically updates ball's position
+     * @param paddle
+     * @param elapsedTime
+     */
     public void hitPaddle(Paddle paddle, double elapsedTime) {
-        double paddleThird = paddle.getShape().getWidth() / 3;
+        double paddleHalf = paddle.getShape().getWidth() / 2;
         if (checkCollision(myShape, paddle.getShape())) {
-            if (myShape.getCenterX() <= paddleThird) {
+            if (myShape.getCenterX() <= paddleHalf) {
+                dx *= 1;
                 dy *= -1;
             }
-            if (myShape.getCenterX() > paddleThird && myShape.getCenterX() <= paddleThird * 2) {
-                dy *= 0.2;
-            }
-            if (myShape.getCenterX() > paddleThird * 2) {
+            if (myShape.getCenterX() > paddleHalf) {
                 dx *= -1;
                 dy *= -1;
             }
@@ -75,6 +97,10 @@ public class Ball extends Sprite {
         }
     }
 
+    /**
+     * Checks if ball has no lives left -- means game ends
+     * @return true if myLives = 0, false otherwise
+     */
     public boolean checkNoLivesLeft() {
         return myLives == 0;
     }

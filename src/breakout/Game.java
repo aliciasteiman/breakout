@@ -61,6 +61,10 @@ public class Game extends Application {
     private String LEVEL_ONE = "line_config_small.txt";
     private PowerUp powerUp;
 
+    /**
+     * Sets and shows the stage (which contains the scene of objects that the player sees)
+     * @param stage
+     */
     @Override
     public void start (Stage stage) {
         myStage = stage;
@@ -71,6 +75,13 @@ public class Game extends Application {
         setAnimation(myStage);
     }
 
+    /**
+     * Sets instructions scene, which is seen first when the game starts. Player hits button to start game.
+     * @param width
+     * @param height
+     * @param background
+     * @return myInstructions = instructions/rules for play and start game button
+     */
     public Scene setUpInstructionsScene(int width, int height, Paint background) {
         Group root = new Group();
         myLabel = new Label("Instructions");
@@ -93,6 +104,13 @@ public class Game extends Application {
     }
 
 
+    /**
+     * Shows when player runs out of lives. Asks if player wants to try that level again.
+     * @param width
+     * @param height
+     * @param background
+     * @return myRestart = scene that gives play again option
+     */
     private Scene setUpPlayAgainScene(int width, int height, Paint background) {
         Group root = new Group();
         myUserPrompt = new Label("Do you want to play again?");
@@ -117,6 +135,15 @@ public class Game extends Application {
         return myRestart;
     }
 
+    /**
+     * Sets up level based on the level passed in as a parameter. Contains ball, paddle, bricks, score, lives
+     * remaining, and current level.
+     * @param width
+     * @param height
+     * @param background
+     * @param level
+     * @return
+     */
     public Scene setUpLevelScene(int width, int height, Paint background, Level level) {
         Group root = new Group();
         myPaddle = new Paddle(WIDTH/2 - PADDLE_WIDTH/2, HEIGHT - PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_HEIGHT, PADDLE_COLOR);
@@ -142,6 +169,10 @@ public class Game extends Application {
     }
 
 
+    /** Adds visible display text for a level (lives remaining, score, current level) and initializes text for when a
+     * player wins or loses a game that is initially not visible
+     * @param root
+     */
     private void setDisplayText(Group root) {
         livesLeft = createText(livesLeft, "Lives remaining: " + myBall.getLives(), 8, 450, 15, true);
         root.getChildren().add(livesLeft);
@@ -159,6 +190,16 @@ public class Game extends Application {
         root.getChildren().add(currentLevel);
     }
 
+    /**
+     * Helper method to create text objects
+     * @param text
+     * @param message
+     * @param xPos
+     * @param yPos
+     * @param size
+     * @param visibility
+     * @return
+     */
     private Text createText(Text text, String message, double xPos, double yPos, int size, boolean visibility) {
         text = new Text();
         text.setText(message);
@@ -169,6 +210,10 @@ public class Game extends Application {
         return text;
     }
 
+    /**
+     * Sets up the game animation
+     * @param stage
+     */
     public void setAnimation(Stage stage) {
         KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step(SECOND_DELAY));
         myAnimation = new Timeline();
@@ -176,6 +221,12 @@ public class Game extends Application {
         myAnimation.getKeyFrames().add(frame);
     }
 
+    /**
+     * Determines what happens during each frame of the animation
+     * Updates lives and score. Checks if ball hits bounds, paddle, and bricks.
+     * Shows winning texts if all bricks are cleared. Shows losing text if ball runs out of lives.
+     * @param elapsedTime
+     */
     public void step(double elapsedTime) {
         livesLeft.setText("Lives remaining: " + myBall.getLives());
         score.setText("Score: " + myLevel.getScore());
@@ -197,6 +248,11 @@ public class Game extends Application {
 
     }
 
+    /**
+     * Handles key inputs. Starts game when user hits the space bar. Sets left and right arrow keys as paddle
+     * controls. Creates cheat keys.
+     * @param code
+     */
     private void handleKeyInput(KeyCode code) {
         Rectangle paddle = myPaddle.getShape();
         Circle ball = myBall.getShape();
@@ -234,6 +290,12 @@ public class Game extends Application {
         }
     }
 
+    /**
+     * Handles mouse inputs. Checks if user hits certain buttons and executes follow up actions accordingly.
+     * i.e. if user hits "start" button in opening scene, screen shows level one
+     * @param x
+     * @param y
+     */
     private void handleMouseInput(double x, double y) {
         if (playGame.contains(x, y)) {
             myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelOne(LEVEL_ONE)));

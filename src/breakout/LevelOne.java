@@ -10,6 +10,9 @@ import java.util.Random;
 
 public class LevelOne extends Level {
 
+    //might need to revisit brickTracker (b/c it's in Level I'm afraid it won't know when bricks of a level are gone)
+    //maybe make it a private variable in each subclass
+
     private List<Brick> bricksLevelOne;
     private Brick brick;
 
@@ -17,6 +20,12 @@ public class LevelOne extends Level {
         super(file);
     }
 
+    /**
+     * Determines number of rows/columns based on configurations (list of each line of the file passed to Level)
+     * Loops through each row (i.e. line of data) and creates a Brick object based on the number in the row
+     * Adds 1 to brickTracker to determine total number of bricks
+     * @return bricksLevelOne = list of Brick objects
+     */
     @Override
     public List<Brick> createConfiguration() {
         bricksLevelOne = new ArrayList<>();
@@ -46,6 +55,12 @@ public class LevelOne extends Level {
         return bricksLevelOne;
     }
 
+    /**
+     * Loops through all the bricks during each step and determines if the Ball object hit a Brick object
+     * If ball hit brick --> ball bounces of brick, score increases by 1, brickTracker decreases by 1
+     * @param ball
+     * @param elapsedTime
+     */
     public void checkBrickCollision(Ball ball, double elapsedTime) {
         Iterator<Brick> iter = bricksLevelOne.iterator();
         while (iter.hasNext()) {

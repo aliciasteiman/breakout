@@ -5,6 +5,8 @@ import javafx.scene.shape.Ellipse;
 
 public abstract class PowerUp extends Sprite {
 
+    //work in progress!!
+
     protected Ellipse myShape;
     private int POWERUP_SPEED = 100;
 

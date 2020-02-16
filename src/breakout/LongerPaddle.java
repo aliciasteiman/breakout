@@ -10,6 +10,10 @@ public class LongerPaddle extends PowerUp {
         super(xPos, yPos, xRad, yRad, color);
     }
 
+    /**
+     * Increases paddle size by 50
+     * @param paddle
+     */
     public void applyPowerUp(Paddle paddle) {
         Rectangle longerPaddle = paddle.getShape();
         longerPaddle.setWidth(longerPaddle.getWidth() + 50);

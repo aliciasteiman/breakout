@@ -15,6 +15,12 @@ public class MultipleHitsBrick extends Brick {
         //myShape.setFill(color);
     }
 
+    /**
+     * Each time ball hits a MultipleHitsBrick its NUM_HITS is decreased by 1 and opacity is reduced by a 1/3
+     * Brick is removed if NUM_HITS = 0 (if it reaches number of hits needed to break)
+     * @param ball
+     * @return true if ball hits brick, false otherwise
+     */
     @Override
     public boolean checkBreak(Ball ball) { //executing three times? why?
         if (checkCollision(ball.getShape(), myShape)) {
@@ -24,7 +30,7 @@ public class MultipleHitsBrick extends Brick {
             myShape.setOpacity(opacity);
             if (NUM_HITS == 0) {
                 removeBrick();
-                return true;
+                //return true;
             }
             return true;
         }

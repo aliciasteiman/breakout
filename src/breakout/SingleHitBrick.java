@@ -14,6 +14,11 @@ public class SingleHitBrick extends Brick {
         //myShape.setFill(color);
     }
 
+    /**
+     * Checks if Ball hits SingleHitBrick once and removes Brick if hit
+     * @param ball
+     * @return true if brick was hit, false otherwise
+     */
     @Override
     public boolean checkBreak(Ball ball) {
         if (checkCollision(ball.getShape(), myShape)) {
