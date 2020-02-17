@@ -47,9 +47,4 @@ public class MultipleHitsBrick extends Brick {
         return null;
     }
 
-    @Override
-    public String getType() {
-        return "MultipleHitBrick";
-    }
-
 }

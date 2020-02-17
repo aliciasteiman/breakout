@@ -20,6 +20,7 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class Game extends Application {
@@ -101,13 +102,13 @@ public class Game extends Application {
 
         myLabel.setFont(Font.font("Bradley Hand"));
         myLabel.setFont(Font.font(30));
-        myLabel.setLayoutX(WIDTH/15 - myLabel.getWidth()/2); //width of text is 0? need to call getWidth in start
+        myLabel.setLayoutX(15);
         myLabel.setLayoutY(10);
         root.getChildren().add(myLabel);
 
-        rules = createText(rules, "The rules are simple,clear the screen of all \nnecessary bricks.\n"+
-                "Be careful though, some bricks are better avoided.\nMay the odds be in your favor.\n", 10, 100,"Brush Script MT", 20);
-        //rules.setFont(Font.font("Brush Script MT"));
+        rules = createText(rules, "Rules for play: \n1. Use your left and right arrow keys to control the paddle." +
+                "\n2. Use the paddle to control the ball. \n3. Use the ball to clear all the bricks. \nBut be careful, some " +
+                "bricks are better avoided. \nGood luck!", 10, 100,"Brush Script MT", 15);
         root.getChildren().add(rules);
 
         playGame = new Button("Play game");
@@ -156,6 +157,7 @@ public class Game extends Application {
         return myRestart;
     }
 
+
     private Scene setUpWinScreen(int width, int height, Paint background) {
         Group root = new Group();
 
@@ -169,7 +171,7 @@ public class Game extends Application {
         root.getChildren().add(myWinPrompt);
 
         nextLevel = new Button("Yes");
-        nextLevel.setLayoutX(WIDTH/4);
+        nextLevel.setLayoutX(WIDTH/3);
         nextLevel.setLayoutY(400);
         nextLevel.setOnMouseClicked(e -> handleMouseNextLevel(e.getX(), e.getY()));
         root.getChildren().add(nextLevel);
@@ -177,7 +179,7 @@ public class Game extends Application {
         quitGame = new Button("No");
         quitGame.setLayoutX(WIDTH/2);
         quitGame.setLayoutY(400);
-        quitGame.setOnMouseClicked(e -> handleMousePlayAgain(e.getX(), e.getY()));
+        quitGame.setOnMouseClicked(e -> handleMouseNextLevel(e.getX(), e.getY()));
         root.getChildren().add(quitGame);
 
         myNextLevel = new Scene(root, width, height, background);
@@ -205,7 +207,7 @@ public class Game extends Application {
 
         myLevel = level;
         for (Brick brick: myLevel.createConfiguration()) {
-            if (brick.getType().equals("PowerUpBrick")) {
+            if (brick instanceof PowerUpBrick) {
                 powerUp = brick.getPowerUp();
                 myPowerUps.add(powerUp);
                 root.getChildren().add(powerUp.getShape());
@@ -235,7 +237,7 @@ public class Game extends Application {
         currentLevel = createText(currentLevel, "LEVEL " + myLevel.getLevel(), 8, 410,"Lucida Handwriting", 15);
         root.getChildren().add(currentLevel);
 
-        beatGame = createText(beatGame, "Congratulations! You beat all 3 levels.", 250, 250,"Lucida Handwriting", 30);
+        beatGame = createText(beatGame, "Congratulations! You beat all 3 levels.", 10, 250,"Lucida Handwriting", 15);
         beatGame.setVisible(false);
         root.getChildren().add(beatGame);
     }
@@ -289,8 +291,9 @@ public class Game extends Application {
         }
 
         if (myLevel.checkBricksClear()) {
+            myLevel.resetBrickTracker();
             myAnimation.pause();
-            if (myLevel.getLevel().equals("3")) {
+            if (myLevel instanceof LevelThree) {
                 beatGame.setVisible(true);
             }
             else {
@@ -337,7 +340,10 @@ public class Game extends Application {
 
         if (code == KeyCode.C) { //clear all bricks
             for (Brick brick : myLevel.createConfiguration()) {
-                brick.removeBrick();
+                if ((!(brick instanceof AvoidBrick)) && (brick.getShape().isVisible())) {
+                    brick.getShape().setFill(null);
+                    brick.getShape().setVisible(false);
+                }
             }
             myLevel.createConfiguration().clear();
         }
@@ -354,12 +360,32 @@ public class Game extends Application {
             myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelThree(LEVEL_THREE)));
         }
 
-        if (code == KeyCode.A) { //adds additional lives
-            paddle.setWidth(paddle.getWidth()*2);
+        if (code == KeyCode.DIGIT0) { //makes paddle width of screen
+            paddle.setWidth(WIDTH);
         }
 
         if (code == KeyCode.P) { //drops a power-up
-            //write code
+            Random rand = new Random();
+            int num = rand.nextInt(myPowerUps.size());
+            PowerUp p = myPowerUps.get(num);
+            p.setPowerUpDrop();
+            p.setPowerUpLife();
+        }
+
+        if (code == KeyCode.I) { //gives ball (essentially) infinite lives
+            myBall.updateLives((int) Double.POSITIVE_INFINITY);
+        }
+
+        if (code == KeyCode.D) { //destroys "first" remaining block on screen
+            for (Brick brick : myLevel.createConfiguration()) {
+                if (myLevel.brickTracker == 1) {
+                    brick.removeBrick();
+                }
+            }
+        }
+
+        if (code == KeyCode.S) { //speeds up ball by factor of 2
+            myBall.BALL_SPEED *= 2;
         }
     }
 
@@ -377,7 +403,6 @@ public class Game extends Application {
 
     private void handleMousePlayAgain(double x, double y) {
         if (playAgain.contains(x, y)) {
-            System.out.println(myLevel);
             myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, myLevel));
         }
         else if (quitGame.contains(x, y)) {

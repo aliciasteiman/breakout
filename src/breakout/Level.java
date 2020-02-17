@@ -51,8 +51,9 @@ public abstract class Level extends Sprite {
             for (int column = 0; NUM_COLUMNS > column; column++) {
                 if (holder.charAt(column) == '0') {
                     brick = new SingleHitBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, null);
+                    brick.getShape().setVisible(false);
+                    brickTracker -= 1;
                 }
-
                 if(holder.charAt(column) == '1') {
                     brick = new SingleHitBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, Color.SEAGREEN);
                 }
@@ -64,12 +65,12 @@ public abstract class Level extends Sprite {
                 }
                 else if (holder.charAt(column) == '4') {
                     brick = new AvoidBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, Color.BLACK);
-                    avoidBricks += 1;
+                    brickTracker -= 1;
                 }
+                brickTracker += 1;
                 bricksLevel.add(brick);
             }
         }
-        brickTracker = bricksLevel.size();
         return bricksLevel;
     }
 
@@ -94,7 +95,9 @@ public abstract class Level extends Sprite {
     /**
      * @return
      */
-    public abstract boolean checkBricksClear();
+    public boolean checkBricksClear() {
+        return brickTracker == 0;
+    }
 
     /**
      * @return user's score (number of bricks hit)
@@ -107,5 +110,9 @@ public abstract class Level extends Sprite {
      * @return level "1", "2", etc.
      */
     public abstract String getLevel();
+
+    public void resetBrickTracker() {
+        brickTracker = 0;
+    }
 
 }

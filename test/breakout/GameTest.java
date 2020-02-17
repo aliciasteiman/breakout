@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
+import java.util.concurrent.TimeUnit;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest extends DukeApplicationTest {
@@ -95,8 +97,8 @@ class GameTest extends DukeApplicationTest {
         myBall.setCenterY(95);
         myGame.step(1.0/60);
         //assertEquals(-1, Game.dy);
-        assertEquals(30 + 1 * 100 * 1.0/60, myBall.getCenterX());
-        assertEquals(95 + 1 * 100 * 1.0/60, myBall.getCenterY());
+        assertEquals(35 - 1 * 100 * 1.0/60, myBall.getCenterX());
+        assertEquals(95.0, myBall.getCenterY());
     }
 
     /**
@@ -105,14 +107,15 @@ class GameTest extends DukeApplicationTest {
      */
     @Test
     public void testKeyBlocks() {
-        for (int i = 0; i <= myLevel.createConfiguration().size() - 6; i += 6) { //checking first brick of each row
+        myLevel = new LevelThree(TEST_FILE); //using 7 b/c rows and columns = 7
+        for (int i = 0; i <= myLevel.createConfiguration().size() - 7; i += 7) { //checking first brick of each row
             Brick brick = myLevel.createConfiguration().get(i);
             assertEquals(0, brick.getShape().getX());
-            assertEquals(i/6 * 22, brick.getShape().getY());
+            assertEquals(i/7 * 22, brick.getShape().getY());
         }
-        for (int i = 0; i < 6; i++) { //check first brick of each column
+        for (int i = 0; i < 7; i++) { //check first brick of each column
             Brick brick = myLevel.createConfiguration().get(i);
-            assertEquals(i * (((500 - (6*2))/6.0) + 2), brick.getShape().getX());
+            assertEquals(i * (((500 - (7*2))/7.0) + 2), brick.getShape().getX());
             assertEquals(0, brick.getShape().getY());
         }
     }
@@ -131,22 +134,4 @@ class GameTest extends DukeApplicationTest {
         //assertTrue(! myBricks.contains());
         //what should I be checking for here? score? brick = null?
     }
-
-
-    /**
-     * Tests that score increases by 1 each time a brick is hit.
-     */
-    @Test
-    public void testScore() {
-        myBall.setCenterX(30);
-        myBall.setCenterY(95);
-        myGame.step(1.0/60);
-        assertEquals(1, myLevel.getScore());
-
-        myBall.setCenterX(235);
-        myBall.setCenterY(95);
-        myGame.step(1.0/60);
-        assertEquals(2, myLevel.getScore());
-    }
-
 }

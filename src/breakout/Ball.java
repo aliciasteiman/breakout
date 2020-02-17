@@ -90,14 +90,25 @@ public class Ball extends Sprite {
     public void hitPaddle(Paddle paddle, double elapsedTime) {
         double paddleHalf = paddle.getShape().getWidth() / 2;
         if (checkCollision(myShape, paddle.getShape())) {
-            if (myShape.getCenterX() <= paddleHalf) {
-                dx *= 1;
-                dy *= -1;
+            if (myShape.getCenterX() <= paddle.getShape().getX() + paddleHalf) {
+                if (dx == 1) {
+                    dx *= -1.2;
+                }
+                else {
+                    dx *= 1.5;
+                }
+               //dy *= -1;
             }
-            if (myShape.getCenterX() > paddleHalf) {
-                dx *= -1;
-                dy *= -1;
+            else if (myShape.getCenterX() > paddle.getShape().getX() + paddleHalf) {
+                if (dx == 1) {
+                    dx *= 1.8;
+                }
+                else {
+                    dx *= -1.1;
+                }
+                //dy *= -1;
             }
+            dy *= -1.4;
             updatePosition(elapsedTime);
         }
     }
@@ -108,11 +119,6 @@ public class Ball extends Sprite {
      */
     public boolean checkNoLivesLeft() {
         return myLives == 0;
-    }
-
-    public int resetLives() {
-        myLives = 0;
-        return myLives;
     }
 
 }

@@ -16,8 +16,8 @@ public class AvoidBrick extends Brick {
     @Override
     public int[] update() {
         int[] ret = new int[2];
-        ret[0] = -1;
-        ret[1] = -1;
+        ret[0] = -1; //decrease score by 1
+        ret[1] = 0; //brickTracker remains the same
         return ret;
     }
 
@@ -31,11 +31,6 @@ public class AvoidBrick extends Brick {
     @Override
     public PowerUp getPowerUp() {
         return null;
-    }
-
-    @Override
-    public String getType() {
-        return "AvoidBrick";
     }
 
 }

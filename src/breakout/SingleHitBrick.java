@@ -40,8 +40,4 @@ public class SingleHitBrick extends Brick {
         return null;
     }
 
-    @Override
-    public String getType() {
-        return "SingleHitBrick";
-    }
 }

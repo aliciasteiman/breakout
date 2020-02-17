@@ -52,8 +52,4 @@ public class PowerUpBrick extends Brick {
         return powerup;
     }
 
-    @Override
-    public String getType() {
-        return "PowerUpBrick";
-    }
 }

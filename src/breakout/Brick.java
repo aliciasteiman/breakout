@@ -48,6 +48,4 @@ public abstract class Brick extends Sprite {
 
     public abstract PowerUp getPowerUp();
 
-    public abstract String getType();
-
 }
