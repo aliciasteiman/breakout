@@ -47,6 +47,7 @@ Cheat keys:
 * L = adds additional lives to ball
 * C = clears all bricks present on screen
 + P = drops a powerup
+* A = doubles paddle length
 * DIGIT1 = jumps tp level 1
 * DIGIT2 = jumps to second level 
 * DIGIT3 = jumps to third level
