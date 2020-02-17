@@ -13,7 +13,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -48,6 +47,7 @@ public class Game extends Application {
     private Scene myLevelScene;
     private Scene myInstructions;
     private Scene myRestart;
+    private Scene myNextLevel;
 
     private Text livesLeft;
     private Text winningText;
@@ -55,16 +55,20 @@ public class Game extends Application {
     private Text score;
     private Text rules;
     private Text currentLevel;
+    private Text beatGame;
 
     private Button playGame;
     private Button playAgain;
     private Button quitGame;
+    private Button nextLevel;
     private Label myLabel;
-    private Label myUserPrompt;
+    private Label myLosePrompt;
+    private Label myWinPrompt;
 
     private String LEVEL_ONE = "test.txt";
     private PowerUp powerUp;
     private List<PowerUp> myPowerUps;
+    private int myScore;
 
     /**
      * Sets and shows the stage (which contains the scene of objects that the player sees)
@@ -95,7 +99,7 @@ public class Game extends Application {
         myLabel.setLayoutY(10);
         root.getChildren().add(myLabel);
 
-        rules = createText(rules, "Fill this in with rules", 10, 100, 20, true);
+        rules = createText(rules, "Fill this in with rules", 10, 100, 20);
         root.getChildren().add(rules);
 
         playGame = new Button("Play game");
@@ -116,13 +120,17 @@ public class Game extends Application {
      * @param background
      * @return myRestart = scene that gives play again option
      */
-    private Scene setUpPlayAgainScene(int width, int height, Paint background) {
+    private Scene setUpLoseScreen(int width, int height, Paint background) {
         Group root = new Group();
-        myUserPrompt = new Label("Do you want to play again?");
-        myUserPrompt.setFont(Font.font(40));
-        myUserPrompt.setLayoutX(10);
-        myUserPrompt.setLayoutY(10);
-        root.getChildren().add(myUserPrompt);
+
+        losingText = createText(losingText, "You lost. Better luck next time.", 10, 10, 30);
+        root.getChildren().add(losingText);
+
+        myLosePrompt = new Label("Do you want to play again?");
+        myLosePrompt.setFont(Font.font(40));
+        myLosePrompt.setLayoutX(50);
+        myLosePrompt.setLayoutY(50);
+        root.getChildren().add(myLosePrompt);
 
         playAgain = new Button("Yes");
         playAgain.setLayoutX(WIDTH/4);
@@ -138,6 +146,34 @@ public class Game extends Application {
 
         myRestart = new Scene(root, width, height, background);
         return myRestart;
+    }
+
+    private Scene setUpWinScreen(int width, int height, Paint background) {
+        Group root = new Group();
+
+        winningText = createText(winningText, "You beat the level! Congratulations!", 10, 10, 30);
+        root.getChildren().add(winningText);
+
+        myWinPrompt = new Label("Do you want to go to the next level?");
+        myWinPrompt.setFont(Font.font(40));
+        myWinPrompt.setLayoutX(50);
+        myWinPrompt.setLayoutY(50);
+        root.getChildren().add(myWinPrompt);
+
+        nextLevel = new Button("Yes");
+        nextLevel.setLayoutX(WIDTH/4);
+        nextLevel.setLayoutY(400);
+        nextLevel.setOnMouseClicked(e -> handleMouseNextLevel(e.getX(), e.getY()));
+        root.getChildren().add(nextLevel);
+
+        quitGame = new Button("No");
+        quitGame.setLayoutX(WIDTH/2);
+        quitGame.setLayoutY(400);
+        quitGame.setOnMouseClicked(e -> handleMousePlayAgain(e.getX(), e.getY()));
+        root.getChildren().add(quitGame);
+
+        myNextLevel = new Scene(root, width, height, background);
+        return myNextLevel;
     }
 
     /**
@@ -182,20 +218,18 @@ public class Game extends Application {
      * @param root
      */
     private void setDisplayText(Group root) {
-        livesLeft = createText(livesLeft, "Lives remaining: " + myBall.getLives(), 8, 450, 15, true);
+        livesLeft = createText(livesLeft, "Lives remaining: " + myBall.getLives(), 8, 450, 15);
         root.getChildren().add(livesLeft);
 
-        score = createText(score, "Score: " + myLevel.getScore(), 8, 430, 15, true);
+        score = createText(score, "Score: " + myScore, 8, 430, 15);
         root.getChildren().add(score);
 
-        winningText = createText(winningText, "You won! Congratulations!", 50, 200, 30, false);
-        root.getChildren().add(winningText);
-
-        losingText = createText(losingText, "You lost. Better luck next time.", 30, 200, 30, false);
-        root.getChildren().add(losingText);
-
-        currentLevel = createText(currentLevel, "LEVEL " + myLevel.getLevel(), 8, 410, 15, true);
+        currentLevel = createText(currentLevel, "LEVEL " + myLevel.getLevel(), 8, 410, 15);
         root.getChildren().add(currentLevel);
+
+        beatGame = createText(beatGame, "Congratulations! You beat all 3 levels.", 250, 250, 30);
+        beatGame.setVisible(false);
+        root.getChildren().add(beatGame);
     }
 
     /**
@@ -205,16 +239,14 @@ public class Game extends Application {
      * @param xPos
      * @param yPos
      * @param size
-     * @param visibility
      * @return
      */
-    private Text createText(Text text, String message, double xPos, double yPos, int size, boolean visibility) {
+    private Text createText(Text text, String message, double xPos, double yPos, int size) {
         text = new Text();
         text.setText(message);
         text.setX(xPos);
         text.setY(yPos);
         text.setFont(Font.font(size));
-        text.setVisible(visibility);
         return text;
     }
 
@@ -237,7 +269,7 @@ public class Game extends Application {
      */
     public void step(double elapsedTime) {
         livesLeft.setText("Lives remaining: " + myBall.getLives());
-        score.setText("Score: " + myLevel.getScore());
+        score.setText("Score: " + (myLevel.getScore() + myScore));
 
         myBall.checkBounds(WIDTH, HEIGHT, elapsedTime);
         myBall.hitPaddle(myPaddle, elapsedTime);
@@ -248,18 +280,20 @@ public class Game extends Application {
         }
 
         if (myLevel.checkBricksClear()) {
-            winningText.setVisible(true);
-            myAnimation.stop();
+            myAnimation.pause();
+            if (myLevel.getLevel().equals("3")) {
+                beatGame.setVisible(true);
+            }
+            else {
+                myStage.setScene(setUpWinScreen(WIDTH, HEIGHT, BACKGROUND));
+                myScore = myLevel.getScore();
+            }
         }
-
-        //get the time of when powerup is dropped and then x amount of time later remove it
 
         if (myBall.checkNoLivesLeft()) {
-            losingText.setVisible(true);
             myAnimation.pause();
-            myStage.setScene(setUpPlayAgainScene(WIDTH, HEIGHT, BACKGROUND));
+            myStage.setScene(setUpLoseScreen(WIDTH, HEIGHT, BACKGROUND));
         }
-
     }
 
     /**
@@ -299,12 +333,20 @@ public class Game extends Application {
             myLevel.createConfiguration().clear();
         }
 
-        if (code == KeyCode.DIGIT2) {
+        if (code == KeyCode.DIGIT1) { //jumps to level 1
+            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelOne(LEVEL_ONE)));
+        }
+
+        if (code == KeyCode.DIGIT2) { //jumps to level 2
             myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelTwo(LEVEL_ONE)));
         }
 
-        if (code == KeyCode.DIGIT3) {
+        if (code == KeyCode.DIGIT3) { //jumps to level 3
             myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelThree(LEVEL_ONE)));
+        }
+
+        if (code == KeyCode.P) { //drops a power-up
+            //write code
         }
     }
 
@@ -327,6 +369,18 @@ public class Game extends Application {
         }
         else if (quitGame.contains(x, y)) {
             myStage.close();
+        }
+    }
+
+    private void handleMouseNextLevel(double x, double y) {
+        if (nextLevel.contains(x, y)) {
+            int next = Integer.parseInt(myLevel.getLevel()) + 1;
+            if (next == 2) {
+                myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelTwo(LEVEL_ONE)));
+            }
+            if (next == 3) {
+                myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelThree(LEVEL_ONE)));
+            }
         }
     }
 }

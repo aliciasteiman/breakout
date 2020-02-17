@@ -89,20 +89,11 @@ public abstract class Level extends Sprite {
         while (iter.hasNext()) {
             Brick brick = iter.next();
             if (brick.checkBreak(ball)) {
-                if (brick.getType() == "AvoidBrick") {
-                    ball.bounce(elapsedTime);
-                    SCORE -= 1;
-                }
-                if (brick.getType() == "MultipleHitsBreak") {
-                    SCORE += 1;
-
-                }
-                else {
-                    ball.bounce(elapsedTime);
-                    brickTracker -= 1;
-                    System.out.println(brickTracker);
-                    SCORE += 1;
-                }
+                int[] update = brick.update();
+                SCORE += update[0];
+                brickTracker += update[1];
+                System.out.println(brickTracker);
+                ball.bounce(elapsedTime);
             }
         }
     }

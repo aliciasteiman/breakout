@@ -9,13 +9,18 @@ import java.util.List;
 
 public class AvoidBrick extends Brick {
 
-    private boolean BOOL = true;
-
     public AvoidBrick(double x, double y, double width, double height, Paint color) {
         super(x, y, width, height, color);
     }
 
     @Override
+    public int[] update() {
+        int[] ret = new int[2];
+        ret[0] = -1;
+        ret[1] = -1;
+        return ret;
+    }
+
     public boolean checkBreak(Ball ball) {
         if (checkCollision(ball.getShape(), myShape)) {
             return true;

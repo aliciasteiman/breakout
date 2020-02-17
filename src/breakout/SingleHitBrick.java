@@ -20,6 +20,14 @@ public class SingleHitBrick extends Brick {
      * @return true if brick was hit, false otherwise
      */
     @Override
+    public int[] update() {
+        int[] ret = new int[2];
+        ret[0] = 1;
+        ret[1] = -1;
+        return ret;
+    }
+
+    @Override
     public boolean checkBreak(Ball ball) {
         if (checkCollision(ball.getShape(), myShape)) {
             removeBrick();

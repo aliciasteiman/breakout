@@ -10,6 +10,7 @@ import java.util.List;
 public abstract class Brick extends Sprite {
 
     protected Rectangle myShape;
+    protected boolean isBroken = false;
 
     /**
      * @param x = x position
@@ -37,6 +38,8 @@ public abstract class Brick extends Sprite {
         myShape.setFill(null);
     }
 
+    public abstract int[] update();
+
     /**
      * Checks if Ball breaks a single Brick
      * @param ball
@@ -46,13 +49,9 @@ public abstract class Brick extends Sprite {
 
     public abstract PowerUp getPowerUp();
 
-    public boolean brick_canbreak (boolean BREAKABLE) {return BREAKABLE;}
-
     public abstract String getType();
 
-    public int decreaseScore(int score) {
-        score -= 1;
-        return score;
+    public boolean isBroken() {
+        return isBroken;
     }
-
 }

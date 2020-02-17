@@ -8,12 +8,18 @@ import java.util.Random;
 
 public class PowerUpBrick extends Brick {
 
-    //work in progress!!!
-
     private PowerUp powerup;
 
     public PowerUpBrick(double x, double y, double width, double height, Paint color) {
         super(x, y, width, height, color);
+    }
+
+    @Override
+    public int[] update() {
+        int[] ret = new int[2];
+        ret[0] = 1;
+        ret[1] = -1;
+        return ret;
     }
 
     @Override
