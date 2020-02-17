@@ -46,6 +46,10 @@ public class Ball extends Sprite {
         myLives += num;
     }
 
+    /**
+     * Updates ball position in each "step"
+     * @param elapsedTime
+     */
     public void updatePosition(double elapsedTime) {
         myShape.setCenterX(myShape.getCenterX() + dx * BALL_SPEED * elapsedTime);
         myShape.setCenterY(myShape.getCenterY() + dy * BALL_SPEED * elapsedTime);

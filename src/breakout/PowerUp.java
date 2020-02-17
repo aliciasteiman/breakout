@@ -7,9 +7,7 @@ import javafx.scene.shape.Ellipse;
 import javafx.util.Duration;
 
 public abstract class PowerUp extends Sprite {
-
-    //work in progress!!
-
+    
     protected Ellipse myShape;
     private int POWERUP_SPEED = 100;
     Timeline myAnimation;

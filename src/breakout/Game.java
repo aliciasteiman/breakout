@@ -157,7 +157,13 @@ public class Game extends Application {
         return myRestart;
     }
 
-
+    /**
+     * Shows when player beats a level. Asks if player wants to go to the next level or quit.
+     * @param width
+     * @param height
+     * @param background
+     * @return myNextLevel = scene that gives go to next level option
+     */
     private Scene setUpWinScreen(int width, int height, Paint background) {
         Group root = new Group();
 

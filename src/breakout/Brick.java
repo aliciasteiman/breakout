@@ -37,6 +37,9 @@ public abstract class Brick extends Sprite {
         myShape.setFill(null);
     }
 
+    /**
+     * @return int[] of size 2, where int[0] updates score and int[1] updates brickTracker
+     */
     public abstract int[] update();
 
     /**
@@ -46,6 +49,10 @@ public abstract class Brick extends Sprite {
      */
     public abstract boolean checkBreak(Ball ball);
 
+    /**
+     * If a brick has a power-up, return the power-up
+     * @return PowerUp
+     */
     public abstract PowerUp getPowerUp();
 
 }
