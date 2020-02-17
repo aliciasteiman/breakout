@@ -62,7 +62,7 @@ public class Game extends Application {
     private Label myLabel;
     private Label myUserPrompt;
 
-    private String LEVEL_ONE = "line_config_small.txt";
+    private String LEVEL_ONE = "test.txt";
     private PowerUp powerUp;
     private List<PowerUp> myPowerUps;
 
@@ -161,17 +161,13 @@ public class Game extends Application {
 
         myLevel = level;
         for (Brick brick: myLevel.createConfiguration()) {
-            if (brick.hasPowerUp()) {
+            if (brick.getType().equals("PowerUpBrick")) {
                 powerUp = brick.getPowerUp();
                 myPowerUps.add(powerUp);
                 root.getChildren().add(powerUp.getShape());
             }
             root.getChildren().add(brick.getShape());
         }
-
-        //check = new LongerPaddle(50, HEIGHT - PADDLE_HEIGHT, 10, 10, Color.ORANGE);
-        //root.getChildren().add(check.getShape());
-
 
         setDisplayText(root);
 
@@ -248,7 +244,7 @@ public class Game extends Application {
         myLevel.checkBrickCollision(myBall, elapsedTime);
 
         for (PowerUp p : myPowerUps) {
-            p.checkHitPaddle(myPaddle);
+            p.checkHitPaddle(myPaddle, myBall);
         }
 
         if (myLevel.checkBricksClear()) {

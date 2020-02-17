@@ -11,6 +11,7 @@ public class PaddleTest {
 
     private Paddle myPaddle = new Paddle(250 - 60, 500 - 15, 120, 15, Color.GRAY);
     private PowerUp longerPaddle = new LongerPaddle(10, 10, 10, 10, Color.ORANGE);
+    private Ball myBall = new Ball(250, 250, 15, Color.GREEN);
 
     /**
      * Tests that control keys for paddle (left and right arrow keys) move paddle by paddle speed.
@@ -34,7 +35,7 @@ public class PaddleTest {
      */
     @Test
     public void testLongerPaddle() {
-        longerPaddle.applyPaddlePowerUp(myPaddle);
+        longerPaddle.applyPowerUp(myPaddle, myBall);
         assertEquals(170, myPaddle.getShape().getWidth());
         longerPaddle.revertPowerUp();
         assertEquals(120, myPaddle.getShape().getWidth());
@@ -46,7 +47,7 @@ public class PaddleTest {
         longerPaddle.getShape().setCenterX(250);
         longerPaddle.getShape().setCenterY(475);
         //assertTrue(longerPaddle.checkHitPaddle(myPaddle)); need to get this to work
-        longerPaddle.checkHitPaddle(myPaddle);
+        longerPaddle.checkHitPaddle(myPaddle, myBall);
         assertEquals(120, myPaddle.getShape().getWidth()); //120 because it applies and reverts power-up
     }
 

@@ -34,7 +34,7 @@ public class SingleHitBrick extends Brick {
     }
 
     @Override
-    public boolean hasPowerUp() {
-        return false;
+    public String getType() {
+        return "SingleHitBrick";
     }
 }

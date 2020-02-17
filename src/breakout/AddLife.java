@@ -3,32 +3,23 @@ package breakout;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-public class AddLife extends Brick{
-    private PowerUp powerup;
+public class AddLife extends PowerUp {
 
-    public AddLife(double x, double y, double width, double height, Paint color) {
-        super(x, y, width, height, color);
+    private int lives;
+
+    public AddLife(double xPos, double yPos, double xRad, double yRad, Paint color) {
+        super(xPos, yPos, xRad, yRad, color);
     }
 
     @Override
-    public boolean checkBreak(Ball ball) {
-        if (checkCollision(ball.getShape(), myShape)) {
-            removeBrick();
-            powerup.setPowerUpDrop();
-            return true;
-        }
-        return false;
+    public void revertPowerUp() {
+        return;
     }
 
     @Override
-    public PowerUp getPowerUp() {
-        powerup = NUM_LIVES+=1;
-        return powerup;
-    }
-
-    @Override
-    public boolean hasPowerUp() {
-        return true;
+    public void applyPowerUp(Paddle paddle, Ball ball) {
+        lives = ball.getLives();
+        ball.updateLives(lives + 1);
     }
 
 }

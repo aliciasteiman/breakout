@@ -46,14 +46,13 @@ public abstract class Brick extends Sprite {
 
     public abstract PowerUp getPowerUp();
 
-    public abstract boolean hasPowerUp();
-
     public boolean brick_canbreak (boolean BREAKABLE) {return BREAKABLE;}
 
+    public abstract String getType();
 
-  public int decreaseScore(int score) {
-      score -= 1;
-      return score;
-  }
+    public int decreaseScore(int score) {
+        score -= 1;
+        return score;
+    }
 
 }

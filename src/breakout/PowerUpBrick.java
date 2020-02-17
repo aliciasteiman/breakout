@@ -28,13 +28,26 @@ public class PowerUpBrick extends Brick {
 
     @Override
     public PowerUp getPowerUp() {
-        powerup = new LongerPaddle(myShape.getX() + myShape.getWidth()/2, myShape.getY() + myShape.getHeight()/2,
-                10, 10, Color.BLUEVIOLET);
+        //create an array list of all powerups in PowerUp class, pick one at random
+        Random rand = new Random();
+        int num = rand.nextInt(3);
+        if (num == 0) {
+            powerup = new LongerPaddle(myShape.getX() + myShape.getWidth()/2, myShape.getY() + myShape.getHeight()/2,
+                    10, 10, Color.BLUEVIOLET);
+        }
+        if (num == 1) {
+            powerup = new BiggerBall(myShape.getX() + myShape.getWidth()/2, myShape.getY() + myShape.getHeight()/2,
+                    10, 10, Color.BLUEVIOLET);
+        }
+        if (num == 2) {
+            powerup = new AddLife(myShape.getX() + myShape.getWidth()/2, myShape.getY() + myShape.getHeight()/2,
+                    10, 10, Color.BLUEVIOLET);
+        }
         return powerup;
     }
 
     @Override
-    public boolean hasPowerUp() {
-        return true;
+    public String getType() {
+        return "PowerUpBrick";
     }
 }

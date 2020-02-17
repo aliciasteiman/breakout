@@ -50,12 +50,12 @@ public abstract class PowerUp extends Sprite {
         myAnimation.play(); //create a helper method to set up a timeline with a cycle count parameter
     }
 
-    public abstract void applyPaddlePowerUp(Paddle paddle);
+    public abstract void applyPowerUp(Paddle paddle, Ball ball);
 
-    public boolean checkHitPaddle(Paddle paddle) {
+    public boolean checkHitPaddle(Paddle paddle, Ball ball) {
         if (checkCollision(myShape, paddle.getShape())) {
-            //removePowerUp();
-            applyPaddlePowerUp(paddle);
+            removePowerUp();
+            applyPowerUp(paddle, ball);
             setPowerUpLife();
             return true;
         }

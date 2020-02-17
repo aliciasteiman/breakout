@@ -17,52 +17,10 @@ public class LevelTwo extends Level {
         super(file);
     }
 
-    /**
-     * Determines number of rows/columns based on configurations (list of each line of the file passed to Level)
-     * Loops through each row (i.e. line of data) and creates a Brick object based on the number in the row
-     * Adds 1 to brickTracker to determine total number of bricks
-     * @return bricksLevelTwo = list of Brick objects
-     */
-    @Override
-    public List<Brick> createConfiguration() {
-        bricksLevelTwo = new ArrayList<>();
-        int NUM_ROWS = configurations.size();
-        for (int row = 0; row < NUM_ROWS; row++) {
-            String s = configurations.get(row);
-            String holder = s.replaceAll("\\s", "");
-            int NUM_COLUMNS = holder.length();
-            double BRICK_WIDTH = (double) 500 / NUM_COLUMNS;
 
-            for (int column = 0; NUM_COLUMNS > column; column++) {
-                Random rand = new Random();
-                int red = rand.nextInt(255);
-                int green = rand.nextInt(255);
-                int blue = rand.nextInt(255);
-                Paint color = Color.rgb(red, green, blue);
-                brick = new MultipleHitsBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, color);
-                bricksLevelTwo.add(brick);
-                brickTracker += 1;
-            }
-        }
-        return bricksLevelTwo;
-    }
-
-    /**
-     * Loops through all the bricks during each step and determines if the Ball object hit a Brick object
-     * If ball hit brick --> ball bounces of brick, score increases by 1, brickTracker decreases by 1
-     * @param ball
-     * @param elapsedTime
-     */
     @Override
-    public void checkBrickCollision(Ball ball, double elapsedTime) {
-        Iterator<Brick> iter = bricksLevelTwo.iterator();
-        while (iter.hasNext()) {
-            Brick brick = iter.next();
-            if (brick.checkBreak(ball)) {
-                ball.bounce(elapsedTime);
-                SCORE += 1;
-            }
-        }
+    public boolean checkBricksClear() {
+        return brickTracker == 0;
     }
 
     @Override

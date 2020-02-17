@@ -16,7 +16,7 @@ public class LongerPaddle extends PowerUp {
      * @param paddle
      */
     @Override
-    public void applyPaddlePowerUp(Paddle paddle) {
+    public void applyPowerUp(Paddle paddle, Ball ball) {
         longerPaddle = paddle.getShape();
         longerPaddle.setWidth(longerPaddle.getWidth() + 50);
     }

@@ -20,11 +20,12 @@ public class MultipleHitsBrick extends Brick {
     @Override
     public boolean checkBreak(Ball ball) {
         Random ran = new Random();
-        NUM_HITS= ran.nextInt(3) + 2;
+        NUM_HITS = ran.nextInt(4) + 2;
+        int decreaseOpacity = NUM_HITS;
         if (checkCollision(ball.getShape(), myShape)) {
             NUM_HITS -= 1;
             double opacity = myShape.getOpacity();
-            opacity -= 1.0/NUM_HITS;
+            opacity -= 1.0/decreaseOpacity;
             myShape.setOpacity(opacity);
             if (NUM_HITS == 0) {
                 removeBrick();
@@ -41,8 +42,8 @@ public class MultipleHitsBrick extends Brick {
     }
 
     @Override
-    public boolean hasPowerUp() {
-        return false;
+    public String getType() {
+        return "MultipleHitBrick";
     }
 
 }
