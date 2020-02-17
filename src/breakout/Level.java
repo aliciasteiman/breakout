@@ -92,7 +92,6 @@ public abstract class Level extends Sprite {
                 int[] update = brick.update();
                 SCORE += update[0];
                 brickTracker += update[1];
-                System.out.println(brickTracker);
                 ball.bounce(elapsedTime);
             }
         }

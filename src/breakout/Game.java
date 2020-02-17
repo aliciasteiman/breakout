@@ -93,13 +93,17 @@ public class Game extends Application {
      */
     public Scene setUpInstructionsScene(int width, int height, Paint background) {
         Group root = new Group();
-        myLabel = new Label("Instructions");
-        myLabel.setFont(Font.font(40));
-        myLabel.setLayoutX(WIDTH/2 - myLabel.getWidth()/2); //width of text is 0? need to call getWidth in start
+        myLabel = new Label("Welcome to the Breakout game!");
+
+        myLabel.setFont(Font.font("Bradley Hand"));
+        myLabel.setFont(Font.font(30));
+        myLabel.setLayoutX(WIDTH/15 - myLabel.getWidth()/2); //width of text is 0? need to call getWidth in start
         myLabel.setLayoutY(10);
         root.getChildren().add(myLabel);
 
-        rules = createText(rules, "Fill this in with rules", 10, 100, 20);
+        rules = createText(rules, "The rules are simple,clear the screen of all \nnecessary bricks.\n"+
+                "Be careful though, some bricks are better avoided.\nMay the odds be in your favor.\n", 10, 100,"Brush Script MT", 20);
+        //rules.setFont(Font.font("Brush Script MT"));
         root.getChildren().add(rules);
 
         playGame = new Button("Play game");
@@ -123,17 +127,17 @@ public class Game extends Application {
     private Scene setUpLoseScreen(int width, int height, Paint background) {
         Group root = new Group();
 
-        losingText = createText(losingText, "You lost. Better luck next time.", 10, 10, 30);
+        losingText = createText(losingText, "You lost. Better luck next time.", 10, 30,"Lucida Handwriting", 20);
         root.getChildren().add(losingText);
 
         myLosePrompt = new Label("Do you want to play again?");
-        myLosePrompt.setFont(Font.font(40));
+        myLosePrompt.setFont(Font.font(20));
         myLosePrompt.setLayoutX(50);
         myLosePrompt.setLayoutY(50);
         root.getChildren().add(myLosePrompt);
 
         playAgain = new Button("Yes");
-        playAgain.setLayoutX(WIDTH/4);
+        playAgain.setLayoutX(WIDTH/3);
         playAgain.setLayoutY(400);
         playAgain.setOnMouseClicked(e -> handleMousePlayAgain(e.getX(), e.getY()));
         root.getChildren().add(playAgain);
@@ -151,11 +155,11 @@ public class Game extends Application {
     private Scene setUpWinScreen(int width, int height, Paint background) {
         Group root = new Group();
 
-        winningText = createText(winningText, "You beat the level! Congratulations!", 10, 10, 30);
+        winningText = createText(winningText, "You beat the level! Congratulations!", 10, 30,"Lucida Handwriting",20);
         root.getChildren().add(winningText);
 
         myWinPrompt = new Label("Do you want to go to the next level?");
-        myWinPrompt.setFont(Font.font(40));
+        myWinPrompt.setFont(Font.font(20));
         myWinPrompt.setLayoutX(50);
         myWinPrompt.setLayoutY(50);
         root.getChildren().add(myWinPrompt);
@@ -218,16 +222,16 @@ public class Game extends Application {
      * @param root
      */
     private void setDisplayText(Group root) {
-        livesLeft = createText(livesLeft, "Lives remaining: " + myBall.getLives(), 8, 450, 15);
+        livesLeft = createText(livesLeft, "Lives remaining: " + myBall.getLives(), 8, 450,"Lucida Handwriting", 15);
         root.getChildren().add(livesLeft);
 
-        score = createText(score, "Score: " + myScore, 8, 430, 15);
+        score = createText(score, "Score: " + myScore, 8, 430,"Lucida Handwriting", 15);
         root.getChildren().add(score);
 
-        currentLevel = createText(currentLevel, "LEVEL " + myLevel.getLevel(), 8, 410, 15);
+        currentLevel = createText(currentLevel, "LEVEL " + myLevel.getLevel(), 8, 410,"Lucida Handwriting", 15);
         root.getChildren().add(currentLevel);
 
-        beatGame = createText(beatGame, "Congratulations! You beat all 3 levels.", 250, 250, 30);
+        beatGame = createText(beatGame, "Congratulations! You beat all 3 levels.", 250, 250,"Lucida Handwriting", 30);
         beatGame.setVisible(false);
         root.getChildren().add(beatGame);
     }
@@ -241,11 +245,12 @@ public class Game extends Application {
      * @param size
      * @return
      */
-    private Text createText(Text text, String message, double xPos, double yPos, int size) {
+    private Text createText(Text text, String message, double xPos, double yPos, String font,int size ) {
         text = new Text();
         text.setText(message);
         text.setX(xPos);
         text.setY(yPos);
+        text.setFont(Font.font(font));
         text.setFont(Font.font(size));
         return text;
     }
