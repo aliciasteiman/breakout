@@ -34,7 +34,7 @@ public class PowerUpBrick extends Brick {
 
     @Override
     public PowerUp getPowerUp() {
-        //create an array list of all powerups in PowerUp class, pick one at random
+        //create an array list of all power-ups in PowerUp class, pick one at random
         Random rand = new Random();
         int num = rand.nextInt(3);
         if (num == 0) {

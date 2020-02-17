@@ -34,7 +34,7 @@ public class PaddleTest {
      * Checks if paddle width decreases by 50 when power-up is reverted.
      */
     @Test
-    public void testLongerPaddle() {
+    public void testLongerPaddlePowerUp() {
         longerPaddle.applyPowerUp(myPaddle, myBall);
         assertEquals(170, myPaddle.getShape().getWidth());
         longerPaddle.revertPowerUp();
@@ -42,11 +42,11 @@ public class PaddleTest {
     }
 
     @Test
-    public void testCheckHitPaddle() {
+    public void testCheckPowerUpHitPaddle() {
         myPaddle.getShape().setX(250 - 60);
         longerPaddle.getShape().setCenterX(250);
         longerPaddle.getShape().setCenterY(475);
-        //assertTrue(longerPaddle.checkHitPaddle(myPaddle)); need to get this to work
+        assertTrue(longerPaddle.checkHitPaddle(myPaddle, myBall)); //why isn't their intersection returning true?
         longerPaddle.checkHitPaddle(myPaddle, myBall);
         assertEquals(120, myPaddle.getShape().getWidth()); //120 because it applies and reverts power-up
     }

@@ -16,7 +16,6 @@ public class SingleHitBrick extends Brick {
 
     /**
      * Checks if Ball hits SingleHitBrick once and removes Brick if hit
-     * @param ball
      * @return true if brick was hit, false otherwise
      */
     @Override

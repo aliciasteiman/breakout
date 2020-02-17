@@ -10,6 +10,8 @@ public class BallTest {
     private Ball myBall = new Ball(250, 250, 15, Color.BLUEVIOLET);
     private Paddle myPaddle = new Paddle(250 - 60, 500 - 15, 120, 15, Color.GRAY);
     private MultipleHitsBrick mhp = new MultipleHitsBrick(20, 20,80, 20, Color.ORANGE);
+    private PowerUp biggerBall = new BiggerBall(10, 10, 10, 10, Color.GOLD);
+    private PowerUp addLife = new AddLife(10, 10, 10, 10, Color.GOLD);
 
 
     /**
@@ -35,7 +37,30 @@ public class BallTest {
     }
 
     /**
-     * Tests that ball collides with MultipleHitsBrick more than once
+     * Tests that ball size increases by a factor of 2 when BiggerBall power-up is applied.
+     */
+    @Test
+    public void testBiggerBallPowerUp() {
+        biggerBall.applyPowerUp(myPaddle, myBall);
+        assertEquals(30, myBall.getShape().getRadius());
+        biggerBall.revertPowerUp();
+        assertEquals(15, myBall.getShape().getRadius());
+    }
+
+    /**
+     * Tests that ball lives increases by 1 when AddLife power-up is applied.
+     * Tests that ball lives remain the same when AddLife power-up is reverted.
+     */
+    @Test
+    public void testAddLifePowerUp() {
+        addLife.applyPowerUp(myPaddle, myBall);
+        assertEquals(4, myBall.getLives());
+        addLife.revertPowerUp();
+        assertEquals(4, myBall.getLives());
+    }
+
+    /**
+     * Tests that ball collides with MultipleHitsBrick more than once.
      */
     @Test
     public void testBreaksMultipleHitsBrick() {
@@ -45,5 +70,11 @@ public class BallTest {
         for (int i = 0; i < 2; i ++) {
             //assertTrue(mhp.checkBreak(myBall));
         }
+    }
+
+    @Test
+    public void testPowerUpDrop() {
+        addLife.dropPowerUp(1.0/60);
+        assertEquals(10 + 100 * 1.0/60, addLife.myShape.getCenterY());
     }
 }

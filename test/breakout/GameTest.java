@@ -9,13 +9,7 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
-import java.util.concurrent.TimeUnit;
-
 import static org.junit.jupiter.api.Assertions.*;
-
-
-//move some tests around so they're in more appropriate classes, if the step method isn't involved, consider moving
-//the method
 
 class GameTest extends DukeApplicationTest {
 
@@ -23,12 +17,13 @@ class GameTest extends DukeApplicationTest {
     private Scene myScene;
     private Circle myBall;
     private Rectangle myPaddle;
-    private LevelOne myLevel;
-    private String LEVEL_ONE = "line_config_small.txt";
+    private Level myLevel;
+    private String TEST_FILE = "line_config_level_three.txt";
 
     @Override
     public void start(Stage stage) {
-        myScene = myGame.setUpLevelScene(500, 500, Color.WHITESMOKE, new LevelOne(LEVEL_ONE));
+        //change which level gets passed in and that specific level will get full line coverage
+        myScene = myGame.setUpLevelScene(500, 500, Color.WHITESMOKE, new LevelOne(TEST_FILE));
         stage.setScene(myScene);
         stage.show();
 

@@ -19,7 +19,7 @@ public class AddLife extends PowerUp {
     @Override
     public void applyPowerUp(Paddle paddle, Ball ball) {
         lives = ball.getLives();
-        ball.updateLives(lives + 1);
+        ball.updateLives(1);
     }
 
 }

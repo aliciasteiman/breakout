@@ -65,10 +65,14 @@ public class Game extends Application {
     private Label myLosePrompt;
     private Label myWinPrompt;
 
-    private String LEVEL_ONE = "test.txt";
     private PowerUp powerUp;
     private List<PowerUp> myPowerUps;
     private int myScore;
+
+    private String LEVEL_ONE = "line_config_level_one.txt";
+    private String LEVEL_TWO = "line_config_level_two.txt";
+    private String LEVEL_THREE = "line_config_level_three.txt";
+
 
     /**
      * Sets and shows the stage (which contains the scene of objects that the player sees)
@@ -338,11 +342,11 @@ public class Game extends Application {
         }
 
         if (code == KeyCode.DIGIT2) { //jumps to level 2
-            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelTwo(LEVEL_ONE)));
+            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelTwo(LEVEL_TWO)));
         }
 
         if (code == KeyCode.DIGIT3) { //jumps to level 3
-            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelThree(LEVEL_ONE)));
+            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelThree(LEVEL_THREE)));
         }
 
         if (code == KeyCode.P) { //drops a power-up
@@ -376,10 +380,10 @@ public class Game extends Application {
         if (nextLevel.contains(x, y)) {
             int next = Integer.parseInt(myLevel.getLevel()) + 1;
             if (next == 2) {
-                myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelTwo(LEVEL_ONE)));
+                myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelTwo(LEVEL_TWO)));
             }
             if (next == 3) {
-                myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelThree(LEVEL_ONE)));
+                myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelThree(LEVEL_THREE)));
             }
         }
     }

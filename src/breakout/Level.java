@@ -49,27 +49,21 @@ public abstract class Level extends Sprite {
             double BRICK_WIDTH = (double) 500 / NUM_COLUMNS;
 
             for (int column = 0; NUM_COLUMNS > column; column++) {
-                Random rand = new Random();
-                int red = rand.nextInt(255);
-                int green = rand.nextInt(255);
-                int blue = rand.nextInt(255);
-                Paint color = Color.rgb(red, green, blue);
-
                 if (holder.charAt(column) == '0') {
                     brick = new SingleHitBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, null);
                 }
 
                 if(holder.charAt(column) == '1') {
-                    brick = new SingleHitBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, color);
+                    brick = new SingleHitBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, Color.SEAGREEN);
                 }
                 else if(holder.charAt(column) == '2') {
-                    brick = new PowerUpBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, color);
+                    brick = new PowerUpBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, Color.GOLD);
                 }
                 else if(holder.charAt(column) =='3') {
-                    brick = new MultipleHitsBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, color);
+                    brick = new MultipleHitsBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, Color.PURPLE);
                 }
                 else if (holder.charAt(column) == '4') {
-                    brick = new AvoidBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, color);
+                    brick = new AvoidBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, Color.BLACK);
                     avoidBricks += 1;
                 }
                 bricksLevel.add(brick);
@@ -92,7 +86,6 @@ public abstract class Level extends Sprite {
                 int[] update = brick.update();
                 SCORE += update[0];
                 brickTracker += update[1];
-                System.out.println(brickTracker);
                 ball.bounce(elapsedTime);
             }
         }

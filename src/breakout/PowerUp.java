@@ -23,7 +23,7 @@ public abstract class PowerUp extends Sprite {
         return myShape;
     }
 
-    public void dropPowerUp(double elapsedTime) { //this is the step method
+    public void dropPowerUp(double elapsedTime) {
         myShape.setCenterY(myShape.getCenterY() + POWERUP_SPEED * elapsedTime);
     }
 
