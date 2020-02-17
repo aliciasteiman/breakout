@@ -1,5 +1,5 @@
 # Game Design Final
-### Names
+### Suomo Ammah & Alicia Steiman
 
 ## Team Roles and Responsibilities
 
@@ -14,6 +14,7 @@
 
 
 ## High-level Design
+The Game class 
 
 #### Core Classes
 
