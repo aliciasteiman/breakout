@@ -354,6 +354,10 @@ public class Game extends Application {
             myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelThree(LEVEL_THREE)));
         }
 
+        if (code == KeyCode.A) { //adds additional lives
+            paddle.setWidth(paddle.getWidth()*2);
+        }
+
         if (code == KeyCode.P) { //drops a power-up
             //write code
         }
