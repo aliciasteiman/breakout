@@ -337,7 +337,7 @@ public class Game extends Application {
 
         if (code == KeyCode.C) { //clear all bricks
             for (Brick brick : myLevel.createConfiguration()) {
-                brick.getShape().setFill(null);
+                brick.removeBrick();
             }
             myLevel.createConfiguration().clear();
         }

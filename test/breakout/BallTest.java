@@ -68,10 +68,13 @@ public class BallTest {
         myBall.getShape().setCenterX(20);
         myBall.getShape().setCenterY(20);
         for (int i = 0; i < 2; i ++) {
-            //assertTrue(mhp.checkBreak(myBall));
+            assertTrue(mhp.checkBreak(myBall));
         }
     }
 
+    /**
+     * Tests that power-up's position updates when dropPowerUp() is called.
+     */
     @Test
     public void testPowerUpDrop() {
         addLife.dropPowerUp(1.0/60);

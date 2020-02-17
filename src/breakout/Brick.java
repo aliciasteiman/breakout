@@ -10,7 +10,6 @@ import java.util.List;
 public abstract class Brick extends Sprite {
 
     protected Rectangle myShape;
-    protected boolean isBroken = false;
 
     /**
      * @param x = x position
@@ -51,7 +50,4 @@ public abstract class Brick extends Sprite {
 
     public abstract String getType();
 
-    public boolean isBroken() {
-        return isBroken;
-    }
 }
