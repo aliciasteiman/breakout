@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Random;
 
 
+/**
+ * Creates Breakout game. Sets up all visual elements and handles user interaction.
+ */
 public class Game extends Application {
 
     private final int WIDTH = 500;
@@ -407,6 +410,12 @@ public class Game extends Application {
         }
     }
 
+    /**
+     * Handles mouse inputs on "play again" scene
+     * If user wants to play again, their current level is reset. If not, the game is exited.
+     * @param x
+     * @param y
+     */
     private void handleMousePlayAgain(double x, double y) {
         if (playAgain.contains(x, y)) {
             myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, myLevel));
@@ -416,6 +425,12 @@ public class Game extends Application {
         }
     }
 
+    /**
+     * Handles mouse input on "next level" scene. Appears when user clears all bricks on a level.
+     * If yes, the next level is shown.
+     * @param x
+     * @param y
+     */
     private void handleMouseNextLevel(double x, double y) {
         if (nextLevel.contains(x, y)) {
             int next = Integer.parseInt(myLevel.getLevel()) + 1;

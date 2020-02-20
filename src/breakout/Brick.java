@@ -7,6 +7,9 @@ import javafx.scene.shape.Rectangle;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Single brick object. Has a shape and state (visible/not hit and not visible/removed). Can contain power-ups.
+ */
 public abstract class Brick extends Sprite {
 
     protected Rectangle myShape;

@@ -5,6 +5,10 @@ import javafx.scene.paint.Paint;
 
 import java.util.*;
 
+/**
+ * Abstract class representing any given Level. Able to set up a configuration of bricks, check if the level
+ * is completed, check a brick collision, and return a user score.
+ */
 public abstract class Level extends Sprite {
 
     //look at duplication in LevelOne and LevelTwo and see if there is any way to remove it
@@ -93,7 +97,8 @@ public abstract class Level extends Sprite {
     }
 
     /**
-     * @return
+     * Checks if all bricks needed to be hit to beat a level are cleared.
+     * @return true/false
      */
     public boolean checkBricksClear() {
         return brickTracker == 0;
@@ -111,6 +116,10 @@ public abstract class Level extends Sprite {
      */
     public abstract String getLevel();
 
+    /**
+     * Sets brickTracker back to 0 between levels so that when a new level is started, the brickTracker can
+     * be updated correctly.
+     */
     public void resetBrickTracker() {
         brickTracker = 0;
     }

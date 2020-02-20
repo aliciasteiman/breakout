@@ -14,7 +14,7 @@
 
 
 ## High-level Design
-The Game class 
+
 
 #### Core Classes
 
