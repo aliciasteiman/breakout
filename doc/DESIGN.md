@@ -10,8 +10,7 @@
     old code and effectively contributed to the design. I also maintained many of the project documents and often assigned tasks. 
 
  * Team Member #2 (Suomo)
-   *I handled mainly the user interactive portion of the code such as creating subclasses that interacted with the superclasses.
-   
+   * I handled mainly the user interactive portion of the code such as creating subclasses that interacted with the superclasses.
 
 
 ## Design Goals
