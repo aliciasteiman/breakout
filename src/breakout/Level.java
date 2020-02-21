@@ -28,7 +28,7 @@ public abstract class Level extends Sprite {
 
 
     /**
-     * Constructor to set up a level
+     * Constructor to set up a level with random brick configurations
      * @param file = brick configuration
      */
     public Level(String file) {

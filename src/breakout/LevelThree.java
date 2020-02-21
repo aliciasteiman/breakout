@@ -25,13 +25,14 @@ public class LevelThree extends Level{
         int NUM_COLUMNS = holder.length();
         double BRICK_WIDTH = (double) 500 / NUM_COLUMNS;
 
+
         for (int column = 0; NUM_COLUMNS > column; column++) {
             if (holder.charAt(column) == '0') {
                 brick = new SingleHitBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, null);
                 brick.getShape().setVisible(false);
                 brickTracker -= 1;
             }
-            if(holder.charAt(column) == '1') {
+            else if(holder.charAt(column) =='1') {
                 brick = new SingleHitBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, Color.SEAGREEN);
             }
             else if(holder.charAt(column) == '2') {
@@ -44,6 +45,7 @@ public class LevelThree extends Level{
                 brick = new AvoidBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, Color.BLACK);
                 brickTracker -= 1;
             }
+
             brickTracker += 1;
             bricksLevel.add(brick);
         }
