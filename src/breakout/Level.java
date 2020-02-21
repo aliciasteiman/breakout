@@ -23,6 +23,9 @@ public abstract class Level extends Sprite {
     protected List<Brick> bricksLevel;
     private Brick brick;
     protected int avoidBricks;
+    private int MAX_ROWS = 7;
+
+
 
     /**
      * Constructor to set up a level
@@ -32,8 +35,24 @@ public abstract class Level extends Sprite {
         configurations = new ArrayList<>();
         Scanner input = new Scanner(Level.class.getClassLoader().getResourceAsStream(file));
 
-        while (input.hasNext()) {
-            configurations.add(input.nextLine());
+//        while (input.hasNext()) {
+//            configurations.add(input.nextLine());
+//        }
+        List templist = new ArrayList<>();
+        //Scanner scan = new Scanner(Level.class.getClassLoader().getResourceAsStream("overall.txt"));
+        while (input.hasNext()){
+            templist.add(input.nextLine());
+        }
+        int LINES=templist.size();
+        Random rand = new Random();
+        int randnum = rand.nextInt(LINES);
+       // System.out.println("I'm here");
+        while(!(MAX_ROWS ==0)){
+            Collections.shuffle(templist);
+            String s = (String) templist.get(randnum);
+            configurations.add(s);
+            MAX_ROWS-=1;
+
         }
     }
 
@@ -43,40 +62,7 @@ public abstract class Level extends Sprite {
      * Adds 1 to brickTracker to determine total number of bricks
      * @return bricksLevelOne = list of Brick objects
      */
-    public List<Brick> createConfiguration() {
-        bricksLevel = new ArrayList<>();
-        int NUM_ROWS = configurations.size();
-        for (int row = 0; row < NUM_ROWS; row++) {
-            String s = configurations.get(row);
-            String holder = s.replaceAll("\\s", "");
-            int NUM_COLUMNS = holder.length();
-            double BRICK_WIDTH = (double) 500 / NUM_COLUMNS;
-
-            for (int column = 0; NUM_COLUMNS > column; column++) {
-                if (holder.charAt(column) == '0') {
-                    brick = new SingleHitBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, null);
-                    brick.getShape().setVisible(false);
-                    brickTracker -= 1;
-                }
-                if(holder.charAt(column) == '1') {
-                    brick = new SingleHitBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, Color.SEAGREEN);
-                }
-                else if(holder.charAt(column) == '2') {
-                    brick = new PowerUpBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, Color.GOLD);
-                }
-                else if(holder.charAt(column) =='3') {
-                    brick = new MultipleHitsBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, Color.PURPLE);
-                }
-                else if (holder.charAt(column) == '4') {
-                    brick = new AvoidBrick(column * BRICK_WIDTH, row  * (BRICK_HEIGHT + ROW_SEPARATION), BRICK_WIDTH, BRICK_HEIGHT, Color.BLACK);
-                    brickTracker -= 1;
-                }
-                brickTracker += 1;
-                bricksLevel.add(brick);
-            }
-        }
-        return bricksLevel;
-    }
+    public abstract List <Brick> createConfiguration();
 
     /**
      * Checks if ball hits bricks, updates score, and subtracts from brickTracker

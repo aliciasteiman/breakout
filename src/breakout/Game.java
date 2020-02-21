@@ -77,6 +77,7 @@ public class Game extends Application {
     private String LEVEL_TWO = "line_config_level_two.txt";
     private String LEVEL_THREE = "line_config_level_three.txt";
     private String LEVEL_FOUR = "line_config_level_four.txt";
+    private String overall = "overall.txt";
 
 
     /**
@@ -363,15 +364,15 @@ public class Game extends Application {
         }
 
         if (code == KeyCode.DIGIT2) { //jumps to level 2
-            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelTwo(LEVEL_TWO)));
+            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelTwo(overall)));
         }
 
         if (code == KeyCode.DIGIT3) { //jumps to level 3
-            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelThree(LEVEL_THREE)));
+            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelThree(overall)));
         }
 
         if (code == KeyCode.DIGIT4) { //jumps to level 3
-            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelThree(LEVEL_FOUR)));
+            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelThree(overall)));
         }
 
         if (code == KeyCode.DIGIT0) { //makes paddle width of screen
@@ -411,7 +412,7 @@ public class Game extends Application {
      */
     private void handleMouseInput(double x, double y) {
         if (playGame.contains(x, y)) {
-            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelOne(LEVEL_ONE)));
+            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelOne(overall)));
         }
     }
 
@@ -440,10 +441,10 @@ public class Game extends Application {
         if (nextLevel.contains(x, y)) {
             int next = Integer.parseInt(myLevel.getLevel()) + 1;
             if (next == 2) {
-                myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelTwo(LEVEL_TWO)));
+                myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelTwo(overall)));
             }
             if (next == 3) {
-                myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelThree(LEVEL_THREE)));
+                myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelThree(overall)));
             }
         }
     }
