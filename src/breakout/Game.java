@@ -73,6 +73,7 @@ public class Game extends Application {
     private List<PowerUp> myPowerUps;
     private int myScore;
 
+    private String ALICIA_VIDEO = "testConfigurations/alicia_video.txt";
     private String LEVEL_ONE = "line_config_level_one.txt";
     private String LEVEL_TWO = "line_config_level_two.txt";
     private String LEVEL_THREE = "line_config_level_three.txt";
@@ -406,7 +407,8 @@ public class Game extends Application {
      */
     private void handleMouseInput(double x, double y) {
         if (playGame.contains(x, y)) {
-            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelOne(LEVEL_ONE)));
+            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelOne(ALICIA_VIDEO)));
+            //myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelOne(LEVEL_ONE)));
         }
     }
 
