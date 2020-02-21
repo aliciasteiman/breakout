@@ -76,6 +76,7 @@ public class Game extends Application {
     private String LEVEL_ONE = "line_config_level_one.txt";
     private String LEVEL_TWO = "line_config_level_two.txt";
     private String LEVEL_THREE = "line_config_level_three.txt";
+    private String LEVEL_FOUR = "line_config_level_four.txt";
 
 
     /**
@@ -367,6 +368,10 @@ public class Game extends Application {
 
         if (code == KeyCode.DIGIT3) { //jumps to level 3
             myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelThree(LEVEL_THREE)));
+        }
+
+        if (code == KeyCode.DIGIT4) { //jumps to level 3
+            myStage.setScene(setUpLevelScene(WIDTH, HEIGHT, BACKGROUND, new LevelThree(LEVEL_FOUR)));
         }
 
         if (code == KeyCode.DIGIT0) { //makes paddle width of screen
